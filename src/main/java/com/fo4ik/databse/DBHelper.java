@@ -47,6 +47,21 @@ public class DBHelper {
         }
     }
 
+    //Create method to update job
+    public void updateJob(Job job) {
+        String updateSQL = "UPDATE jobs SET jobTitle = ?, jobCompany = ?, html = ?, addDate = ? WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+            preparedStatement.setString(1, job.getJobTitle());
+            preparedStatement.setString(2, job.getJobCompany());
+            preparedStatement.setString(3, job.getHtml());
+            preparedStatement.setDate(4, new java.sql.Date(job.getAddDate().getTime()));
+            preparedStatement.setInt(5, job.getId());
+        } catch (SQLException e) {
+            System.out.println("Error updating job in the database: " + e.getMessage());
+        }
+    }
+
     public List<Job> getAllJobs() {
         List<Job> jobs = new ArrayList<>();
 
