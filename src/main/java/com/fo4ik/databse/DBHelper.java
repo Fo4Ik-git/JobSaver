@@ -42,6 +42,7 @@ public class DBHelper {
             preparedStatement.setString(2, job.getJobCompany());
             preparedStatement.setString(3, job.getHtml());
             preparedStatement.setDate(4, new java.sql.Date(job.getAddDate().getTime()));
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error adding job to the database: " + e.getMessage());
         }
@@ -56,6 +57,7 @@ public class DBHelper {
             preparedStatement.setString(3, job.getHtml());
             preparedStatement.setDate(4, new java.sql.Date(job.getAddDate().getTime()));
             preparedStatement.setInt(5, job.getId());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error updating job in the database: " + e.getMessage());
         }
@@ -67,10 +69,12 @@ public class DBHelper {
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
             preparedStatement.setInt(1, job.getId());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error deleting job from the database: " + e.getMessage());
         }
     }
+
 
     public List<Job> getAllJobs() {
         List<Job> jobs = new ArrayList<>();
