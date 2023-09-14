@@ -10,8 +10,12 @@ import java.util.Date;
 
 public class AddJobFragment extends JFrame {
 
+    private static DBHelper dbHelper;
+
     public AddJobFragment() {
         setTitle("Add Job");
+
+        dbHelper = new DBHelper();
 
         setSize(800, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -59,7 +63,6 @@ public class AddJobFragment extends JFrame {
                 return;
             } else {
                 Job job = new Job(titleField.getText(), companyField.getText(), HtmlParser.getHtml(linkField.getText()), new Date());
-                DBHelper dbHelper = new DBHelper();
                 dbHelper.connect();
                 dbHelper.addJob(job);
 
