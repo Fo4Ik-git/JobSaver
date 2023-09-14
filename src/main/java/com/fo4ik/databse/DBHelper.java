@@ -47,7 +47,6 @@ public class DBHelper {
         }
     }
 
-    //Create method to update job
     public void updateJob(Job job) {
         String updateSQL = "UPDATE jobs SET jobTitle = ?, jobCompany = ?, html = ?, addDate = ? WHERE id = ?";
 
@@ -59,6 +58,17 @@ public class DBHelper {
             preparedStatement.setInt(5, job.getId());
         } catch (SQLException e) {
             System.out.println("Error updating job in the database: " + e.getMessage());
+        }
+    }
+
+    //Create a method to delete a job from the database
+    public void deleteJob(Job job) {
+        String deleteSQL = "DELETE FROM jobs WHERE id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+            preparedStatement.setInt(1, job.getId());
+        } catch (SQLException e) {
+            System.out.println("Error deleting job from the database: " + e.getMessage());
         }
     }
 
