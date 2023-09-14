@@ -86,7 +86,7 @@
       <recent name="com.fo4ik.fragments" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.JBrowserDriverSwingExample">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="HtmlUnitSwingExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.fo4ik.HtmlUnitSwingExample" />
       <module name="LinkedInJobSaver.main" />
