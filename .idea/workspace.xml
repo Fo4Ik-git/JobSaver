@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/databse/DBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/databse/DBHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/AddJobFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/AddJobFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +68,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "database.query.execution",
     "vue.rearranger.settings.migration": "true"
   },
@@ -142,12 +139,56 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1694682396206</updated>
-      <workItem from="1694682397710" duration="23953000" />
+      <workItem from="1694682397710" duration="25660000" />
     </task>
+    <task id="LOCAL-00001" summary="update basic files">
+      <created>1694730612902</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1694730612902</updated>
+    </task>
+    <task id="LOCAL-00002" summary="add resourceBundle">
+      <created>1694730648307</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1694730648307</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Create application version 1 (have bug in jfxPanel)">
+      <created>1694730725955</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1694730725955</updated>
+    </task>
+    <task id="LOCAL-00004" summary="update">
+      <created>1694730791487</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1694730791487</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add actions to buttons">
+      <created>1694732237736</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1694732237736</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update basic files" />
+    <MESSAGE value="add resourceBundle" />
+    <MESSAGE value="Create application version 1 (have bug in jfxPanel)" />
+    <MESSAGE value="update" />
+    <MESSAGE value="Add actions to buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add actions to buttons" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

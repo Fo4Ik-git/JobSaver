@@ -1467,36 +1467,62 @@
     <argument id="517" parent="176">
       <Position>1</Position>
     </argument>
-    <table id="518" parent="177" name="sqlite_master">
+    <table id="518" parent="177" name="jobs"/>
+    <table id="519" parent="177" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="519" parent="177" name="sqlite_sequence">
+    <table id="520" parent="177" name="sqlite_sequence">
       <System>1</System>
     </table>
-    <column id="520" parent="518" name="type">
-      <DasType>TEXT|0s</DasType>
+    <column id="521" parent="518" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>INTEGER|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="521" parent="518" name="name">
+    <column id="522" parent="518" name="jobTitle">
       <DasType>TEXT|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="522" parent="518" name="tbl_name">
+    <column id="523" parent="518" name="jobCompany">
       <DasType>TEXT|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="523" parent="518" name="rootpage">
+    <column id="524" parent="518" name="html">
+      <DasType>TEXT|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="525" parent="518" name="addDate">
+      <DasType>DATE|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <key id="526" parent="518">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="527" parent="519" name="type">
+      <DasType>TEXT|0s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="528" parent="519" name="name">
+      <DasType>TEXT|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="529" parent="519" name="tbl_name">
+      <DasType>TEXT|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="530" parent="519" name="rootpage">
       <DasType>INT|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="524" parent="518" name="sql">
+    <column id="531" parent="519" name="sql">
       <DasType>TEXT|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="525" parent="519" name="name">
+    <column id="532" parent="520" name="name">
       <Position>1</Position>
     </column>
-    <column id="526" parent="519" name="seq">
+    <column id="533" parent="520" name="seq">
       <Position>2</Position>
     </column>
   </database-model>
