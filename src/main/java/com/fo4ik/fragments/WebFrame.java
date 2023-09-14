@@ -1,6 +1,7 @@
 package com.fo4ik.fragments;
 
 import com.fo4ik.Main;
+import com.fo4ik.databse.DBHelper;
 import com.fo4ik.entity.Job;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -17,6 +18,7 @@ public class WebFrame {
     private static JTextField jobCompanyField;
 
     private static JFXPanel jfxPanel;
+    private static DBHelper dbHelper = new DBHelper();
 
 
     public static JPanel getWebFrame(Job job) {
@@ -25,8 +27,8 @@ public class WebFrame {
         JPanel editPanel = getEditPanel(job);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, editPanel, webPanel);
-        splitPane.setDividerLocation(0.5);
-        splitPane.setResizeWeight(0.5);
+        /*splitPane.setDividerLocation(0.3);
+        splitPane.setResizeWeight(0.3);*/
 
         panel.setLayout(new BorderLayout());
         panel.add(splitPane, BorderLayout.CENTER);
@@ -49,12 +51,6 @@ public class WebFrame {
 
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> {
-
-            if (jobTitleField.getText().isEmpty() || jobCompanyField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please fill all fields");
-                return;
-            }
-
             Main.frame.getContentPane().removeAll();
             Main.frame.getContentPane().add(Main.getTopPanel(), BorderLayout.NORTH);
             Main.frame.getContentPane().add(Main.listFrame);
@@ -64,8 +60,37 @@ public class WebFrame {
 
         JButton saveButton = new JButton("Save");
         saveButton.setBackground(Color.green);
+
+        saveButton.addActionListener(e -> {
+            if (jobTitleField.getText().isEmpty() || jobCompanyField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Please fill all fields");
+                return;
+            }
+            job.setJobTitle(jobTitleField.getText());
+            job.setJobCompany(jobCompanyField.getText());
+            dbHelper.connect();
+            dbHelper.updateJob(job);
+            dbHelper.close();
+        });
+
         JButton deleteButton = new JButton("Delete");
         deleteButton.setBackground(Color.red);
+
+        deleteButton.addActionListener(e -> {
+            dbHelper.connect();
+            dbHelper.deleteJob(job);
+
+            Main.frame.getContentPane().removeAll();
+            Main.frame.getContentPane().add(Main.getTopPanel(), BorderLayout.NORTH);
+
+            ListFrame.listModel.removeAllElements();
+            ListFrame.listModel.addAll(dbHelper.getAllJobs());
+
+            Main.frame.getContentPane().add(Main.listFrame);
+            Main.frame.revalidate();
+            Main.frame.repaint();
+            dbHelper.close();
+        });
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
@@ -94,7 +119,6 @@ public class WebFrame {
 
         Platform.setImplicitExit(false);
         Platform.runLater(() -> {
-            System.out.println("Loading Web Page");
             WebView webView = new WebView();
             WebEngine webEngine = webView.getEngine();
 
@@ -103,7 +127,7 @@ public class WebFrame {
 
             StackPane stackPane = new StackPane();
             stackPane.getChildren().add(webView);
-            Scene scene = new Scene(stackPane, 800, 600);
+            Scene scene = new Scene(stackPane);
             jfxPanel.setScene(scene);
         });
 
