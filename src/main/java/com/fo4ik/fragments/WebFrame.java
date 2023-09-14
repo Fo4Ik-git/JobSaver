@@ -92,7 +92,7 @@ public class WebFrame {
         webPanel.setLayout(new BorderLayout());
         webPanel.add(jfxPanel, BorderLayout.CENTER);
 
-        // Используем Timer для задержки загрузки страницы
+        Platform.setImplicitExit(false);
         Platform.runLater(() -> {
             System.out.println("Loading Web Page");
             WebView webView = new WebView();
