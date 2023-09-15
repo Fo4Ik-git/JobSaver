@@ -29,12 +29,6 @@ public class AddJobFragment extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(4, 2, 10, 10));
 
-        JLabel titleLabel = new JLabel("Job Title:");
-        JTextField titleField = new JTextField(20);
-
-        JLabel companyLabel = new JLabel("Job Company:");
-        JTextField companyField = new JTextField(20);
-
         JLabel linkLabel = new JLabel("Link:");
         JTextField linkField = new JTextField(20);
 
@@ -42,13 +36,6 @@ public class AddJobFragment extends JFrame {
         hintLabel.setBackground(Color.darkGray);
         hintLabel.setFont(new Font("Serif", Font.BOLD, 20));
         hintLabel.setForeground(Color.red);
-
-
-        panel.add(titleLabel);
-        panel.add(titleField);
-
-        panel.add(companyLabel);
-        panel.add(companyField);
 
         panel.add(linkLabel);
         panel.add(linkField);
@@ -58,11 +45,12 @@ public class AddJobFragment extends JFrame {
         JButton addButton = new JButton("Add Job");
         addButton.addActionListener(e -> {
 
-            if (titleField.getText().isEmpty() || companyField.getText().isEmpty() || linkField.getText().isEmpty()) {
+            if (linkField.getText().isEmpty()) {
                 hintLabel.setText("Please fill all fields");
                 return;
             } else {
-                Job job = new Job(titleField.getText(), companyField.getText(), HtmlParser.getHtml(linkField.getText()), new Date());
+
+                Job job = new Job(HtmlParser.getJobTitle(linkField.getText()), HtmlParser.getJobCompany(linkField.getText()), HtmlParser.getHtml(linkField.getText()), new Date());
                 dbHelper.connect();
                 dbHelper.addJob(job);
 
