@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
 }
 
 project.ext {
@@ -9,6 +10,12 @@ project.ext {
     applicationName = 'Job Saver'
     applicationVersion = '1.0'
 
+}
+
+application {
+    mainClass = project.mainClass
+    applicationName = project.applicationName
+    applicationVersion = project.applicationVersion
 }
 
 group 'com.fo4ik'
@@ -45,6 +52,13 @@ jar {
                 'Main-Class': project.mainClass,
         )
     }
+}
+
+shadowJar {
+    archiveBaseName.set("${project.applicationName}")
+    version = null
+    archiveClassifier.set('')
+    mergeServiceFiles()
 }
 
 test {

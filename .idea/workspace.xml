@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="create method to build application">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,22 +101,9 @@
       <recent name="com.fo4ik.fragments" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.LinkedInJobSaver [buildDependents]">
-    <configuration name="HtmlUnitSwingExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.fo4ik.HtmlUnitSwingExample" />
-      <module name="LinkedInJobSaver.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.fo4ik.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JBrowserDriverSwingExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.fo4ik.JBrowserDriverSwingExample" />
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.fo4ik.Main" />
       <module name="LinkedInJobSaver.main" />
       <extension name="coverage">
         <pattern>
@@ -141,6 +127,27 @@
         <option name="taskNames">
           <list>
             <option value="buildDependents" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="LinkedInJobSaver [buildNeeded]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildNeeded" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -195,10 +202,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.LinkedInJobSaver [buildDependents]" />
-        <item itemvalue="Gradle.LinkedInJobSaver [jar]" />
+        <item itemvalue="Gradle.LinkedInJobSaver [buildNeeded]" />
         <item itemvalue="Gradle.LinkedInJobSaver [build]" />
-        <item itemvalue="Application.JBrowserDriverSwingExample" />
-        <item itemvalue="Application.HtmlUnitSwingExample" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Gradle.LinkedInJobSaver [jar]" />
       </list>
     </recent_temporary>
   </component>
@@ -213,7 +220,7 @@
       <workItem from="1694682397710" duration="26371000" />
       <workItem from="1694772062561" duration="94000" />
       <workItem from="1694776610073" duration="1370000" />
-      <workItem from="1694799049554" duration="3293000" />
+      <workItem from="1694799049554" duration="5428000" />
     </task>
     <task id="LOCAL-00001" summary="update basic files">
       <created>1694730612902</created>
@@ -278,7 +285,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694800549233</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="update">
+      <created>1694802497136</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1694802497136</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -289,11 +303,11 @@
     <MESSAGE value="add resourceBundle" />
     <MESSAGE value="Create application version 1 (have bug in jfxPanel)" />
     <MESSAGE value="Add actions to buttons" />
-    <MESSAGE value="update" />
     <MESSAGE value="Update add Job, only link" />
     <MESSAGE value="create new method" />
     <MESSAGE value="create method to build application" />
-    <option name="LAST_COMMIT_MESSAGE" value="create method to build application" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
