@@ -5,6 +5,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.List;
+
 
 public class HtmlParser {
 
@@ -33,6 +35,7 @@ public class HtmlParser {
     public static String getHtml(String url) {
         try {
             getDocument(url);
+            Elements headerElements = document.select("header");
             Elements navElements = document.select("nav.nav[aria-label=Primary]");
             Elements sectionElementsRight = document.select("section.right-rail");
             Elements sectionElementsJob = document.select("section.similar-jobs");
@@ -41,27 +44,9 @@ public class HtmlParser {
             Elements globalAlerts = document.select("#artdeco-global-alerts-cls-offset");
             Elements elementsToRemove = document.select(".top-card-layout__cta-container");
 
-            for (Element navElement : navElements) {
-                navElement.remove();
-            }
-            for (Element sectionElement : sectionElementsRight) {
-                sectionElement.remove();
-            }
-            for (Element sectionElement : sectionElementsJob) {
-                sectionElement.remove();
-            }
-            for (Element sectionElement : sectionJobAlert) {
-                sectionElement.remove();
-            }
-            for (Element elementToRemove : elementsToRemove) {
-                elementToRemove.remove();
-            }
-            for (Element globalAlert : globalAlerts) {
-                globalAlert.remove();
-            }
-            for (Element similarPeoples : similarPeople) {
-                similarPeoples.remove();
-            }
+            List<Elements> elementsList = List.of(headerElements, navElements, sectionElementsRight, sectionElementsJob, sectionJobAlert, similarPeople, globalAlerts, elementsToRemove);
+
+            deleteElements(elementsList);
 
             return document.html();
         } catch (Exception e) {
@@ -70,4 +55,11 @@ public class HtmlParser {
         return null;
     }
 
+    private static void deleteElements(List<Elements> elements) {
+        for (Elements element : elements) {
+            for (Element el : element) {
+                el.remove();
+            }
+        }
+    }
 }
