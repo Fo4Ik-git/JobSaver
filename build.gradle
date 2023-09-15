@@ -4,29 +4,15 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
-
 project.ext {
     mainClass = 'com.fo4ik.Main'
     applicationName = 'Job Saver'
     applicationVersion = '1.0'
+
 }
 
 group 'com.fo4ik'
 version project.applicationVersion
-
-
-jar {
-
-    archiveBaseName.set(project.applicationName)
-    version = null
-
-    manifest {
-        attributes(
-                'Main-Class': project.mainClass,
-        )
-    }
-}
-
 
 repositories {
     mavenCentral()
@@ -48,6 +34,18 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.16.1'
 }
 
+
+jar {
+
+    archiveBaseName.set(project.applicationName)
+    version = null
+
+    manifest {
+        attributes(
+                'Main-Class': project.mainClass,
+        )
+    }
+}
 
 test {
     useJUnitPlatform()
