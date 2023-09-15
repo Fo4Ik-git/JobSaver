@@ -4,8 +4,29 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
+
+project.ext {
+    mainClass = 'com.fo4ik.Main'
+    applicationName = 'Job Saver'
+    applicationVersion = '1.0'
+}
+
 group 'com.fo4ik'
-version '1.0-SNAPSHOT'
+version project.applicationVersion
+
+
+jar {
+
+    archiveBaseName.set(project.applicationName)
+    version = null
+
+    manifest {
+        attributes(
+                'Main-Class': project.mainClass,
+        )
+    }
+}
+
 
 repositories {
     mavenCentral()
@@ -13,7 +34,7 @@ repositories {
 
 javafx {
     version = "20"
-    modules = [ 'javafx.controls' ]
+    modules = ['javafx.controls']
 }
 
 dependencies {
@@ -26,6 +47,7 @@ dependencies {
     implementation 'com.formdev:flatlaf:3.2.1'
     implementation 'org.jsoup:jsoup:1.16.1'
 }
+
 
 test {
     useJUnitPlatform()
