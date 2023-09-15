@@ -13,4 +13,4 @@ To build the project, `build.gradle` is used. You can compile and run the projec
 
 ## License
 
-Please refer to the `LICENSE` file in the repository for licensing information.
+Please refer to the [LICENSE](LICENSE) file in the repository for licensing information.
