@@ -2,8 +2,8 @@ package com.fo4ik;
 
 import com.fo4ik.config.Config;
 import com.fo4ik.databse.DBHelper;
-import com.fo4ik.fragments.ListFrame;
-import com.fo4ik.fragments.MenuFragment;
+import com.fo4ik.panel.ListPanel;
+import com.fo4ik.panel.MenuPanel;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
@@ -32,12 +32,12 @@ public class Main extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(800, 600));
 
-        frame.setJMenuBar(MenuFragment.getMenu());
+        frame.setJMenuBar(MenuPanel.getMenu());
         frame.setLocationRelativeTo(null);
 
 
         frame.getContentPane().add(getTopPanel(), BorderLayout.NORTH);
-        listFrame = ListFrame.getListFrame(dbHelper.getAllJobs());
+        listFrame = ListPanel.getListFrame(dbHelper.getAllJobs());
         webFrame = new JPanel();
 
         frame.getContentPane().add(listFrame);

@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/actionListners/CustomActionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/actionListners/CustomActionListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/AddJobFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/JobListCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/JobListCellRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/ListFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/MenuFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/MenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/WebFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +83,7 @@
     "WebServerToolWindowFactoryState": "false",
     "extract.method.default.visibility": "private",
     "jdk.selected.JAVA_MODULE": "liberica-17",
-    "last_opened_file_path": "C:/Users/terra/IdeaProjects/LinkedInJobSaver",
+    "last_opened_file_path": "C:/Users/terra/IdeaProjects/MyWebPortfolio",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -220,7 +225,7 @@
       <workItem from="1694682397710" duration="26371000" />
       <workItem from="1694772062561" duration="94000" />
       <workItem from="1694776610073" duration="1370000" />
-      <workItem from="1694799049554" duration="5428000" />
+      <workItem from="1694799049554" duration="9828000" />
     </task>
     <task id="LOCAL-00001" summary="update basic files">
       <created>1694730612902</created>
@@ -292,7 +297,49 @@
       <option name="project" value="LOCAL" />
       <updated>1694802497136</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="start use shadow">
+      <created>1694804596659</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1694804596659</updated>
+    </task>
+    <task id="LOCAL-00012" summary="rewrite main method">
+      <created>1694804645720</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1694804645720</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add readme">
+      <created>1694805251391</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1694805251391</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Add license">
+      <created>1694805268148</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1694805268148</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Update">
+      <created>1694805333045</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1694805333045</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Update">
+      <created>1694806637596</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1694806637596</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,7 +354,12 @@
     <MESSAGE value="create new method" />
     <MESSAGE value="create method to build application" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="start use shadow" />
+    <MESSAGE value="rewrite main method" />
+    <MESSAGE value="Add readme" />
+    <MESSAGE value="Add license" />
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

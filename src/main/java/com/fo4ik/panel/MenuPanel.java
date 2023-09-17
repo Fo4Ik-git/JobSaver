@@ -1,4 +1,4 @@
-package com.fo4ik.fragments;
+package com.fo4ik.panel;
 
 import com.fo4ik.Main;
 import com.fo4ik.actionListners.CustomActionListener;
@@ -7,7 +7,7 @@ import com.fo4ik.config.Config;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class MenuFragment extends Main {
+public class MenuPanel extends Main {
 
     public static JMenuBar getMenu() {
 

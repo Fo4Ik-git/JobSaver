@@ -1,18 +1,19 @@
-package com.fo4ik.fragments;
+package com.fo4ik.window;
 
 import com.fo4ik.databse.DBHelper;
 import com.fo4ik.engine.HtmlParser;
 import com.fo4ik.entity.Job;
+import com.fo4ik.panel.ListPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
 
-public class AddJobFragment extends JFrame {
+public class AddJobWindow extends JFrame {
 
     private static DBHelper dbHelper;
 
-    public AddJobFragment() {
+    public AddJobWindow() {
         setTitle("Add Job");
 
         dbHelper = new DBHelper();
@@ -55,8 +56,8 @@ public class AddJobFragment extends JFrame {
                 dbHelper.addJob(job);
 
 
-                ListFrame.listModel.removeAllElements();
-                ListFrame.listModel.addAll(dbHelper.getAllJobs());
+                ListPanel.listModel.removeAllElements();
+                ListPanel.listModel.addAll(dbHelper.getAllJobs());
                 dbHelper.close();
             }
 

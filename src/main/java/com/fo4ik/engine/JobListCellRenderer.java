@@ -1,4 +1,4 @@
-package com.fo4ik.fragments;
+package com.fo4ik.engine;
 
 import com.fo4ik.entity.Job;
 
@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 
-class JobListCellRenderer extends JPanel implements ListCellRenderer<Job> {
+public class JobListCellRenderer extends JPanel implements ListCellRenderer<Job> {
     private JLabel jobTitleAndCompanyLabel = new JLabel();
     private JLabel addDateLabel = new JLabel();
 

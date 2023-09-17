@@ -1,4 +1,4 @@
-package com.fo4ik.fragments;
+package com.fo4ik.panel;
 
 import com.fo4ik.Main;
 import com.fo4ik.databse.DBHelper;
@@ -13,7 +13,7 @@ import javafx.scene.web.WebView;
 import javax.swing.*;
 import java.awt.*;
 
-public class WebFrame {
+public class WebPanel {
     private static JTextField jobTitleField;
     private static JTextField jobCompanyField;
 
@@ -83,8 +83,8 @@ public class WebFrame {
             Main.frame.getContentPane().removeAll();
             Main.frame.getContentPane().add(Main.getTopPanel(), BorderLayout.NORTH);
 
-            ListFrame.listModel.removeAllElements();
-            ListFrame.listModel.addAll(dbHelper.getAllJobs());
+            ListPanel.listModel.removeAllElements();
+            ListPanel.listModel.addAll(dbHelper.getAllJobs());
 
             Main.frame.getContentPane().add(Main.listFrame);
             Main.frame.revalidate();

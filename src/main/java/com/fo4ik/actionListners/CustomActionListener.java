@@ -1,7 +1,7 @@
 package com.fo4ik.actionListners;
 
 import com.fo4ik.Main;
-import com.fo4ik.fragments.AddJobFragment;
+import com.fo4ik.window.AddJobWindow;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +19,7 @@ public class CustomActionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Add job":
-                AddJobFragment addJobFragment = new AddJobFragment();
+                AddJobWindow addJobFragment = new AddJobWindow();
                 break;
             case "Settings":
                 System.out.println("Settings");
