@@ -7,18 +7,21 @@ import com.fo4ik.entity.Job;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class ListPanel extends Main {
 
-    private DefaultListModel<Job> listModel;
-    private List<Job> jobs;
+    private final DefaultListModel<Job> listModel;
+    private final List<Job> jobs;
     public ListPanel() {
         dbHelper.connect();
         this.listModel = new DefaultListModel<>();
         this.jobs = dbHelper.getAllJobs();
         dbHelper.close();
+    }
+    public ListPanel(List<Job> jobs) {
+        this.listModel = new DefaultListModel<>();
+        this.jobs = jobs;
     }
 
     public void getListPanel(){

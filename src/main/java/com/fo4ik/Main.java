@@ -2,6 +2,7 @@ package com.fo4ik;
 
 import com.fo4ik.config.Config;
 import com.fo4ik.database.DBHelper;
+import com.fo4ik.entity.Job;
 import com.fo4ik.panel.ListPanel;
 import com.fo4ik.panel.MenuPanel;
 import com.fo4ik.panel.TopPanel;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 public class Main extends JFrame {
 
@@ -48,6 +50,21 @@ public class Main extends JFrame {
         topPanelClass.getTopPanel();
 
         ListPanel listPanelClass = new ListPanel();
+        listPanelClass.getListPanel();
+        frame.getContentPane().repaint();
+        frame.getContentPane().revalidate();
+    }
+
+    public void update(List<Job> jobs){
+        frame.getContentPane().removeAll();
+        MenuPanel menuPanelClass = new MenuPanel();
+        menuPanelClass.getMenu();
+        frame.setLocationRelativeTo(null);
+
+        TopPanel topPanelClass = new TopPanel();
+        topPanelClass.getTopPanel();
+
+        ListPanel listPanelClass = new ListPanel(jobs);
         listPanelClass.getListPanel();
         frame.getContentPane().repaint();
         frame.getContentPane().revalidate();

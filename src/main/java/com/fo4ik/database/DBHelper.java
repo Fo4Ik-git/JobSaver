@@ -101,6 +101,37 @@ public class DBHelper {
         return jobs;
     }
 
+    public List<Job> searchJobsByTitleOrCompany(String keyword) {
+        List<Job> matchingJobs = new ArrayList<>();
+
+        String searchSQL = "SELECT * FROM jobs WHERE jobTitle LIKE ? OR jobCompany LIKE ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(searchSQL)) {
+            String searchKeyword = "%" + keyword + "%"; // Add wildcard % for partial matching
+            preparedStatement.setString(1, searchKeyword);
+            preparedStatement.setString(2, searchKeyword);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String jobTitle = resultSet.getString("jobTitle");
+                String jobCompany = resultSet.getString("jobCompany");
+                String html = resultSet.getString("html");
+                Date addDate = resultSet.getDate("addDate");
+
+                Job job = new Job(id, jobTitle, jobCompany, html, addDate);
+                matchingJobs.add(job);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error searching jobs in the database: " + e.getMessage());
+        }
+
+        System.out.println("Found " + matchingJobs.size() + " matching jobs");
+
+        return matchingJobs;
+    }
+
     public void close() {
         try {
             if (connection != null) {
