@@ -10,6 +10,9 @@ project.ext {
     applicationName = 'Job Saver'
     applicationVersion = '1.0'
 
+    jdbc = 'org.xerial:sqlite-jdbc:3.43.0.0'
+    flatlaf = 'com.formdev:flatlaf:3.2.1'
+    jsoup = 'org.jsoup:jsoup:1.16.1'
 }
 
 application {
@@ -35,10 +38,10 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
 
-    implementation 'org.xerial:sqlite-jdbc:3.43.0.0'
+    implementation "${project.jdbc}"
 
-    implementation 'com.formdev:flatlaf:3.2.1'
-    implementation 'org.jsoup:jsoup:1.16.1'
+    implementation "${project.flatlaf}"
+    implementation "${project.jsoup}"
 }
 
 
@@ -55,12 +58,26 @@ jar {
 }
 
 shadowJar {
-    archiveBaseName.set("${project.applicationName}")
+    archiveBaseName.set("${applicationName}")
     version = null
     archiveClassifier.set('')
     mergeServiceFiles()
+
+    dependencies {
+        // Включаем все зависимости в сборку
+        include(dependency("${project.jdbc}"))
+        include(dependency("${project.flatlaf}"))
+        include(dependency("${project.jsoup}"))
+    }
 }
 
 test {
     useJUnitPlatform()
 }
+
+tasks.register('copyJFXLibs', Copy) {
+    from { configurations.runtimeClasspath.filter { it.name.startsWith('javafx-') } }
+    into "$buildDir/libs"
+}
+
+shadowJar.dependsOn('copyJFXLibs')

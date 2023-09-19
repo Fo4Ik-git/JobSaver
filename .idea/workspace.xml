@@ -4,15 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="">
+    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="Optimize code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/actionListners/CustomActionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/actionListners/CustomActionListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/AddJobFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/JobListCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/JobListCellRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/ListFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/MenuFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/MenuPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/fragments/WebFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,32 +74,32 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "extract.method.default.visibility": "private",
-    "jdk.selected.JAVA_MODULE": "liberica-17",
-    "last_opened_file_path": "C:/Users/terra/IdeaProjects/MyWebPortfolio",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15429688",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "database.query.execution",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;liberica-17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/terra/IdeaProjects/LinkedInJobSaver&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;database.query.execution&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.fo4ik.fragments" />
@@ -225,7 +224,11 @@
       <workItem from="1694682397710" duration="26371000" />
       <workItem from="1694772062561" duration="94000" />
       <workItem from="1694776610073" duration="1370000" />
-      <workItem from="1694799049554" duration="9828000" />
+      <workItem from="1694799049554" duration="12593000" />
+      <workItem from="1695069145818" duration="29000" />
+      <workItem from="1695077873656" duration="147000" />
+      <workItem from="1695124740730" duration="599000" />
+      <workItem from="1695159602767" duration="1211000" />
     </task>
     <task id="LOCAL-00001" summary="update basic files">
       <created>1694730612902</created>
@@ -339,7 +342,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694806637596</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Refactor code">
+      <created>1694984372849</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1694984372849</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -359,7 +369,8 @@
     <MESSAGE value="Add readme" />
     <MESSAGE value="Add license" />
     <MESSAGE value="Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+    <MESSAGE value="Refactor code" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor code" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
