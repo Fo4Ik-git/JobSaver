@@ -1,4 +1,4 @@
-package com.fo4ik.databse;
+package com.fo4ik.database;
 
 import com.fo4ik.config.Config;
 import com.fo4ik.entity.Job;
@@ -110,5 +110,4 @@ public class DBHelper {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
 }

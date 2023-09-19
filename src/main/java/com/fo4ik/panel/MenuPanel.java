@@ -1,29 +1,23 @@
 package com.fo4ik.panel;
 
 import com.fo4ik.Main;
-import com.fo4ik.actionListners.CustomActionListener;
-import com.fo4ik.config.Config;
+import com.fo4ik.actionListner.CustomActionListener;
 
 import javax.swing.*;
-import java.awt.event.ActionListener;
 
 public class MenuPanel extends Main {
 
-    public static JMenuBar getMenu() {
-
-        ActionListener menuListener = new CustomActionListener();
-
-
+    public void getMenu() {
         JMenuBar menuBar = new JMenuBar();
-        JMenu settingsMenu = new JMenu(Config.getResourceBundle().getString("menuButtonFile"));
-        JMenuItem settingsItem = new JMenuItem(Config.getResourceBundle().getString("menuItemButtonSettings"));
-        settingsItem.setActionCommand("Settings");
-        settingsItem.addActionListener(menuListener);
+        JMenu menu = new JMenu("Menu");
+        menuBar.add(menu);
 
-        settingsMenu.add(settingsItem);
-        menuBar.add(settingsMenu);
-        return menuBar;
+        JMenuItem settings = new JMenuItem("Settings");
+        settings.setActionCommand("Settings");
+        settings.addActionListener(new CustomActionListener());
+        menu.add(settings);
+
+        frame.setJMenuBar(menuBar);
     }
-
 
 }

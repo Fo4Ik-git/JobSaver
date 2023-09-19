@@ -1,7 +1,6 @@
 package com.fo4ik.panel;
 
 import com.fo4ik.Main;
-import com.fo4ik.databse.DBHelper;
 import com.fo4ik.entity.Job;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -13,30 +12,31 @@ import javafx.scene.web.WebView;
 import javax.swing.*;
 import java.awt.*;
 
-public class WebPanel {
+public class WebPanel extends Main {
+
+    private static JFXPanel jfxPanel;
+
     private static JTextField jobTitleField;
     private static JTextField jobCompanyField;
 
-    private static JFXPanel jfxPanel;
-    private static DBHelper dbHelper = new DBHelper();
-
-
-    public static JPanel getWebFrame(Job job) {
+    public void getWebPanel(Job job){
         JPanel panel = new JPanel();
-        JPanel webPanel = getWebPanel(job);
+        JPanel webPanel = getWebFrame(job);
         JPanel editPanel = getEditPanel(job);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, editPanel, webPanel);
-        /*splitPane.setDividerLocation(0.3);
-        splitPane.setResizeWeight(0.3);*/
 
         panel.setLayout(new BorderLayout());
         panel.add(splitPane, BorderLayout.CENTER);
 
-        return panel;
+        frame.getContentPane().removeAll();
+        frame.getContentPane().add(panel);
+        frame.getContentPane().repaint();
+        frame.getContentPane().revalidate();
+
     }
 
-    private static JPanel getEditPanel(Job job) {
+    private JPanel getEditPanel(Job job) {
         JPanel editPanel = new JPanel();
         editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
         editPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -44,18 +44,21 @@ public class WebPanel {
         jobTitleField = new JTextField(job.getJobTitle());
         jobCompanyField = new JTextField(job.getJobCompany());
 
-        //Set max dimension for text fields
         Dimension maxFieldSize = new Dimension(Integer.MAX_VALUE, 100);
         jobTitleField.setMaximumSize(maxFieldSize);
         jobCompanyField.setMaximumSize(maxFieldSize);
 
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> {
-            Main.frame.getContentPane().removeAll();
-            Main.frame.getContentPane().add(Main.getTopPanel(), BorderLayout.NORTH);
-            Main.frame.getContentPane().add(Main.listFrame);
-            Main.frame.revalidate();
-            Main.frame.repaint();
+            dbHelper.connect();
+            frame.getContentPane().removeAll();
+            ListPanel listPanelClass = new ListPanel();
+            listPanelClass.getListPanel();
+
+            frame.getContentPane().repaint();
+            frame.getContentPane().revalidate();
+
+            dbHelper.close();
         });
 
         JButton saveButton = new JButton("Save");
@@ -75,20 +78,18 @@ public class WebPanel {
 
         JButton deleteButton = new JButton("Delete");
         deleteButton.setBackground(Color.red);
-
         deleteButton.addActionListener(e -> {
             dbHelper.connect();
             dbHelper.deleteJob(job);
 
-            Main.frame.getContentPane().removeAll();
-            Main.frame.getContentPane().add(Main.getTopPanel(), BorderLayout.NORTH);
+            frame.getContentPane().removeAll();
 
-            ListPanel.listModel.removeAllElements();
-            ListPanel.listModel.addAll(dbHelper.getAllJobs());
+            ListPanel listPanelClass = new ListPanel();
+            listPanelClass.getListPanel();
 
-            Main.frame.getContentPane().add(Main.listFrame);
-            Main.frame.revalidate();
-            Main.frame.repaint();
+            frame.getContentPane().repaint();
+            frame.getContentPane().revalidate();
+
             dbHelper.close();
         });
 
@@ -111,7 +112,7 @@ public class WebPanel {
         return editPanel;
     }
 
-    private static JPanel getWebPanel(Job job) {
+    private JPanel getWebFrame(Job job) {
         JPanel webPanel = new JPanel();
         jfxPanel = new JFXPanel();
         webPanel.setLayout(new BorderLayout());

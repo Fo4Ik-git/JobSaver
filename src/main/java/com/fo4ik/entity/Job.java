@@ -3,7 +3,6 @@ package com.fo4ik.entity;
 import java.util.Date;
 
 public class Job {
-
     private int id;
     private String JobTitle, JobCompany, html;
     private Date addDate;

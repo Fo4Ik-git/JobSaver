@@ -1,6 +1,6 @@
 package com.fo4ik.window;
 
-import com.fo4ik.databse.DBHelper;
+import com.fo4ik.database.DBHelper;
 import com.fo4ik.engine.HtmlParser;
 import com.fo4ik.entity.Job;
 import com.fo4ik.panel.ListPanel;
@@ -55,9 +55,9 @@ public class AddJobWindow extends JFrame {
                 dbHelper.connect();
                 dbHelper.addJob(job);
 
+                ListPanel listPanelClass = new ListPanel();
+                listPanelClass.update();
 
-                ListPanel.listModel.removeAllElements();
-                ListPanel.listModel.addAll(dbHelper.getAllJobs());
                 dbHelper.close();
             }
 
@@ -71,5 +71,4 @@ public class AddJobWindow extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         return panel;
     }
-
 }

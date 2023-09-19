@@ -4,14 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="Optimize code">
+    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="Update gradle">
+      <change afterPath="$PROJECT_DIR$/src/tmp/actionListners/CustomActionListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tmp/panel/ListPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/actionListners/CustomActionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/actionListners/CustomActionListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tmp/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/actionListners/CustomActionListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tmp/config/Config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/databse/DBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tmp/databse/DBHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/HtmlParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tmp/HtmlParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/JobListCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tmp/JobListCellRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/entity/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tmp/entity/Job.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/MenuPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tmp/panel/MenuPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tmp/panel/WebPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/tmp/window/AddJobFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +65,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -104,6 +113,9 @@
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.fo4ik.fragments" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\terra\IdeaProjects\LinkedInJobSaver\src\tmp" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -112,6 +124,19 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.fo4ik.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.fo4ik.test.MainTest" />
+      <module name="LinkedInJobSaver.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.fo4ik.test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -182,34 +207,13 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="LinkedInJobSaver [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MainTest" />
         <item itemvalue="Gradle.LinkedInJobSaver [buildDependents]" />
         <item itemvalue="Gradle.LinkedInJobSaver [buildNeeded]" />
         <item itemvalue="Gradle.LinkedInJobSaver [build]" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Gradle.LinkedInJobSaver [jar]" />
       </list>
     </recent_temporary>
   </component>
@@ -228,7 +232,7 @@
       <workItem from="1695069145818" duration="29000" />
       <workItem from="1695077873656" duration="147000" />
       <workItem from="1695124740730" duration="599000" />
-      <workItem from="1695159602767" duration="1211000" />
+      <workItem from="1695159602767" duration="5279000" />
     </task>
     <task id="LOCAL-00001" summary="update basic files">
       <created>1694730612902</created>
@@ -349,7 +353,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694984372849</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Update gradle">
+      <created>1695160872834</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1695160872834</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -370,7 +381,8 @@
     <MESSAGE value="Add license" />
     <MESSAGE value="Update" />
     <MESSAGE value="Refactor code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor code" />
+    <MESSAGE value="Update gradle" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update gradle" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
