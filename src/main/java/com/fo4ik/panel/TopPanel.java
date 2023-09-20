@@ -25,22 +25,16 @@ public class TopPanel extends Main {
         searchButton.setActionCommand("Search");
         searchButton.addActionListener(e -> {
             String searchQuery = searchField.getText();
-            if (!searchQuery.isEmpty()) {
-                dbHelper.connect();
-                clearButton.setVisible(true);
-                List<Job> jobs = dbHelper.searchJobsByTitleOrCompany(searchQuery);
-                if (jobs.isEmpty()) {
-                    update();
-                } else {
-                    update(jobs);
-                }
-                dbHelper.close();
-            }
+            search(searchQuery);
+        });
+        searchField.addActionListener(e -> {
+            String searchQuery = searchField.getText();
+            search(searchQuery);
         });
 
-        clearButton.addActionListener(e -> {
-            update();
-        });
+
+        clearButton.addActionListener(e -> update());
+
 
         buttonsPanel.add(searchButton);
         buttonsPanel.add(clearButton);
@@ -49,6 +43,19 @@ public class TopPanel extends Main {
         topPanel.add(buttonsPanel, BorderLayout.EAST);
 
         frame.getContentPane().add(topPanel, BorderLayout.NORTH);
+    }
+
+    private void search(String searchQuery) {
+        if (!searchQuery.isEmpty()) {
+            dbHelper.connect();
+            List<Job> jobs = dbHelper.searchJobsByTitleOrCompany(searchQuery);
+            if (jobs.isEmpty()) {
+                update();
+            } else {
+                update(jobs);
+            }
+            dbHelper.close();
+        }
     }
 
 }

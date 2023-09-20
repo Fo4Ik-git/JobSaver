@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/database/DBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/database/DBHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/JobListCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/JobListCellRenderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/TopPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/TopPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -426,14 +420,27 @@
       <option name="project" value="LOCAL" />
       <updated>1695212055181</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="clean and optimize">
+      <created>1695235735611</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1695235735611</updated>
+    </task>
+    <task id="LOCAL-00030" summary="create Config file for colors">
+      <created>1695235760377</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1695235760377</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="update basic files" />
     <MESSAGE value="add resourceBundle" />
     <MESSAGE value="Create application version 1 (have bug in jfxPanel)" />
     <MESSAGE value="Add actions to buttons" />
@@ -457,7 +464,9 @@
     <MESSAGE value="Fix bug with javafx" />
     <MESSAGE value="Fix colors" />
     <MESSAGE value="Add fixes and add logo" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add fixes and add logo" />
+    <MESSAGE value="clean and optimize" />
+    <MESSAGE value="create Config file for colors" />
+    <option name="LAST_COMMIT_MESSAGE" value="create Config file for colors" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
