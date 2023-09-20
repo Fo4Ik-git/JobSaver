@@ -1,8 +1,6 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
-    id 'com.github.johnrengelman.shadow' version '7.1.0'
 }
 
 project.ext {
@@ -13,6 +11,7 @@ project.ext {
     jdbc = 'org.xerial:sqlite-jdbc:3.43.0.0'
     flatlaf = 'com.formdev:flatlaf:3.2.1'
     jsoup = 'org.jsoup:jsoup:1.16.1'
+    javafxVersion = '20'
 }
 
 application {
@@ -28,11 +27,6 @@ repositories {
     mavenCentral()
 }
 
-javafx {
-    version = "20"
-    modules = ['javafx.controls']
-}
-
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
@@ -42,8 +36,15 @@ dependencies {
 
     implementation "${project.flatlaf}"
     implementation "${project.jsoup}"
-}
 
+    implementation "org.openjfx:javafx-controls:${project.javafxVersion}"
+    implementation "org.openjfx:javafx-fxml:${project.javafxVersion}"
+    implementation "org.openjfx:javafx-base:${project.javafxVersion}"
+    implementation "org.openjfx:javafx-graphics:${project.javafxVersion}"
+    implementation "org.openjfx:javafx-media:${project.javafxVersion}"
+    implementation "org.openjfx:javafx-swing:${project.javafxVersion}"
+    implementation "org.openjfx:javafx-web:${project.javafxVersion}"
+}
 
 jar {
 
@@ -55,29 +56,14 @@ jar {
                 'Main-Class': project.mainClass,
         )
     }
-}
 
-shadowJar {
-    archiveBaseName.set("${applicationName}")
-    version = null
-    archiveClassifier.set('')
-    mergeServiceFiles()
-
-    dependencies {
-        // Включаем все зависимости в сборку
-        include(dependency("${project.jdbc}"))
-        include(dependency("${project.flatlaf}"))
-        include(dependency("${project.jsoup}"))
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 test {
     useJUnitPlatform()
 }
-
-tasks.register('copyJFXLibs', Copy) {
-    from { configurations.runtimeClasspath.filter { it.name.startsWith('javafx-') } }
-    into "$buildDir/libs"
-}
-
-shadowJar.dependsOn('copyJFXLibs')
