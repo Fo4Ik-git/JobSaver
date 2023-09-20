@@ -44,10 +44,9 @@ public class ListPanel extends Main {
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setCellRenderer(new JobListCellRenderer());
 
-        Insets insets = new Insets(10, 10, 10, 10);
         JScrollPane scrollPane = new JScrollPane(list);
         scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        scrollPane.setBackground(Color.white);
+        scrollPane.setBackground(ColorsConfig.BACKGROUND_LIGHT);
         panel.add(scrollPane, BorderLayout.CENTER);
 
         list.addListSelectionListener(e -> {
