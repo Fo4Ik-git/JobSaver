@@ -27,14 +27,13 @@ public class JobListCellRenderer extends JPanel implements ListCellRenderer<Job>
         String addDateText = "Add Date: " + dateFormat.format(job.getAddDate());
         addDateLabel.setText(addDateText);
 
-        System.out.println(job.getStatus());
-
         switch (job.getStatus()) {
-            case 0 -> setBackground(Color.orange);
-            case 1 -> setBackground(Color.yellow);
-            case 2 -> setBackground(Color.green);
-            case 3 -> setBackground(Color.darkGray);
-            case 4 -> setBackground(Color.red);
+            case 0 -> setBackground(Color.decode("#00FF00"));
+            case 1 -> setBackground(Color.decode("#7C7CF9"));
+            case 2 -> setBackground(Color.decode("#FFA500"));
+            case 3 -> setBackground(Color.decode("#C102C1"));
+            case 4 -> setBackground(Color.decode("#009E00"));
+            case 5 -> setBackground(Color.decode("#FF0000"));
         }
 
         if (isSelected) {
