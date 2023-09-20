@@ -34,6 +34,9 @@ public class Main extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setMinimumSize(new Dimension(800, 600));
 
+        ImageIcon icon = new ImageIcon("src/main/resources/img/icon.png");
+        frame.setIconImage(icon.getImage());
+
         update();
 
         dbHelper.close();
