@@ -7,8 +7,8 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 
 public class JobListCellRenderer extends JPanel implements ListCellRenderer<Job> {
-    private JLabel jobTitleAndCompanyLabel = new JLabel();
-    private JLabel addDateLabel = new JLabel();
+    private final JLabel jobTitleAndCompanyLabel = new JLabel();
+    private final JLabel addDateLabel = new JLabel();
 
     public JobListCellRenderer() {
         setLayout(new BorderLayout());
@@ -27,12 +27,23 @@ public class JobListCellRenderer extends JPanel implements ListCellRenderer<Job>
         String addDateText = "Add Date: " + dateFormat.format(job.getAddDate());
         addDateLabel.setText(addDateText);
 
+        System.out.println(job.getStatus());
+
+        switch (job.getStatus()) {
+            case 0 -> setBackground(Color.orange);
+            case 1 -> setBackground(Color.yellow);
+            case 2 -> setBackground(Color.green);
+            case 3 -> setBackground(Color.darkGray);
+            case 4 -> setBackground(Color.red);
+        }
+
         if (isSelected) {
-            setBackground(list.getSelectionBackground());
+           /* setBackground(list.getSelectionBackground());
+            setForeground(list.getSelectionForeground());*/
             setForeground(list.getSelectionForeground());
         } else {
-            setBackground(list.getBackground());
             setForeground(list.getForeground());
+//            setBackground(list.getBackground());
         }
 
         return this;

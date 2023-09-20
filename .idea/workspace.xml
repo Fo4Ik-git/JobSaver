@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="Add search">
+    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/config/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/database/DBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/database/DBHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/TopPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/TopPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/JobListCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/JobListCellRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/entity/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/entity/Job.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/window/AddJobWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/language.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/language.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +226,7 @@
       <workItem from="1695069145818" duration="29000" />
       <workItem from="1695077873656" duration="147000" />
       <workItem from="1695124740730" duration="599000" />
-      <workItem from="1695159602767" duration="6677000" />
+      <workItem from="1695159602767" duration="8514000" />
     </task>
     <task id="LOCAL-00001" summary="update basic files">
       <created>1694730612902</created>
@@ -364,7 +368,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695165170061</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Add search">
+      <created>1695166303197</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1695166303197</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

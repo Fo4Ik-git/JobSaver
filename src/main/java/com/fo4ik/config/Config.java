@@ -14,6 +14,13 @@ public class Config {
 
     public static ResourceBundle resourceBundle = ResourceBundle.getBundle("language", Locale.getDefault());
 
+    public static final String[] STATUS_OPTIONS = {
+            resourceBundle.getString("JobStatus.New"),
+            resourceBundle.getString("JobStatus.Viewed"),
+            resourceBundle.getString("JobStatus.Applied"),
+            resourceBundle.getString("JobStatus.Interview"),
+            resourceBundle.getString("JobStatus.Offer"),
+            resourceBundle.getString("JobStatus.Rejected")};
     public static ResourceBundle getResourceBundle() {
         return resourceBundle;
     }

@@ -1495,34 +1495,38 @@
       <DasType>DATE|0s</DasType>
       <Position>5</Position>
     </column>
-    <key id="526" parent="518">
+    <column id="526" parent="518" name="status">
+      <DasType>TEXT|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <key id="527" parent="518">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="527" parent="519" name="type">
+    <column id="528" parent="519" name="type">
       <DasType>TEXT|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="528" parent="519" name="name">
+    <column id="529" parent="519" name="name">
       <DasType>TEXT|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="529" parent="519" name="tbl_name">
+    <column id="530" parent="519" name="tbl_name">
       <DasType>TEXT|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="530" parent="519" name="rootpage">
+    <column id="531" parent="519" name="rootpage">
       <DasType>INT|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="531" parent="519" name="sql">
+    <column id="532" parent="519" name="sql">
       <DasType>TEXT|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="532" parent="520" name="name">
+    <column id="533" parent="520" name="name">
       <Position>1</Position>
     </column>
-    <column id="533" parent="520" name="seq">
+    <column id="534" parent="520" name="seq">
       <Position>2</Position>
     </column>
   </database-model>

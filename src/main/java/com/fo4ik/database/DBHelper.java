@@ -25,7 +25,8 @@ public class DBHelper {
                 "jobTitle TEXT," +
                 "jobCompany TEXT," +
                 "html TEXT," +
-                "addDate DATE" +
+                "addDate DATE," +
+                "status INT" +
                 ")";
         try (Statement statement = connection.createStatement()) {
             statement.execute(createTableSQL);
@@ -35,13 +36,10 @@ public class DBHelper {
     }
 
     public void addJob(Job job) {
-        String insertSQL = "INSERT INTO jobs (jobTitle, jobCompany, html, addDate) VALUES (?, ?, ?, ?)";
+        String insertSQL = "INSERT INTO jobs (jobTitle, jobCompany, html, addDate, status) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-            preparedStatement.setString(1, job.getJobTitle());
-            preparedStatement.setString(2, job.getJobCompany());
-            preparedStatement.setString(3, job.getHtml());
-            preparedStatement.setDate(4, new java.sql.Date(job.getAddDate().getTime()));
+            gerPreparedStatment(job, preparedStatement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error adding job to the database: " + e.getMessage());
@@ -49,18 +47,23 @@ public class DBHelper {
     }
 
     public void updateJob(Job job) {
-        String updateSQL = "UPDATE jobs SET jobTitle = ?, jobCompany = ?, html = ?, addDate = ? WHERE id = ?";
+        String updateSQL = "UPDATE jobs SET jobTitle = ?, jobCompany = ?, html = ?, addDate = ? , status = ? WHERE id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
-            preparedStatement.setString(1, job.getJobTitle());
-            preparedStatement.setString(2, job.getJobCompany());
-            preparedStatement.setString(3, job.getHtml());
-            preparedStatement.setDate(4, new java.sql.Date(job.getAddDate().getTime()));
-            preparedStatement.setInt(5, job.getId());
+            gerPreparedStatment(job, preparedStatement);
+            preparedStatement.setInt(6, job.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error updating job in the database: " + e.getMessage());
         }
+    }
+
+    private void gerPreparedStatment(Job job, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setString(1, job.getJobTitle());
+        preparedStatement.setString(2, job.getJobCompany());
+        preparedStatement.setString(3, job.getHtml());
+        preparedStatement.setDate(4, new Date(job.getAddDate().getTime()));
+        preparedStatement.setInt(5, job.getStatus());
     }
 
     //Create a method to delete a job from the database
@@ -82,18 +85,7 @@ public class DBHelper {
         String selectSQL = "SELECT * FROM jobs";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String jobTitle = resultSet.getString("jobTitle");
-                String jobCompany = resultSet.getString("jobCompany");
-                String html = resultSet.getString("html");
-                Date addDate = resultSet.getDate("addDate");
-
-                Job job = new Job(id, jobTitle, jobCompany, html, addDate);
-                jobs.add(job);
-            }
+            getJobResult(jobs, preparedStatement);
         } catch (SQLException e) {
             System.out.println("Error fetching jobs from the database: " + e.getMessage());
         }
@@ -111,18 +103,7 @@ public class DBHelper {
             preparedStatement.setString(1, searchKeyword);
             preparedStatement.setString(2, searchKeyword);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String jobTitle = resultSet.getString("jobTitle");
-                String jobCompany = resultSet.getString("jobCompany");
-                String html = resultSet.getString("html");
-                Date addDate = resultSet.getDate("addDate");
-
-                Job job = new Job(id, jobTitle, jobCompany, html, addDate);
-                matchingJobs.add(job);
-            }
+            getJobResult(matchingJobs, preparedStatement);
         } catch (SQLException e) {
             System.out.println("Error searching jobs in the database: " + e.getMessage());
         }
@@ -130,6 +111,22 @@ public class DBHelper {
         System.out.println("Found " + matchingJobs.size() + " matching jobs");
 
         return matchingJobs;
+    }
+
+    private void getJobResult(List<Job> jobs, PreparedStatement preparedStatement) throws SQLException {
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String jobTitle = resultSet.getString("jobTitle");
+            String jobCompany = resultSet.getString("jobCompany");
+            String html = resultSet.getString("html");
+            Date addDate = resultSet.getDate("addDate");
+            int status = resultSet.getInt("status");
+
+            Job job = new Job(id, jobTitle, jobCompany, html, addDate, status);
+            jobs.add(job);
+        }
     }
 
     public void close() {

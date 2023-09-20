@@ -51,7 +51,7 @@ public class AddJobWindow extends JFrame {
                 return;
             } else {
 
-                Job job = new Job(HtmlParser.getJobTitle(linkField.getText()), HtmlParser.getJobCompany(linkField.getText()), HtmlParser.getHtml(linkField.getText()), new Date());
+                Job job = new Job(HtmlParser.getJobTitle(linkField.getText()), HtmlParser.getJobCompany(linkField.getText()), HtmlParser.getHtml(linkField.getText()), new Date(), 0);
                 dbHelper.connect();
                 dbHelper.addJob(job);
 

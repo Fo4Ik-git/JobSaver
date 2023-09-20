@@ -1,6 +1,7 @@
 package com.fo4ik.panel;
 
 import com.fo4ik.Main;
+import com.fo4ik.config.Config;
 import com.fo4ik.entity.Job;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -43,10 +44,13 @@ public class WebPanel extends Main {
 
         jobTitleField = new JTextField(job.getJobTitle());
         jobCompanyField = new JTextField(job.getJobCompany());
+        JComboBox<String> statusComboBox = new JComboBox<>(Config.STATUS_OPTIONS);
+        statusComboBox.setSelectedIndex(job.getStatus());
 
-        Dimension maxFieldSize = new Dimension(Integer.MAX_VALUE, 100);
+        Dimension maxFieldSize = new Dimension(Integer.MAX_VALUE, 50);
         jobTitleField.setMaximumSize(maxFieldSize);
         jobCompanyField.setMaximumSize(maxFieldSize);
+        statusComboBox.setMaximumSize(maxFieldSize);
 
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> {
@@ -71,6 +75,8 @@ public class WebPanel extends Main {
             }
             job.setJobTitle(jobTitleField.getText());
             job.setJobCompany(jobCompanyField.getText());
+            job.setStatus(statusComboBox.getSelectedIndex());
+
             dbHelper.connect();
             dbHelper.updateJob(job);
             dbHelper.close();
@@ -106,6 +112,8 @@ public class WebPanel extends Main {
         editPanel.add(jobTitleField);
         editPanel.add(new JLabel("Job Company:"));
         editPanel.add(jobCompanyField);
+        editPanel.add(new JLabel("Status:"));
+        editPanel.add(statusComboBox);
         editPanel.add(Box.createVerticalStrut(10));
         editPanel.add(buttonPanel);
 
