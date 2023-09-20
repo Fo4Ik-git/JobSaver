@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
 project.ext {
@@ -11,7 +12,6 @@ project.ext {
     jdbc = 'org.xerial:sqlite-jdbc:3.43.0.0'
     flatlaf = 'com.formdev:flatlaf:3.2.1'
     jsoup = 'org.jsoup:jsoup:1.16.1'
-    javafxVersion = '20'
 }
 
 application {
@@ -37,20 +37,20 @@ dependencies {
     implementation "${project.flatlaf}"
     implementation "${project.jsoup}"
 
-    implementation "org.openjfx:javafx-controls:${project.javafxVersion}"
-    implementation "org.openjfx:javafx-fxml:${project.javafxVersion}"
-    implementation "org.openjfx:javafx-base:${project.javafxVersion}"
-    implementation "org.openjfx:javafx-graphics:${project.javafxVersion}"
-    implementation "org.openjfx:javafx-media:${project.javafxVersion}"
-    implementation "org.openjfx:javafx-swing:${project.javafxVersion}"
-    implementation "org.openjfx:javafx-web:${project.javafxVersion}"
+    implementation 'org.openjfx:javafx-base:20.0.0'
+    implementation 'org.openjfx:javafx-graphics:20.0.0'
+    implementation 'org.openjfx:javafx-controls:20.0.0'
+    implementation 'org.openjfx:javafx-fxml:20.0.0'
+}
+
+javafx {
+    version = "20"
+    modules = [ 'javafx.controls', 'javafx.swing', 'javafx.web' ]
 }
 
 jar {
-
-    archiveBaseName.set(project.applicationName)
+    archiveBaseName = "${project.applicationName}"
     version = null
-
     manifest {
         attributes(
                 'Main-Class': project.mainClass,
