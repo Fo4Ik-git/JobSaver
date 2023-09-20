@@ -108,8 +108,6 @@ public class DBHelper {
             System.out.println("Error searching jobs in the database: " + e.getMessage());
         }
 
-        System.out.println("Found " + matchingJobs.size() + " matching jobs");
-
         return matchingJobs;
     }
 

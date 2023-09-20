@@ -55,12 +55,7 @@ public class WebPanel extends Main {
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> {
             dbHelper.connect();
-            frame.getContentPane().removeAll();
-            ListPanel listPanelClass = new ListPanel();
-            listPanelClass.getListPanel();
-
-            frame.getContentPane().repaint();
-            frame.getContentPane().revalidate();
+            update();
 
             dbHelper.close();
         });

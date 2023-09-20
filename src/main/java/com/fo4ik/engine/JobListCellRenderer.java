@@ -1,8 +1,11 @@
 package com.fo4ik.engine;
 
+import com.fo4ik.config.ColorsConfig;
 import com.fo4ik.entity.Job;
+import com.fo4ik.panel.ListPanel;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 
@@ -11,11 +14,11 @@ public class JobListCellRenderer extends JPanel implements ListCellRenderer<Job>
     private final JLabel addDateLabel = new JLabel();
 
     public JobListCellRenderer() {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(10, 10));
         add(jobTitleAndCompanyLabel, BorderLayout.WEST);
         add(addDateLabel, BorderLayout.EAST);
         setPreferredSize(new Dimension(getPreferredSize().width, 50));
-        setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+
     }
 
     @Override
@@ -28,15 +31,15 @@ public class JobListCellRenderer extends JPanel implements ListCellRenderer<Job>
         addDateLabel.setText(addDateText);
 
         setBackgroundForElements(job);
+        setBorder(BorderFactory.createMatteBorder(0, 0, 5, 0, ColorsConfig.BACKGROUND_LIGHT));
 
         if (isSelected) {
-           /* setBackground(list.getSelectionBackground());
-            setForeground(list.getSelectionForeground());*/
             setForeground(list.getSelectionForeground());
         } else {
             setForeground(list.getForeground());
-//            setBackground(list.getBackground());
         }
+
+        if (cellHasFocus) setBackground(Color.decode("#000000"));
 
         return this;
     }

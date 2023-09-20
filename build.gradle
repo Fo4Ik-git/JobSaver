@@ -31,16 +31,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
-
     implementation "${project.jdbc}"
-
     implementation "${project.flatlaf}"
     implementation "${project.jsoup}"
-
-    implementation 'org.openjfx:javafx-base:20.0.0'
-    implementation 'org.openjfx:javafx-graphics:20.0.0'
-    implementation 'org.openjfx:javafx-controls:20.0.0'
-    implementation 'org.openjfx:javafx-fxml:20.0.0'
 }
 
 javafx {

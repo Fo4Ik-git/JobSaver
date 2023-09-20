@@ -45,9 +45,9 @@ public class Main extends JFrame {
 
     public void update(){
         frame.getContentPane().removeAll();
+
         MenuPanel menuPanelClass = new MenuPanel();
         menuPanelClass.getMenu();
-        frame.setLocationRelativeTo(null);
 
         TopPanel topPanelClass = new TopPanel();
         topPanelClass.getTopPanel();
@@ -62,7 +62,6 @@ public class Main extends JFrame {
         frame.getContentPane().removeAll();
         MenuPanel menuPanelClass = new MenuPanel();
         menuPanelClass.getMenu();
-        frame.setLocationRelativeTo(null);
 
         TopPanel topPanelClass = new TopPanel();
         topPanelClass.getTopPanel();
