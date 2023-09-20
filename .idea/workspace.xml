@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="Update to basic builder">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/JobListCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/JobListCellRenderer.java" afterDir="false" />
-    </list>
+    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="Update to basic builder" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
