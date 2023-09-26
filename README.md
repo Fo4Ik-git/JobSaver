@@ -1,4 +1,7 @@
 # JobSaver
+[![Download latest](https://img.shields.io/github/v/release/Fo4Ik-git/JobSaver?label=Download%20latest&logo=download)](https://github.com/Fo4Ik-git/JobSaver/releases/latest)
+[![License](https://img.shields.io/github/license/Fo4Ik-git/JobSaver)](LICENSE)
+
 
 **JobSaver** is a versatile job search and management application developed in Java, designed to simplify and automate
 the process of finding and saving job listings. The application provides a user-friendly graphical interface for ease of
@@ -24,11 +27,10 @@ To build and run the project, you can use the provided `build.gradle` file. Foll
 3. Run the following command to build the project using Gradle:
 
    ```bash
-   gradlew build
+   gradlew jpackage
    ```
 
-
-4. Once the build is complete, you can run the application.
+4. Once the build is complete, you can run the application you can find in the `build/jpackage` directory.
 
 ## Usage
 

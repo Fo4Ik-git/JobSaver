@@ -1,0 +1,99 @@
+Index: src/main/java/com/fo4ik/jobsaver/engine/HtmlParser.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fo4ik.engine;\r\n\r\n\r\nimport org.jsoup.Jsoup;\r\nimport org.jsoup.nodes.Document;\r\nimport org.jsoup.nodes.Element;\r\nimport org.jsoup.select.Elements;\r\n\r\nimport java.io.IOException;\r\nimport java.util.List;\r\nimport java.util.concurrent.ExecutorService;\r\nimport java.util.concurrent.Executors;\r\nimport java.util.concurrent.TimeUnit;\r\n\r\npublic class HtmlParser {\r\n\r\n    private static final int NUM_THREADS = 5;\r\n\r\n    private static ExecutorService executorService = Executors.newFixedThreadPool(NUM_THREADS);\r\n\r\n    public static String getJobTitle(String url) {\r\n        return getElementText(url, \".top-card-layout__title\");\r\n    }\r\n\r\n    public static String getJobCompany(String url) {\r\n        return getElementText(url, \".topcard__org-name-link\");\r\n    }\r\n\r\n    public static String getHtml(String url) {\r\n        try {\r\n            Document document = Jsoup.connect(url).get();\r\n            Elements headerElements = document.select(\"header\");\r\n            Elements navElements = document.select(\"nav.nav[aria-label=Primary]\");\r\n            Elements sectionElementsRight = document.select(\"section.right-rail\");\r\n            Elements sectionElementsJob = document.select(\"section.similar-jobs\");\r\n            Elements sectionJobAlert = document.select(\"section.job-alert-redirect-section\");\r\n            Elements similarPeople = document.select(\".face-pile.flex\");\r\n            Elements globalAlerts = document.select(\"#artdeco-global-alerts-cls-offset\");\r\n            Elements elementsToRemove = document.select(\".top-card-layout__cta-container\");\r\n\r\n            List<Elements> elementsList = List.of(headerElements, navElements, sectionElementsRight, sectionElementsJob, sectionJobAlert, similarPeople, globalAlerts, elementsToRemove);\r\n\r\n            deleteElements(document, elementsList);\r\n\r\n            return document.html();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n        return null;\r\n    }\r\n\r\n    private static String getElementText(String url, String cssSelector) {\r\n        try {\r\n            Document document = Jsoup.connect(url).get();\r\n            Elements elements = document.select(cssSelector);\r\n            return elements.text();\r\n        } catch (IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n        return null;\r\n    }\r\n\r\n    private static void deleteElements(Document document, List<Elements> elementsList) {\r\n        for (Elements elements : elementsList) {\r\n            for (Element element : elements) {\r\n                element.remove();\r\n            }\r\n        }\r\n    }\r\n\r\n    public static void shutdown() {\r\n        executorService.shutdown();\r\n        try {\r\n            if (!executorService.awaitTermination(5, TimeUnit.SECONDS)) {\r\n                executorService.shutdownNow();\r\n            }\r\n        } catch (InterruptedException e) {\r\n            executorService.shutdownNow();\r\n        }\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/com/fo4ik/jobsaver/engine/HtmlParser.java b/src/main/java/com/fo4ik/jobsaver/engine/HtmlParser.java
+--- a/src/main/java/com/fo4ik/jobsaver/engine/HtmlParser.java	
++++ b/src/main/java/com/fo4ik/jobsaver/engine/HtmlParser.java	
+@@ -1,5 +1,4 @@
+-package com.fo4ik.engine;
+-
++package com.fo4ik.jobsaver.engine;
+ 
+ import org.jsoup.Jsoup;
+ import org.jsoup.nodes.Document;
+@@ -7,16 +6,17 @@
+ import org.jsoup.select.Elements;
+ 
+ import java.io.IOException;
++import java.util.Iterator;
+ import java.util.List;
+ import java.util.concurrent.ExecutorService;
+ import java.util.concurrent.Executors;
+-import java.util.concurrent.TimeUnit;
+ 
+ public class HtmlParser {
+-
+     private static final int NUM_THREADS = 5;
++    private static ExecutorService executorService = Executors.newFixedThreadPool(5);
+ 
+-    private static ExecutorService executorService = Executors.newFixedThreadPool(NUM_THREADS);
++    public HtmlParser() {
++    }
+ 
+     public static String getJobTitle(String url) {
+         return getElementText(url, ".top-card-layout__title");
+@@ -37,11 +37,8 @@
+             Elements similarPeople = document.select(".face-pile.flex");
+             Elements globalAlerts = document.select("#artdeco-global-alerts-cls-offset");
+             Elements elementsToRemove = document.select(".top-card-layout__cta-container");
+-
+             List<Elements> elementsList = List.of(headerElements, navElements, sectionElementsRight, sectionElementsJob, sectionJobAlert, similarPeople, globalAlerts, elementsToRemove);
+-
+             deleteElements(document, elementsList);
+-
+             return document.html();
+         } catch (IOException e) {
+             e.printStackTrace();
+@@ -61,21 +58,17 @@
+     }
+ 
+     private static void deleteElements(Document document, List<Elements> elementsList) {
+-        for (Elements elements : elementsList) {
+-            for (Element element : elements) {
++        Iterator var2 = elementsList.iterator();
++
++        while (var2.hasNext()) {
++            Elements elements = (Elements) var2.next();
++            Iterator var4 = elements.iterator();
++
++            while (var4.hasNext()) {
++                Element element = (Element) var4.next();
+                 element.remove();
+             }
+         }
+-    }
+ 
+-    public static void shutdown() {
+-        executorService.shutdown();
+-        try {
+-            if (!executorService.awaitTermination(5, TimeUnit.SECONDS)) {
+-                executorService.shutdownNow();
+-            }
+-        } catch (InterruptedException e) {
+-            executorService.shutdownNow();
+-        }
+     }
+ }
+Index: src/main/java/com/fo4ik/jobsaver/database/DBHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fo4ik.jobsaver.database;\r\n\r\nimport com.fo4ik.jobsaver.entity.Job;\r\n\r\nimport java.sql.*;\r\nimport java.util.ArrayList;\r\nimport java.util.Iterator;\r\nimport java.util.List;\r\n\r\npublic class DBHelper {\r\n    private static DBHelper instance;\r\n    private Connection connection;\r\n    private List<DatabaseChangeListener> listeners = new ArrayList();\r\n\r\n    public DBHelper() {\r\n    }\r\n\r\n    public static DBHelper getInstance() {\r\n        if (instance == null) {\r\n            instance = new DBHelper();\r\n        }\r\n\r\n        return instance;\r\n    }\r\n\r\n    public void connect() {\r\n        try{\r\n            Class.forName(\"com.formdev.flatlaf.IntelliJTheme\");\r\n        } catch (Exception e) {\r\n            System.out.println(\"Error: \" + e.getMessage());\r\n        }\r\n\r\n        try {\r\n            this.connection = DriverManager.getConnection(\"jdbc:sqlite:database.db\");\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error: \" + e.getMessage());\r\n        }\r\n\r\n    }\r\n\r\n    public void createTable() {\r\n        String createTableSQL = \"CREATE TABLE IF NOT EXISTS jobs (id INTEGER PRIMARY KEY AUTOINCREMENT,jobTitle TEXT,jobCompany TEXT,html TEXT,addDate DATE,status INT)\";\r\n\r\n        try (Statement statement = connection.createStatement()) {\r\n            statement.execute(createTableSQL);\r\n        } catch (SQLException var7) {\r\n            System.out.println(\"Error: \" + var7.getMessage());\r\n        }\r\n\r\n    }\r\n\r\n    public void addJob(Job job) {\r\n        String insertSQL = \"INSERT INTO jobs (jobTitle, jobCompany, html, addDate, status) VALUES (?, ?, ?, ?, ?)\";\r\n\r\n        try (PreparedStatement preparedStatement = this.connection.prepareStatement(insertSQL)) {\r\n            this.gerPreparedStatment(job, preparedStatement);\r\n            preparedStatement.executeUpdate();\r\n            this.notifyDatabaseChange();\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error adding job to the database: \" + e.getMessage());\r\n        }\r\n\r\n    }\r\n\r\n    public void updateJob(Job job) {\r\n        String updateSQL = \"UPDATE jobs SET jobTitle = ?, jobCompany = ?, html = ?, addDate = ? , status = ? WHERE id = ?\";\r\n\r\n        try (PreparedStatement preparedStatement = this.connection.prepareStatement(updateSQL)) {\r\n            gerPreparedStatment(job, preparedStatement);\r\n            preparedStatement.setInt(6, job.getId());\r\n            preparedStatement.executeUpdate();\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error updating job in the database: \" + e.getMessage());\r\n        }\r\n\r\n    }\r\n\r\n    private void gerPreparedStatment(Job job, PreparedStatement preparedStatement) throws SQLException {\r\n        preparedStatement.setString(1, job.getJobTitle());\r\n        preparedStatement.setString(2, job.getJobCompany());\r\n        preparedStatement.setString(3, job.getHtml());\r\n        preparedStatement.setDate(4, new Date(job.getAddDate().getTime()));\r\n        preparedStatement.setInt(5, job.getStatus());\r\n    }\r\n\r\n    public void deleteJob(Job job) {\r\n        String deleteSQL = \"DELETE FROM jobs WHERE id = ?\";\r\n\r\n        try (PreparedStatement preparedStatement = this.connection.prepareStatement(deleteSQL)) {\r\n            preparedStatement.setInt(1, job.getId());\r\n            preparedStatement.executeUpdate();\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error deleting job from the database: \" + e.getMessage());\r\n        }\r\n\r\n    }\r\n\r\n    public List<Job> getAllJobs() {\r\n        List<Job> jobs = new ArrayList();\r\n        String selectSQL = \"SELECT * FROM jobs\";\r\n\r\n        try (PreparedStatement preparedStatement = this.connection.prepareStatement(selectSQL)) {\r\n            getJobResult(jobs, preparedStatement);\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error fetching jobs from the database: \" + e.getMessage());\r\n        }\r\n\r\n        return jobs;\r\n    }\r\n\r\n    //find Job by title or company / title and company\r\n    public List<Job> searchJobsByTitleAndCompany(String title, String company) {\r\n        List<Job> matchingJobs = new ArrayList();\r\n        String searchSQL = \"SELECT * FROM jobs WHERE jobTitle LIKE ? AND jobCompany LIKE ?\";\r\n\r\n        try (PreparedStatement preparedStatement = this.connection.prepareStatement(searchSQL)) {\r\n            String searchTitle = \"%\" + title + \"%\";\r\n            String searchCompany = \"%\" + company + \"%\";\r\n            preparedStatement.setString(1, searchTitle);\r\n            preparedStatement.setString(2, searchCompany);\r\n            getJobResult(matchingJobs, preparedStatement);\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error searching jobs in the database: \" + e.getMessage());\r\n        }\r\n\r\n        return matchingJobs;\r\n    }\r\n\r\n    public List<Job> searchJobsByTitleOrCompany(String keyword) {\r\n        List<Job> matchingJobs = new ArrayList();\r\n        String searchSQL = \"SELECT * FROM jobs WHERE jobTitle LIKE ? OR jobCompany LIKE ?\";\r\n\r\n        try (PreparedStatement preparedStatement = this.connection.prepareStatement(searchSQL)) {\r\n            String searchKeyword = \"%\" + keyword + \"%\";\r\n            preparedStatement.setString(1, searchKeyword);\r\n            preparedStatement.setString(2, searchKeyword);\r\n            getJobResult(matchingJobs, preparedStatement);\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error searching jobs in the database: \" + e.getMessage());\r\n        }\r\n\r\n        return matchingJobs;\r\n    }\r\n\r\n    private void getJobResult(List<Job> jobs, PreparedStatement preparedStatement) throws SQLException {\r\n        ResultSet resultSet = preparedStatement.executeQuery();\r\n\r\n        while (resultSet.next()) {\r\n            int id = resultSet.getInt(\"id\");\r\n            String jobTitle = resultSet.getString(\"jobTitle\");\r\n            String jobCompany = resultSet.getString(\"jobCompany\");\r\n            String html = resultSet.getString(\"html\");\r\n            Date addDate = resultSet.getDate(\"addDate\");\r\n            int status = resultSet.getInt(\"status\");\r\n            Job job = new Job(id, jobTitle, jobCompany, html, addDate, status);\r\n            jobs.add(job);\r\n        }\r\n\r\n    }\r\n\r\n    public void close() {\r\n        try {\r\n            if (this.connection != null) {\r\n                this.connection.close();\r\n            }\r\n        } catch (SQLException var2) {\r\n            System.out.println(\"Error: \" + var2.getMessage());\r\n        }\r\n\r\n    }\r\n\r\n    public void registerDatabaseChangeListener(DatabaseChangeListener listener) {\r\n        this.listeners.add(listener);\r\n    }\r\n\r\n    public void removeDatabaseChangeListener(DatabaseChangeListener listener) {\r\n        this.listeners.remove(listener);\r\n    }\r\n\r\n    private void notifyDatabaseChange() {\r\n        Iterator var1 = this.listeners.iterator();\r\n\r\n        while (var1.hasNext()) {\r\n            DatabaseChangeListener listener = (DatabaseChangeListener) var1.next();\r\n            listener.onDatabaseChange();\r\n        }\r\n\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java b/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java
+--- a/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java	
++++ b/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java	
+@@ -24,12 +24,6 @@
+     }
+ 
+     public void connect() {
+-        try{
+-            Class.forName("com.formdev.flatlaf.IntelliJTheme");
+-        } catch (Exception e) {
+-            System.out.println("Error: " + e.getMessage());
+-        }
+-
+         try {
+             this.connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+         } catch (SQLException e) {
