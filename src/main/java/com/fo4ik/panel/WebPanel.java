@@ -117,6 +117,7 @@ public class WebPanel extends Main {
 
     private JPanel getWebFrame(Job job) {
         JPanel webPanel = new JPanel();
+        webPanel.setMinimumSize(new Dimension(300, webPanel.getHeight()));
         jfxPanel = new JFXPanel();
         webPanel.setLayout(new BorderLayout());
         webPanel.add(jfxPanel, BorderLayout.CENTER);

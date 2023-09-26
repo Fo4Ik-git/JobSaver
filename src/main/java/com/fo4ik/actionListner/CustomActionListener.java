@@ -1,6 +1,7 @@
 package com.fo4ik.actionListner;
 
 import com.fo4ik.Main;
+import com.fo4ik.panel.settings.SettingsPanel;
 import com.fo4ik.window.AddJobWindow;
 
 import java.awt.event.ActionEvent;
@@ -12,6 +13,10 @@ public class CustomActionListener extends Main implements ActionListener {
         switch (e.getActionCommand()) {
             case "Add job":
                 AddJobWindow addJobWindow = new AddJobWindow();
+                break;
+            case "Settings":
+                SettingsPanel settingsPanel = new SettingsPanel();
+                settingsPanel.getSettings();
                 break;
         }
     }

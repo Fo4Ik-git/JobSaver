@@ -1,4 +1,4 @@
-package com.fo4ik.engine;
+package com.fo4ik.engine.render;
 
 import com.fo4ik.engine.rounded.RoundedPanel;
 import com.fo4ik.entity.Job;
@@ -55,7 +55,7 @@ public class JobListCellRenderer extends DefaultListCellRenderer {
             case 3 -> panel.setBackground(Color.decode("#C102C1"));
             case 4 -> panel.setBackground(Color.decode("#009E00"));
             case 5 -> panel.setBackground(Color.decode("#FF0000"));
-            default -> panel.setBackground(Color.WHITE); // По умолчанию
+            default -> panel.setBackground(Color.WHITE); // ?? ?????????
         }
     }
 }

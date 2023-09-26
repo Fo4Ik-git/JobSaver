@@ -1,6 +1,7 @@
 package com.fo4ik.config;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class Config {
@@ -12,20 +13,28 @@ public class Config {
 
 //    public static final String APP_ICON = "src/main/resources/icon.png";
 
-    public static ResourceBundle resourceBundle = ResourceBundle.getBundle("language", Locale.getDefault());
+    public static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("language", new Locale("ru"));
 
     public static final String[] STATUS_OPTIONS = {
-            resourceBundle.getString("JobStatus.New"),
-            resourceBundle.getString("JobStatus.Viewed"),
-            resourceBundle.getString("JobStatus.Applied"),
-            resourceBundle.getString("JobStatus.Interview"),
-            resourceBundle.getString("JobStatus.Offer"),
-            resourceBundle.getString("JobStatus.Rejected")};
+            RESOURCE_BUNDLE.getString("JobStatus.New"),
+            RESOURCE_BUNDLE.getString("JobStatus.Viewed"),
+            RESOURCE_BUNDLE.getString("JobStatus.Applied"),
+            RESOURCE_BUNDLE.getString("JobStatus.Interview"),
+            RESOURCE_BUNDLE.getString("JobStatus.Offer"),
+            RESOURCE_BUNDLE.getString("JobStatus.Rejected")};
+
     public static ResourceBundle getResourceBundle() {
-        return resourceBundle;
+        return RESOURCE_BUNDLE;
     }
 
     public static void setResourceBundle(String language) {
-        resourceBundle = ResourceBundle.getBundle("language", new Locale(language));
+        RESOURCE_BUNDLE = ResourceBundle.getBundle("language", new Locale(language));
     }
+
+    public static Map<String, String> SUPPORTED_LANGUAGES_MAP = Map.of(
+            "en", "English",
+            "pl", "Polski",
+            "uk", "??????????",
+            "ru", "???????"
+    );
 }

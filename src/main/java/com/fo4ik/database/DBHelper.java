@@ -12,6 +12,12 @@ public class DBHelper {
     private Connection connection;
 
     public void connect() {
+        try{
+            Class.forName("com.formdev.flatlaf.IntelliJTheme");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:" + Config.APP_DATABASE_NAME);
         } catch (SQLException e) {
