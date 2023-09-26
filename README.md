@@ -1,6 +1,6 @@
 # JobSaver
 
-[![Download latest](https://img.shields.io/github/v/release/Fo4Ik-git/JobSaver?label=Download%20latest&logo=download)](https://github.com/Fo4Ik-git/JobSaver/releases/latest)
+[![Download Latest](https://img.shields.io/github/v/release/Fo4Ik-git/JobSaver?label=Download%20Latest&logo=download)](https://github.com/Fo4Ik-git/JobSaver/releases/latest)
 [![License](https://img.shields.io/github/license/Fo4Ik-git/JobSaver)](LICENSE)
 
 **JobSaver** is an app that helps you keep track of your job applications. You can add jobs that you are interested in,
