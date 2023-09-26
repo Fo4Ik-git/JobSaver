@@ -1,11 +1,11 @@
 # JobSaver
+
 [![Download latest](https://img.shields.io/github/v/release/Fo4Ik-git/JobSaver?label=Download%20latest&logo=download)](https://github.com/Fo4Ik-git/JobSaver/releases/latest)
 [![License](https://img.shields.io/github/license/Fo4Ik-git/JobSaver)](LICENSE)
 
-
-**JobSaver** is a versatile job search and management application developed in Java, designed to simplify and automate
-the process of finding and saving job listings. The application provides a user-friendly graphical interface for ease of
-use.
+**JobSaver** is an app that helps you keep track of your job applications. You can add jobs that you are interested in,
+check their responsibilities, and update their status. JobSaver also lets you see the progress of your applications in a
+dashboard. With JobSaver, you can easily manage your job search and never miss an opportunity.
 
 ## Features
 

@@ -4,24 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="JavaFx migration">
-      <change beforePath="$PROJECT_DIR$/.idea/resourceBundles.xml" beforeDir="false" />
+    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="Update to JavaFx">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/actionListner/CustomActionListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/config/Config.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/render/JobListCellRenderer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/render/LanguageListCellRenderer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/engine/rounded/RoundedPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/ListPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/WebPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/settings/LanguagePanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/panel/settings/SettingsPanel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/language.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/language.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/language_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/language_ru.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/config/Config.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/controllers/JobCellController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/controllers/JobViewController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/controllers/MainController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/database/DBHelper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/database/DatabaseChangeListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/engine/HtmlParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/engine/PropertiesManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/engine/SceneSwitcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/entity/Job.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/window/AddJob.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/com/fo4ik/jobsaver/window/AddJobWindow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/java/module-info.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +64,20 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Fo4Ik-git"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="74598747-285e-4a3d-907d-53b783f16c76" />
+        <option name="url" value="https://github.com/Fo4Ik-git/JobSaver.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -112,9 +126,12 @@
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\terra\IdeaProjects\JobSaver" />
+      <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\resources" />
+      <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\java" />
       <recent name="C:\Users\terra\IdeaProjects\LinkedInJobSaver\src\main\resources\img" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\terra\IdeaProjects\JobSaver" />
       <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\java" />
       <recent name="C:\Users\terra\IdeaProjects\LinkedInJobSaver\src\tmp" />
     </key>
@@ -458,14 +475,21 @@
       <option name="project" value="LOCAL" />
       <updated>1695235760377</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Update to JavaFx">
+      <option name="closed" value="true" />
+      <created>1695705374119</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1695705374119</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add resourceBundle" />
     <MESSAGE value="Create application version 1 (have bug in jfxPanel)" />
     <MESSAGE value="Add actions to buttons" />
     <MESSAGE value="Update add Job, only link" />
@@ -490,7 +514,8 @@
     <MESSAGE value="Add fixes and add logo" />
     <MESSAGE value="clean and optimize" />
     <MESSAGE value="create Config file for colors" />
-    <option name="LAST_COMMIT_MESSAGE" value="create Config file for colors" />
+    <MESSAGE value="Update to JavaFx" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update to JavaFx" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
