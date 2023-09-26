@@ -1,0 +1,816 @@
+Index: src/main/java/com/fo4ik/jobsaver/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fo4ik.jobsaver;\r\n\r\nimport com.fo4ik.jobsaver.config.Config;\r\nimport com.fo4ik.jobsaver.controllers.MainController;\r\nimport javafx.application.Application;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.scene.Scene;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.io.IOException;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.Path;\r\nimport java.nio.file.Paths;\r\n\r\npublic class Main extends Application {\r\n\r\n    protected Scene scene;\r\n    private int width = 720;\r\n    private int height = 405;\r\n\r\n    public static void main(String[] args) {\r\n        launch();\r\n    }\r\n\r\n    @Override\r\n    public void start(Stage stage) throws Exception {\r\n        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(\"main.fxml\"));\r\n        fxmlLoader.setResources(Config.getResourceBundle());\r\n        scene = new Scene(fxmlLoader.load(), width, height);\r\n        //set min size\r\n        stage.setMinWidth(width);\r\n        stage.setMinHeight(height);\r\n\r\n        MainController mainController = fxmlLoader.getController();\r\n        mainController.getSize(width, height);\r\n\r\n        createFiles();\r\n        //add image icon from resources image folder\r\n        stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream(Config.APP_ICON)));\r\n\r\n\r\n        stage.setTitle(Config.APP_NAME);\r\n        stage.setScene(scene);\r\n        stage.show();\r\n    }\r\n\r\n    private void createFiles() throws IOException {\r\n        Path properties = Paths.get(Config.PROPERTIES_FILE_PATH);\r\n        Path database = Paths.get(Config.APP_DATABASE_NAME);\r\n\r\n        if (!properties.toFile().exists()) {\r\n            Files.createFile(properties);\r\n        }\r\n        if (!database.toFile().exists()) {\r\n            Files.createFile(database);\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/fo4ik/jobsaver/Main.java b/src/main/java/com/fo4ik/jobsaver/Main.java
+--- a/src/main/java/com/fo4ik/jobsaver/Main.java	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/src/main/java/com/fo4ik/jobsaver/Main.java	(date 1695692726130)
+@@ -2,6 +2,7 @@
+ 
+ import com.fo4ik.jobsaver.config.Config;
+ import com.fo4ik.jobsaver.controllers.MainController;
++import com.fo4ik.jobsaver.database.DBHelper;
+ import javafx.application.Application;
+ import javafx.fxml.FXMLLoader;
+ import javafx.scene.Scene;
+@@ -26,6 +27,7 @@
+     public void start(Stage stage) throws Exception {
+         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main.fxml"));
+         fxmlLoader.setResources(Config.getResourceBundle());
++        createFiles();
+         scene = new Scene(fxmlLoader.load(), width, height);
+         //set min size
+         stage.setMinWidth(width);
+@@ -34,7 +36,7 @@
+         MainController mainController = fxmlLoader.getController();
+         mainController.getSize(width, height);
+ 
+-        createFiles();
++
+         //add image icon from resources image folder
+         stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream(Config.APP_ICON)));
+ 
+@@ -54,5 +56,11 @@
+         if (!database.toFile().exists()) {
+             Files.createFile(database);
+         }
++        if (database.toFile().exists()) {
++            DBHelper dbHelper = DBHelper.getInstance();
++            dbHelper.connect();
++            dbHelper.createTable();
++            dbHelper.close();
++        }
+     }
+ }
+Index: src/main/java/com/fo4ik/jobsaver/database/DBHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fo4ik.jobsaver.database;\r\n\r\nimport com.fo4ik.jobsaver.config.Config;\r\nimport com.fo4ik.jobsaver.entity.Job;\r\n\r\nimport java.sql.*;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class DBHelper {\r\n\r\n    private Connection connection;\r\n\r\n    public void connect() {\r\n        try {\r\n            connection = DriverManager.getConnection(\"jdbc:sqlite:\" + Config.APP_DATABASE_NAME);\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error: \" + e.getMessage());\r\n        }\r\n    }\r\n\r\n    public void createTable() {\r\n        String createTableSQL = \"CREATE TABLE IF NOT EXISTS jobs (\" +\r\n                \"id INTEGER PRIMARY KEY AUTOINCREMENT,\" +\r\n                \"jobTitle TEXT,\" +\r\n                \"jobCompany TEXT,\" +\r\n                \"html TEXT,\" +\r\n                \"addDate DATE,\" +\r\n                \"status INT\" +\r\n                \")\";\r\n        try (Statement statement = connection.createStatement()) {\r\n            statement.execute(createTableSQL);\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error: \" + e.getMessage());\r\n        }\r\n    }\r\n\r\n    public void addJob(Job job) {\r\n        String insertSQL = \"INSERT INTO jobs (jobTitle, jobCompany, html, addDate, status) VALUES (?, ?, ?, ?, ?)\";\r\n\r\n        try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {\r\n            gerPreparedStatment(job, preparedStatement);\r\n            preparedStatement.executeUpdate();\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error adding job to the database: \" + e.getMessage());\r\n        }\r\n    }\r\n\r\n    public void updateJob(Job job) {\r\n        String updateSQL = \"UPDATE jobs SET jobTitle = ?, jobCompany = ?, html = ?, addDate = ? , status = ? WHERE id = ?\";\r\n\r\n        try (PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {\r\n            gerPreparedStatment(job, preparedStatement);\r\n            preparedStatement.setInt(6, job.getId());\r\n            preparedStatement.executeUpdate();\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error updating job in the database: \" + e.getMessage());\r\n        }\r\n    }\r\n\r\n    private void gerPreparedStatment(Job job, PreparedStatement preparedStatement) throws SQLException {\r\n        preparedStatement.setString(1, job.getJobTitle());\r\n        preparedStatement.setString(2, job.getJobCompany());\r\n        preparedStatement.setString(3, job.getHtml());\r\n        preparedStatement.setDate(4, new Date(job.getAddDate().getTime()));\r\n        preparedStatement.setInt(5, job.getStatus());\r\n    }\r\n\r\n    //Create a method to delete a job from the database\r\n    public void deleteJob(Job job) {\r\n        String deleteSQL = \"DELETE FROM jobs WHERE id = ?\";\r\n\r\n        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {\r\n            preparedStatement.setInt(1, job.getId());\r\n            preparedStatement.executeUpdate();\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error deleting job from the database: \" + e.getMessage());\r\n        }\r\n    }\r\n\r\n\r\n    public List<Job> getAllJobs() {\r\n        List<Job> jobs = new ArrayList<>();\r\n\r\n        String selectSQL = \"SELECT * FROM jobs\";\r\n\r\n        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {\r\n            getJobResult(jobs, preparedStatement);\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error fetching jobs from the database: \" + e.getMessage());\r\n        }\r\n\r\n        return jobs;\r\n    }\r\n\r\n    public List<Job> searchJobsByTitleOrCompany(String keyword) {\r\n        List<Job> matchingJobs = new ArrayList<>();\r\n\r\n        String searchSQL = \"SELECT * FROM jobs WHERE jobTitle LIKE ? OR jobCompany LIKE ?\";\r\n\r\n        try (PreparedStatement preparedStatement = connection.prepareStatement(searchSQL)) {\r\n            String searchKeyword = \"%\" + keyword + \"%\"; // Add wildcard % for partial matching\r\n            preparedStatement.setString(1, searchKeyword);\r\n            preparedStatement.setString(2, searchKeyword);\r\n\r\n            getJobResult(matchingJobs, preparedStatement);\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error searching jobs in the database: \" + e.getMessage());\r\n        }\r\n\r\n        return matchingJobs;\r\n    }\r\n\r\n    private void getJobResult(List<Job> jobs, PreparedStatement preparedStatement) throws SQLException {\r\n        ResultSet resultSet = preparedStatement.executeQuery();\r\n\r\n        while (resultSet.next()) {\r\n            int id = resultSet.getInt(\"id\");\r\n            String jobTitle = resultSet.getString(\"jobTitle\");\r\n            String jobCompany = resultSet.getString(\"jobCompany\");\r\n            String html = resultSet.getString(\"html\");\r\n            Date addDate = resultSet.getDate(\"addDate\");\r\n            int status = resultSet.getInt(\"status\");\r\n\r\n            Job job = new Job(id, jobTitle, jobCompany, html, addDate, status);\r\n            jobs.add(job);\r\n        }\r\n    }\r\n\r\n    public void close() {\r\n        try {\r\n            if (connection != null) {\r\n                connection.close();\r\n            }\r\n        } catch (SQLException e) {\r\n            System.out.println(\"Error: \" + e.getMessage());\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java b/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java
+--- a/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java	(date 1695692726138)
+@@ -10,6 +10,16 @@
+ public class DBHelper {
+ 
+     private Connection connection;
++    private static DBHelper instance;
++
++    private List<DatabaseChangeListener> listeners = new ArrayList<>();
++
++    public static DBHelper getInstance() {
++        if (instance == null) {
++            instance = new DBHelper();
++        }
++        return instance;
++    }
+ 
+     public void connect() {
+         try {
+@@ -41,6 +51,7 @@
+         try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+             gerPreparedStatment(job, preparedStatement);
+             preparedStatement.executeUpdate();
++            notifyDatabaseChange();
+         } catch (SQLException e) {
+             System.out.println("Error adding job to the database: " + e.getMessage());
+         }
+@@ -136,4 +147,18 @@
+             System.out.println("Error: " + e.getMessage());
+         }
+     }
++
++    public void registerDatabaseChangeListener(DatabaseChangeListener listener) {
++        listeners.add(listener);
++    }
++
++    public void removeDatabaseChangeListener(DatabaseChangeListener listener) {
++        listeners.remove(listener);
++    }
++
++    private void notifyDatabaseChange() {
++        for (DatabaseChangeListener listener : listeners) {
++            listener.onDatabaseChange();
++        }
++    }
+ }
+Index: src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fo4ik.jobsaver.controllers;\r\n\r\nimport com.fo4ik.jobsaver.config.Config;\r\nimport com.fo4ik.jobsaver.database.DBHelper;\r\nimport com.fo4ik.jobsaver.engine.SceneSwitcher;\r\nimport com.fo4ik.jobsaver.entity.Job;\r\nimport javafx.collections.FXCollections;\r\nimport javafx.collections.ObservableList;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.ChoiceBox;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.TextField;\r\nimport javafx.scene.web.WebView;\r\n\r\nimport java.io.IOException;\r\nimport java.net.URL;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class JobViewController implements Initializable {\r\n\r\n    @FXML\r\n    private Button backButton;\r\n\r\n    @FXML\r\n    private Button deleteButton;\r\n\r\n    @FXML\r\n    private TextField jobCompany;\r\n\r\n    @FXML\r\n    private Label jobCompanyLabel;\r\n\r\n    @FXML\r\n    private ChoiceBox<String> jobStatusChoice;\r\n\r\n    @FXML\r\n    private Label jobStatusLabel;\r\n\r\n    @FXML\r\n    private TextField jobTitle;\r\n\r\n    @FXML\r\n    private Label jobTitleLabel;\r\n\r\n    @FXML\r\n    private WebView jobWebView;\r\n\r\n    @FXML\r\n    private Button saveButton;\r\n    private DBHelper dbHelper = new DBHelper();\r\n    private Job job;\r\n\r\n    public void loadJob(Job job) {\r\n        this.job = job;\r\n\r\n        jobTitle.setText(job.getJobTitle());\r\n        jobCompany.setText(job.getJobCompany());\r\n\r\n        Config config = new Config();\r\n        ObservableList<String> options = FXCollections.observableArrayList(config.STATUS_OPTIONS);\r\n\r\n        jobStatusChoice.setItems(options);\r\n        jobStatusChoice.setValue(config.STATUS_OPTIONS[job.getStatus()]);\r\n\r\n        jobWebView.getEngine().loadContent(job.getHtml());\r\n    }\r\n\r\n    @FXML\r\n    void deleteJob(ActionEvent event) {\r\n        dbHelper.connect();\r\n        dbHelper.deleteJob(job);\r\n        dbHelper.close();\r\n    }\r\n\r\n    @FXML\r\n    void save(ActionEvent event) {\r\n        dbHelper.connect();\r\n        try {\r\n            dbHelper.connect();\r\n            job.setJobTitle(jobTitle.getText());\r\n            job.setJobCompany(jobCompany.getText());\r\n            job.setStatus(jobStatusChoice.getSelectionModel().getSelectedIndex());\r\n            dbHelper.updateJob(job);\r\n            dbHelper.close();\r\n        } catch (Exception e) {\r\n            System.out.println(\"Error: \" + e.getMessage());\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    void switchToMain(ActionEvent event) throws IOException {\r\n        SceneSwitcher sceneSwitcher = new SceneSwitcher(\"/com/fo4ik/jobsaver/main.fxml\");\r\n        sceneSwitcher.switchScene(event);\r\n    }\r\n\r\n\r\n    @Override\r\n    public void initialize(URL location, ResourceBundle resources) {\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java b/src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java
+--- a/src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java	(date 1695692726144)
+@@ -50,7 +50,7 @@
+ 
+     @FXML
+     private Button saveButton;
+-    private DBHelper dbHelper = new DBHelper();
++    private DBHelper dbHelper = DBHelper.getInstance();
+     private Job job;
+ 
+     public void loadJob(Job job) {
+@@ -69,10 +69,11 @@
+     }
+ 
+     @FXML
+-    void deleteJob(ActionEvent event) {
++    void deleteJob(ActionEvent event) throws IOException {
+         dbHelper.connect();
+         dbHelper.deleteJob(job);
+         dbHelper.close();
++        switchToMain(event);
+     }
+ 
+     @FXML
+Index: CHANGELOG.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Change History (Changelog)\r\n\r\n## Version 2.0.0\r\n\r\n### Added\r\n\r\n* Merge to [JavaFX](https://openjfx.io/) for UI\r\n\r\n### Not transferred\r\n\r\n* Settings\r\n\r\n## Version 1.1.0\r\n\r\n### Added\r\n\r\n* Added settings\r\n    + Add change language\r\n* Create properties file for application settings\r\n* Rounded corners for Panels\r\n* Use multithreading for parsing site\r\n\r\n### Fixed\r\n\r\n* Application icon display\r\n* Small fixes in the code and in the interface\r\n\r\n## Version 1.0.1\r\n\r\n### Added\r\n\r\n* Add icon for the application\r\n\r\n### Fixed\r\n\r\n* Small fixes in the code and in the interface\r\n\r\n## Version 1.0.0 (2023-09-20)\r\n\r\n* Added the basic application structure.\r\n* Implemented core functionality.\r\n* Integrated support for SQLite for data storage.\r\n* Added integration with the FlatLaf and Jsoup libraries.\r\n* Integrated JavaFX for web browser support.
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+--- a/CHANGELOG.md	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/CHANGELOG.md	(date 1695695731149)
+@@ -5,6 +5,10 @@
+ ### Added
+ 
+ * Merge to [JavaFX](https://openjfx.io/) for UI
++* Add installer for Windows
++
++### Fixed
++* Update and display List of jobs
+ 
+ ### Not transferred
+ 
+Index: src/main/java/com/fo4ik/jobsaver/controllers/MainController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fo4ik.jobsaver.controllers;\r\n\r\n\r\nimport com.fo4ik.jobsaver.config.Config;\r\nimport com.fo4ik.jobsaver.database.DBHelper;\r\nimport com.fo4ik.jobsaver.engine.SceneSwitcher;\r\nimport com.fo4ik.jobsaver.entity.Job;\r\nimport com.fo4ik.jobsaver.window.AddJobWindow;\r\nimport javafx.collections.FXCollections;\r\nimport javafx.collections.ListChangeListener;\r\nimport javafx.collections.ObservableList;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.input.KeyCode;\r\nimport javafx.scene.input.KeyEvent;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.layout.HBox;\r\nimport javafx.util.Callback;\r\n\r\nimport java.io.IOException;\r\nimport java.net.URL;\r\nimport java.util.List;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class MainController implements Initializable {\r\n\r\n    @FXML\r\n    private Button addButton;\r\n\r\n    @FXML\r\n    private ListView<Job> jobList;\r\n\r\n    @FXML\r\n    private MenuBar menu;\r\n\r\n    @FXML\r\n    private ScrollPane scrollPane;\r\n\r\n    @FXML\r\n    private TextField searchField;\r\n\r\n    @FXML\r\n    private HBox searchPanel;\r\n\r\n    @FXML\r\n    private Button actionButton;\r\n\r\n    private int width, height;\r\n    private DBHelper dbHelper = new DBHelper();\r\n    private ObservableList<Job> selectedJobs = FXCollections.observableArrayList();\r\n\r\n\r\n    public void getSize(int width, int height) {\r\n        this.width = width;\r\n        this.height = height;\r\n    }\r\n\r\n    private void loadJobList() {\r\n        dbHelper.connect();\r\n        List<Job> jobs = dbHelper.getAllJobs();\r\n        ObservableList<Job> observableJobs = FXCollections.observableArrayList(jobs);\r\n        jobList.setItems(observableJobs);\r\n        dbHelper.close();\r\n    }\r\n\r\n    @FXML\r\n    void openAddWindow(ActionEvent event) {\r\n        //Open add job window\r\n        try {\r\n            AddJobWindow addJobWindow = new AddJobWindow();\r\n        } catch (IOException e) {\r\n            throw new RuntimeException(e);\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    void openJobView(MouseEvent event) throws IOException {\r\n        Job selectedJob = jobList.getSelectionModel().getSelectedItem();\r\n        if (selectedJob != null && event.getClickCount() == 2) {\r\n            ActionEvent actionEvent = new ActionEvent(event.getTarget(), null);\r\n            SceneSwitcher sceneSwitcher = new SceneSwitcher(\"/com/fo4ik/jobsaver/job/jobView.fxml\");\r\n            try {\r\n                sceneSwitcher.switchSceneToJobView(actionEvent, selectedJob);\r\n            } catch (IOException e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    void search(ActionEvent event) {\r\n        String searchQuery = searchField.getText();\r\n        search(searchQuery);\r\n    }\r\n\r\n    @FXML\r\n    void actionButton(ActionEvent event) {\r\n        if (searchField.getText().isEmpty()) {\r\n            search(event);\r\n        } else {\r\n            searchField.clear();\r\n            loadJobList();\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    void handleDeleteKey(KeyEvent event) {\r\n        if (event.getCode() == KeyCode.DELETE) {\r\n            if (!selectedJobs.isEmpty()) {\r\n                dbHelper.connect();\r\n                for (Job selectedJob : selectedJobs) {\r\n                    dbHelper.deleteJob(selectedJob);\r\n                }\r\n                dbHelper.close();\r\n                selectedJobs.clear();\r\n                loadJobList();\r\n            }\r\n        }\r\n    }\r\n\r\n    @FXML\r\n    void selectAll(ActionEvent event) {\r\n        selectedJobs.addAll(jobList.getItems());\r\n        jobList.getSelectionModel().selectAll();\r\n    }\r\n\r\n    @FXML\r\n    void unselectAll(ActionEvent event) {\r\n        selectedJobs.clear();\r\n        jobList.getSelectionModel().clearSelection();\r\n    }\r\n\r\n    @FXML\r\n    void delete(ActionEvent event) {\r\n\r\n    }\r\n\r\n    @Override\r\n    public void initialize(URL location, ResourceBundle resources) {\r\n        jobList.setPrefWidth(width);\r\n\r\n        //listner for scrollbar to change size\r\n        scrollPane.widthProperty().addListener((obs, oldWidth, newWidth) -> {\r\n            jobList.setPrefWidth(newWidth.doubleValue());\r\n        });\r\n        scrollPane.heightProperty().addListener((obs, oldHeight, newHeight) -> {\r\n            jobList.setPrefHeight(newHeight.doubleValue());\r\n        });\r\n\r\n        //Add cell factory to list\r\n        jobList.setCellFactory(new Callback<ListView<Job>, ListCell<Job>>() {\r\n            @Override\r\n            public ListCell<Job> call(ListView<Job> param) {\r\n                return new JobListCell();\r\n            }\r\n        });\r\n\r\n\r\n        jobList.setFixedCellSize(50);\r\n        jobList.getStyleClass().add(\"list-cell\");\r\n        jobList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);\r\n        jobList.getSelectionModel().getSelectedItems().addListener((ListChangeListener<Job>) change -> {\r\n            while (change.next()) {\r\n                if (change.wasAdded()) {\r\n                    selectedJobs.addAll(change.getAddedSubList());\r\n                }\r\n                if (change.wasRemoved()) {\r\n                    selectedJobs.removeAll(change.getRemoved());\r\n                }\r\n            }\r\n        });\r\n\r\n\r\n        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);\r\n        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);\r\n        scrollPane.setStyle(\"-fx-background-color: transparent;\");\r\n\r\n        //get all jobs from database\r\n        dbHelper.connect();\r\n        loadJobList();\r\n        dbHelper.close();\r\n    }\r\n\r\n    private void search(String searchQuery) {\r\n        if (!searchQuery.isEmpty()) {\r\n            dbHelper.connect();\r\n            List<Job> jobs = dbHelper.searchJobsByTitleOrCompany(searchQuery);\r\n            ObservableList<Job> observableJobs = FXCollections.observableArrayList(jobs);\r\n            jobList.setItems(observableJobs);\r\n            dbHelper.close();\r\n        } else loadJobList();\r\n    }\r\n\r\n    private class JobListCell extends ListCell<Job> {\r\n\r\n        @Override\r\n        protected void updateItem(Job item, boolean empty) {\r\n            super.updateItem(item, empty);\r\n            if (empty || item == null) {\r\n                setGraphic(null);\r\n            } else {\r\n                FXMLLoader loader = new FXMLLoader(getClass().getResource(\"/com/fo4ik/jobsaver/job/jobCell.fxml\"));\r\n                HBox content;\r\n                try {\r\n                    content = loader.load();\r\n                    JobCellController controller = loader.getController();\r\n                    controller.setJob(item);\r\n                    setGraphic(content);\r\n                } catch (IOException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/fo4ik/jobsaver/controllers/MainController.java b/src/main/java/com/fo4ik/jobsaver/controllers/MainController.java
+--- a/src/main/java/com/fo4ik/jobsaver/controllers/MainController.java	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/src/main/java/com/fo4ik/jobsaver/controllers/MainController.java	(date 1695692726151)
+@@ -1,7 +1,6 @@
+ package com.fo4ik.jobsaver.controllers;
+ 
+ 
+-import com.fo4ik.jobsaver.config.Config;
+ import com.fo4ik.jobsaver.database.DBHelper;
+ import com.fo4ik.jobsaver.engine.SceneSwitcher;
+ import com.fo4ik.jobsaver.entity.Job;
+@@ -14,7 +13,6 @@
+ import javafx.fxml.FXMLLoader;
+ import javafx.fxml.Initializable;
+ import javafx.scene.control.*;
+-import javafx.scene.input.KeyCode;
+ import javafx.scene.input.KeyEvent;
+ import javafx.scene.input.MouseEvent;
+ import javafx.scene.layout.HBox;
+@@ -49,7 +47,7 @@
+     private Button actionButton;
+ 
+     private int width, height;
+-    private DBHelper dbHelper = new DBHelper();
++    private DBHelper dbHelper = DBHelper.getInstance();
+     private ObservableList<Job> selectedJobs = FXCollections.observableArrayList();
+ 
+ 
+@@ -58,7 +56,7 @@
+         this.height = height;
+     }
+ 
+-    private void loadJobList() {
++    public void loadJobList() {
+         dbHelper.connect();
+         List<Job> jobs = dbHelper.getAllJobs();
+         ObservableList<Job> observableJobs = FXCollections.observableArrayList(jobs);
+@@ -108,16 +106,25 @@
+ 
+     @FXML
+     void handleDeleteKey(KeyEvent event) {
+-        if (event.getCode() == KeyCode.DELETE) {
+-            if (!selectedJobs.isEmpty()) {
+-                dbHelper.connect();
+-                for (Job selectedJob : selectedJobs) {
+-                    dbHelper.deleteJob(selectedJob);
+-                }
+-                dbHelper.close();
+-                selectedJobs.clear();
+-                loadJobList();
++        switch (event.getCode()) {
++            case DELETE: {
++                if (!selectedJobs.isEmpty()) {
++                    dbHelper.connect();
++                    for (Job selectedJob : selectedJobs) {
++                        dbHelper.deleteJob(selectedJob);
++                    }
++                    dbHelper.close();
++                    selectedJobs.clear();
++                    loadJobList();
++                }
+             }
++            break;
++            case F5: {
++                if (event.isShiftDown()) {
++                    loadJobList();
++                }
++            }
++            break;
+         }
+     }
+ 
+@@ -178,6 +185,8 @@
+         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+         scrollPane.setStyle("-fx-background-color: transparent;");
+ 
++        dbHelper.registerDatabaseChangeListener(this::loadJobList);
++
+         //get all jobs from database
+         dbHelper.connect();
+         loadJobList();
+Index: src/main/java/com/fo4ik/jobsaver/window/AddJob.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.fo4ik.jobsaver.window;\r\n\r\nimport com.fo4ik.jobsaver.database.DBHelper;\r\nimport com.fo4ik.jobsaver.engine.HtmlParser;\r\nimport com.fo4ik.jobsaver.entity.Job;\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.TextField;\r\n\r\nimport java.util.Date;\r\n\r\npublic class AddJob {\r\n\r\n    @FXML\r\n    private Button addButton;\r\n\r\n    @FXML\r\n    private TextField linkInput;\r\n\r\n    public void initialize() {\r\n        addButton.setOnAction(event -> {\r\n            System.out.println(linkInput.getText());\r\n            if (!linkInput.getText().isEmpty()) {\r\n                System.out.println(\"Empty\");\r\n                Job job = new Job(HtmlParser.getJobTitle(linkInput.getText()), HtmlParser.getJobCompany(linkInput.getText()), HtmlParser.getHtml(linkInput.getText()), new Date(), 0);\r\n                DBHelper dbHelper = new DBHelper();\r\n                dbHelper.connect();\r\n                dbHelper.addJob(job);\r\n                dbHelper.close();\r\n            }\r\n        });\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/fo4ik/jobsaver/window/AddJob.java b/src/main/java/com/fo4ik/jobsaver/window/AddJob.java
+--- a/src/main/java/com/fo4ik/jobsaver/window/AddJob.java	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/src/main/java/com/fo4ik/jobsaver/window/AddJob.java	(date 1695692647652)
+@@ -1,11 +1,13 @@
+ package com.fo4ik.jobsaver.window;
+ 
++import com.fo4ik.jobsaver.controllers.MainController;
+ import com.fo4ik.jobsaver.database.DBHelper;
+ import com.fo4ik.jobsaver.engine.HtmlParser;
+ import com.fo4ik.jobsaver.entity.Job;
+ import javafx.fxml.FXML;
+ import javafx.scene.control.Button;
+ import javafx.scene.control.TextField;
++import javafx.stage.Stage;
+ 
+ import java.util.Date;
+ 
+@@ -17,18 +19,28 @@
+     @FXML
+     private TextField linkInput;
+ 
++
+     public void initialize() {
+         addButton.setOnAction(event -> {
+-            System.out.println(linkInput.getText());
+             if (!linkInput.getText().isEmpty()) {
+-                System.out.println("Empty");
+-                Job job = new Job(HtmlParser.getJobTitle(linkInput.getText()), HtmlParser.getJobCompany(linkInput.getText()), HtmlParser.getHtml(linkInput.getText()), new Date(), 0);
+-                DBHelper dbHelper = new DBHelper();
+-                dbHelper.connect();
+-                dbHelper.addJob(job);
+-                dbHelper.close();
++                try {
++                    Job job = new Job(HtmlParser.getJobTitle(linkInput.getText()), HtmlParser.getJobCompany(linkInput.getText()), HtmlParser.getHtml(linkInput.getText()), new Date(), 0);
++                    DBHelper dbHelper = DBHelper.getInstance();
++                    dbHelper.connect();
++                    dbHelper.addJob(job);
++                    dbHelper.close();
++
++                    // Close the window
++                    Stage stage = (Stage) addButton.getScene().getWindow();
++                    stage.close();
++
++                } catch (Exception e) {
++                    System.out.println("Error while adding job: " + e.getMessage());
++                }
++
+             }
+         });
+     }
+ 
++
+ }
+\ No newline at end of file
+Index: LICENSE
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>All Rights Reserved\r\n\r\nCopyright (c) 2023, Fo4IK-git\r\n\r\nPermission is hereby denied, without written consent from the copyright holder, to use, copy, modify, or distribute this software or parts of it.\r\n\r\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/LICENSE b/LICENSE
+--- a/LICENSE	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/LICENSE	(date 1695697470431)
+@@ -1,7 +1,25 @@
+-All Rights Reserved
++# JobSaver License
++
++Please read this license carefully before using this application.
++
++Permission is hereby granted, free of charge, to use and modify this application under the following conditions:
++
++1. You are free to use this application for personal and commercial purposes.
++
++2. You are allowed to make changes and improvements to this application.
++
++3. You may distribute this application, but only in its original, unmodified form.
++
++4. You are not allowed to modify the text of this license and distribute it as your own license.
++
++5. You are not allowed to use the name "JobSaver" to denote modified versions of this application or other products
++   created based on it to represent them as official products.
+ 
+-Copyright (c) 2023, Fo4IK-git
++6. You are allowed to clone, fork, create derivative works, and modify this application, but you are not allowed
++   to distribute modified versions of this application without the written permission of the author.
+ 
+-Permission is hereby denied, without written consent from the copyright holder, to use, copy, modify, or distribute this software or parts of it.
++This license is created to provide free access and use of this application while protecting the author's rights to the original version.
+ 
+-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+\ No newline at end of file
++The author is not responsible for any damages caused by the use or misuse of this application.
++
++Copyright (c) 2023 Vladyslav Zinkovskyi
+Index: README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># JobSaver\r\n\r\n**JobSaver** is a versatile job search and management application developed in Java, designed to simplify and automate\r\nthe process of finding and saving job listings. The application provides a user-friendly graphical interface for ease of\r\nuse.\r\n\r\n## Features\r\n\r\n- **LinkedIn Integration**: JobSaver currently supports job searching and saving from LinkedIn, with plans to extend\r\n  support for other job search platforms in the future.\r\n\r\n## Getting Started\r\n\r\nTo build and run the project, you can use the provided `build.gradle` file. Follow these steps:\r\n\r\n1. Clone the repository to your local machine.\r\n\r\n   ```bash\r\n   git clone https://github.com/Fo4Ik-git/JobSaver.git\r\n   ```\r\n\r\n2. Open a terminal or command prompt and navigate to the project's root directory.\r\n\r\n3. Run the following command to build the project using Gradle:\r\n\r\n   ```bash\r\n   gradlew build\r\n   ```\r\n\r\n\r\n4. Once the build is complete, you can run the application.\r\n\r\n## Usage\r\n\r\n**JobSaver** offers the following main components:\r\n\r\n### Main Application Window\r\n\r\n- The application's main window serves as the central hub for job search and management.\r\n- Users can view their saved job listings and perform various actions such as editing and deleting jobs.\r\n\r\n### Job Search\r\n\r\n- The application allows users to search for job listings on LinkedIn by providing search queries.\r\n- Users can enter keywords related to their job search and initiate the search from the top panel.\r\n\r\n### Saved Job Listings\r\n\r\n- Users can view their saved job listings in a list format within the main window.\r\n- Each listing includes job title, company, and status information.\r\n- Clicking on a job listing opens a detailed view of the job in a split-panel format.\r\n\r\n### Job Details\r\n\r\n- The detailed view of a job listing includes the job's web page displayed within the application.\r\n- Users can also edit job details such as title, company, and status directly from this view.\r\n- Changes made to job details can be saved or discarded.\r\n\r\n## License\r\n\r\nPlease refer to the [LICENSE](LICENSE) file in the repository for licensing information.\r\n\r\n## Note\r\n\r\n**JobSaver** is continually evolving, with plans to expand its capabilities to support additional job search platforms\r\nin the future. Stay tuned for updates and enhancements to make your job search experience even more efficient and\r\nconvenient.\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/README.md b/README.md
+--- a/README.md	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/README.md	(date 1695696843931)
+@@ -1,13 +1,20 @@
+ # JobSaver
+ 
+-**JobSaver** is a versatile job search and management application developed in Java, designed to simplify and automate
+-the process of finding and saving job listings. The application provides a user-friendly graphical interface for ease of
++[![Download Latest Release](https://img.shields.io/github/v/release/Fo4Ik-git/JobSaver?label=Download%20Latest%20Release)](https://github.com/your-username/your-repo-name/releases/latest)
++[![GitHub](https://img.shields.io/github/license/Fo4Ik-git/JobSaver)](LICENSE)
++
++
++**JobSaver** is a app that helps you keep track of your job applications. You can add jobs that you are interested
++in, check their responsibilities, and update their status. JobSaver also lets you see the progress of your applications
++in a dashboard. With JobSaver, you can easily manage your job search and never miss an opportunity.finding and saving
++job listings. The application provides a user-friendly graphical interface for ease of
+ use.
+ 
+ ## Features
+ 
+ - **LinkedIn Integration**: JobSaver currently supports job searching and saving from LinkedIn, with plans to extend
+   support for other job search platforms in the future.
++- **Status**: you can update the status of your job applications.
+ 
+ ## Getting Started
+ 
+@@ -21,14 +28,15 @@
+ 
+ 2. Open a terminal or command prompt and navigate to the project's root directory.
+ 
+-3. Run the following command to build the project using Gradle:
++3. Run the following command to build installer the project using Gradle:
+ 
+    ```bash
+-   gradlew build
++   gradlew jpackage
+    ```
+-
+ 
+ 4. Once the build is complete, you can run the application.
++Open a `build/jpackage` directory to find Installer and project in directory `Job Saver`.
++
+ 
+ ## Usage
+ 
+@@ -60,6 +68,11 @@
+ 
+ Please refer to the [LICENSE](LICENSE) file in the repository for licensing information.
+ 
++## Change History (Changelog)
++
++To look at the change history of the project, please refer to the
++[Change History (Changelog)](CHANGELOG.md)
++
+ ## Note
+ 
+ **JobSaver** is continually evolving, with plans to expand its capabilities to support additional job search platforms
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>distributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-7.5.1-bin.zip\r\nzipStoreBase=GRADLE_USER_HOME\r\nzipStorePath=wrapper/dists\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>NATIVE_TO_ASCII_UTF-8
+===================================================================
+diff --git a/gradle/wrapper/gradle-wrapper.properties b/gradle/wrapper/gradle-wrapper.properties
+--- a/gradle/wrapper/gradle-wrapper.properties	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/gradle/wrapper/gradle-wrapper.properties	(date 1695671459815)
+@@ -1,5 +1,5 @@
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-7.5.1-bin.zip
++distributionUrl=https\://services.gradle.org/distributions/gradle-8.1-bin.zip
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'java'\r\n    id 'application'\r\n    id 'org.javamodularity.moduleplugin' version '1.8.12'\r\n    id 'org.openjfx.javafxplugin' version '0.1.0'\r\n    id 'org.beryx.jlink' version '2.25.0'\r\n}\r\n\r\nproject.ext {\r\n    mainClass = 'com.fo4ik.jobsaver.Main'\r\n    applicationName = 'Job Saver'\r\n    applicationVersion = '2.0.0'\r\n}\r\n\r\napplication {\r\n    mainClassName = \"${project.mainClass}\"\r\n    applicationName = project.applicationName\r\n    applicationVersion = project.applicationVersion\r\n}\r\n\r\next {\r\n    junitVersion = '5.9.2'\r\n}\r\n\r\ngroup 'com.fo4ik'\r\nversion project.applicationVersion\r\n\r\nrepositories {\r\n    mavenCentral()\r\n}\r\n\r\ndependencies {\r\n    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'\r\n    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'\r\n\r\n\r\n    implementation 'org.jsoup:jsoup:1.16.1'\r\n\r\n    implementation 'org.xerial:sqlite-jdbc:3.42.0.0'\r\n\r\n    implementation('org.controlsfx:controlsfx:11.1.2')\r\n}\r\n\r\njavafx {\r\n    version = \"19\"\r\n    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.media', 'javafx.graphics']\r\n}\r\n\r\njlink {\r\n    imageZip = project.file(\"${buildDir}/distributions/app-${javafx.platform.classifier}.zip\")\r\n    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']\r\n    launcher {\r\n        name = 'app'\r\n    }\r\n}\r\n\r\njlinkZip {\r\n    group = 'distribution'\r\n}\r\n\r\n/*jar {\r\n    archiveBaseName = \"${project.applicationName}\"\r\n    archiveVersion = \"${project.applicationVersion}\"\r\n    manifest {\r\n        attributes(\r\n                'Main-Class': project.mainClass,\r\n        )\r\n    }\r\n\r\n    from {\r\n        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }\r\n    }\r\n\r\n    duplicatesStrategy = DuplicatesStrategy.INCLUDE\r\n}*/\r\n\r\ncompileJava.options.encoding = 'UTF-8'\r\ntasks.withType(JavaCompile).configureEach {\r\n    options.encoding = 'UTF-8'\r\n}\r\n\r\n\r\ntest {\r\n    useJUnitPlatform()\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/build.gradle b/build.gradle
+--- a/build.gradle	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/build.gradle	(date 1695695731143)
+@@ -1,8 +1,8 @@
+ plugins {
+     id 'java'
+     id 'application'
+-    id 'org.javamodularity.moduleplugin' version '1.8.12'
+     id 'org.openjfx.javafxplugin' version '0.1.0'
++    id 'org.javamodularity.moduleplugin' version '1.8.12'
+     id 'org.beryx.jlink' version '2.25.0'
+ }
+ 
+@@ -13,13 +13,15 @@
+ }
+ 
+ application {
++    mainModule = 'com.fo4ik.jobsaver'
++    mainClass = "${project.mainClass}"
+     mainClassName = "${project.mainClass}"
+-    applicationName = project.applicationName
+-    applicationVersion = project.applicationVersion
++    applicationName = "${project.applicationName}"
++    applicationVersion = "${project.applicationVersion}"
+ }
+ 
+-ext {
+-    junitVersion = '5.9.2'
++java {
++    modularity.inferModulePath = true
+ }
+ 
+ group 'com.fo4ik'
+@@ -30,15 +32,8 @@
+ }
+ 
+ dependencies {
+-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+-
+-
+     implementation 'org.jsoup:jsoup:1.16.1'
+-
+     implementation 'org.xerial:sqlite-jdbc:3.42.0.0'
+-
+-    implementation('org.controlsfx:controlsfx:11.1.2')
+ }
+ 
+ javafx {
+@@ -49,8 +44,23 @@
+ jlink {
+     imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
+     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
++
+     launcher {
+-        name = 'app'
++        name = "${project.applicationName}"
++    }
++
++    jpackage {
++        if (org.gradle.internal.os.OperatingSystem.current().windows) {
++            javaHome = System.getenv("JAVA_HOME")
++            installerOptions += ['--win-per-user-install', '--win-dir-chooser', '--win-menu', '--win-shortcut']
++            installerOptions += ['--win-menu-group', 'Job Saver']
++            installerOptions += ['--license-file', 'LICENSE']
++            installerOptions += ['--win-upgrade-uuid', generateUUID()]
++
++            //Optional
++//            imageOptions += ['--win-console']
++        }
++        imageOptions += ['--icon', 'src/main/resources/img/icon.ico']
+     }
+ }
+ 
+@@ -58,28 +68,21 @@
+     group = 'distribution'
+ }
+ 
+-/*jar {
+-    archiveBaseName = "${project.applicationName}"
+-    archiveVersion = "${project.applicationVersion}"
+-    manifest {
+-        attributes(
+-                'Main-Class': project.mainClass,
+-        )
+-    }
++def generateUUID() {
++    def inputString = "${project.applicationName}-${project.applicationVersion}"
++    def uuid = UUID.nameUUIDFromBytes(inputString.getBytes())
++    //println "UUID: ${uuid}"
++    println "UUID: ${uuid.toString()}"
++    return uuid.toString()
++}
+ 
+-    from {
+-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+-    }
++tasks.withType(JavaCompile) {
++    options.encoding = 'UTF-8'
++    options.compilerArgs += ["--module-path", "${sourceSets.main.runtimeClasspath.collect { it.absolutePath }.join(':')}"]
++}
+ 
+-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+-}*/
+-
+-compileJava.options.encoding = 'UTF-8'
+ tasks.withType(JavaCompile).configureEach {
+     options.encoding = 'UTF-8'
+ }
+ 
+ 
+-test {
+-    useJUnitPlatform()
+-}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"7b5ed237-faf5-4834-ab57-034d100ff8e8\" name=\"Changes\" comment=\"JavaFx migration\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/dataSources.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/gradle.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/jpa-buddy.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/resourceBundles.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/uiDesigner.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/vcs.xml\" beforeDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ExternalProjectsData\">\r\n    <projectState path=\"$PROJECT_DIR$\">\r\n      <ProjectState />\r\n    </projectState>\r\n  </component>\r\n  <component name=\"ExternalProjectsManager\">\r\n    <system id=\"GRADLE\">\r\n      <state>\r\n        <task path=\"$PROJECT_DIR$\">\r\n          <activation />\r\n        </task>\r\n        <projects_view>\r\n          <tree_state>\r\n            <expand />\r\n            <select />\r\n          </tree_state>\r\n        </projects_view>\r\n      </state>\r\n    </system>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"FxmlFile\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 4\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2VNhM4zgPmQBgHoiQbDLtIWdCRV\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,\r\n    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;liberica-17&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/terra/IdeaProjects/JobSaver/src/main/resources&quot;,\r\n    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,\r\n    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,\r\n    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,\r\n    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;\r\n  },\r\n  &quot;keyToStringList&quot;: {\r\n    &quot;DatabaseDriversLRU&quot;: [\r\n      &quot;sqlite&quot;\r\n    ]\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CreateClassDialog.RecentsKey\">\r\n      <recent name=\"com.fo4ik.fragments\" />\r\n    </key>\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\terra\\IdeaProjects\\JobSaver\\src\\main\\resources\" />\r\n      <recent name=\"C:\\Users\\terra\\IdeaProjects\\test\\JobSaver\\src\\main\\java\\com\\fo4ik\\panel\" />\r\n      <recent name=\"C:\\Users\\terra\\IdeaProjects\\test\\JobSaver\\src\\main\\java\\com\\fo4ik\\entity\" />\r\n      <recent name=\"C:\\Users\\terra\\IdeaProjects\\test\\JobSaver\\src\\main\\java\\com\\fo4ik\\engine\" />\r\n      <recent name=\"C:\\Users\\terra\\IdeaProjects\\test\\JobSaver\\src\\main\\java\\com\\fo4ik\\config\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\terra\\IdeaProjects\\LinkedInJobSaver\\src\\tmp\" />\r\n    </key>\r\n    <key name=\"CopyClassDialog.RECENTS_KEY\">\r\n      <recent name=\"com.fo4ik.window\" />\r\n      <recent name=\"com.fo4ik.engine\" />\r\n      <recent name=\"com.fo4ik.database\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunAnythingCache\">\r\n    <option name=\"myCommands\">\r\n      <command value=\"gradle run\" />\r\n    </option>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.Main\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"com.fo4ik.jobsaver.Main\" />\r\n      <module name=\"LinkedInJobSaver.main\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"com.fo4ik.jobsaver.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"JobSaver [clean]\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list>\r\n            <option value=\"clean\" />\r\n          </list>\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>\r\n      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>\r\n      <DebugAllEnabled>false</DebugAllEnabled>\r\n      <RunAsTest>false</RunAsTest>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"JobSaver [run]\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" value=\"\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list>\r\n            <option value=\"run\" />\r\n          </list>\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>\r\n      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>\r\n      <DebugAllEnabled>false</DebugAllEnabled>\r\n      <RunAsTest>false</RunAsTest>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"LinkedInJobSaver [buildDependents]\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list>\r\n            <option value=\"buildDependents\" />\r\n          </list>\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>\r\n      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>\r\n      <DebugAllEnabled>false</DebugAllEnabled>\r\n      <RunAsTest>false</RunAsTest>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"LinkedInJobSaver [build]\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list>\r\n            <option value=\"build\" />\r\n          </list>\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>\r\n      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>\r\n      <DebugAllEnabled>false</DebugAllEnabled>\r\n      <RunAsTest>false</RunAsTest>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Main\" />\r\n        <item itemvalue=\"Gradle.JobSaver [run]\" />\r\n        <item itemvalue=\"Gradle.JobSaver [clean]\" />\r\n        <item itemvalue=\"Gradle.LinkedInJobSaver [build]\" />\r\n        <item itemvalue=\"Gradle.LinkedInJobSaver [buildDependents]\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"7b5ed237-faf5-4834-ab57-034d100ff8e8\" name=\"Changes\" comment=\"\" />\r\n      <created>1694682396206</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1694682396206</updated>\r\n      <workItem from=\"1694682397710\" duration=\"26371000\" />\r\n      <workItem from=\"1694772062561\" duration=\"94000\" />\r\n      <workItem from=\"1694776610073\" duration=\"1370000\" />\r\n      <workItem from=\"1694799049554\" duration=\"12593000\" />\r\n      <workItem from=\"1695069145818\" duration=\"29000\" />\r\n      <workItem from=\"1695077873656\" duration=\"147000\" />\r\n      <workItem from=\"1695124740730\" duration=\"599000\" />\r\n      <workItem from=\"1695159602767\" duration=\"14343000\" />\r\n      <workItem from=\"1695427144125\" duration=\"279000\" />\r\n      <workItem from=\"1695427488552\" duration=\"8290000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"update basic files\">\r\n      <created>1694730612902</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694730612902</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"add resourceBundle\">\r\n      <created>1694730648307</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694730648307</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Create application version 1 (have bug in jfxPanel)\">\r\n      <created>1694730725955</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694730725955</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"update\">\r\n      <created>1694730791487</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694730791487</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Add actions to buttons\">\r\n      <created>1694732237736</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694732237736</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"update\">\r\n      <created>1694732273497</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694732273497</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Update add Job, only link\">\r\n      <created>1694777549577</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694777549577</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"create new method\">\r\n      <created>1694800418832</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694800418832</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"create method to build application\">\r\n      <created>1694800549233</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694800549233</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"update\">\r\n      <created>1694802497136</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694802497136</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"start use shadow\">\r\n      <created>1694804596659</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694804596659</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"rewrite main method\">\r\n      <created>1694804645720</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694804645720</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"Add readme\">\r\n      <created>1694805251391</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694805251391</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"Add license\">\r\n      <created>1694805268148</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694805268148</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"Update\">\r\n      <created>1694805333045</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694805333045</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00016\" summary=\"Update\">\r\n      <created>1694806637596</created>\r\n      <option name=\"number\" value=\"00016\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694806637596</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00017\" summary=\"Refactor code\">\r\n      <created>1694984372849</created>\r\n      <option name=\"number\" value=\"00017\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1694984372849</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00018\" summary=\"Update gradle\">\r\n      <created>1695160872834</created>\r\n      <option name=\"number\" value=\"00018\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1695160872834</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00019\" summary=\"Rewrite classes\">\r\n      <created>1695165070166</created>\r\n      <option name=\"number\" value=\"00019\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1695165070166</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00020\" summary=\"Rewrite classes\">\r\n      <created>1695165170061</created>\r\n      <option name=\"number\" value=\"00020\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00020\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1695165170061</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00021\" summary=\"Add search\">\r\n      <created>1695166303197</created>\r\n      <option name=\"number\" value=\"00021\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00021\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1695166303197</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00022\" summary=\"Add status\">\r\n      <created>1695168265048</created>\r\n      <option name=\"number\" value=\"00022\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00022\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1695168265048</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00023\" summary=\"Update to basic builder\">\r\n      <created>1695169490956</created>\r\n      <option name=\"number\" value=\"00023\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00023\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1695169490956</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00024\" summary=\"Update README.md\">\r\n      <created>1695170027905</created>\r\n      <option name=\"number\" value=\"00024\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00024\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1695170027905</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00025\" summary=\"create log list\">\r\n      <created>1695174517952</created>\r\n      <option name=\"number\" value=\"00025\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00025\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1695174517952</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00026\" summary=\"Fix bug with javafx\">\r\n      <created>1695176799260</created>\r\n      <option name=\"number\" value=\"00026\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00026\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1695176799260</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"27\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"update basic files\" />\r\n    <MESSAGE value=\"add resourceBundle\" />\r\n    <MESSAGE value=\"Create application version 1 (have bug in jfxPanel)\" />\r\n    <MESSAGE value=\"Add actions to buttons\" />\r\n    <MESSAGE value=\"Update add Job, only link\" />\r\n    <MESSAGE value=\"create new method\" />\r\n    <MESSAGE value=\"create method to build application\" />\r\n    <MESSAGE value=\"update\" />\r\n    <MESSAGE value=\"start use shadow\" />\r\n    <MESSAGE value=\"rewrite main method\" />\r\n    <MESSAGE value=\"Add readme\" />\r\n    <MESSAGE value=\"Add license\" />\r\n    <MESSAGE value=\"Update\" />\r\n    <MESSAGE value=\"Refactor code\" />\r\n    <MESSAGE value=\"Update gradle\" />\r\n    <MESSAGE value=\"Rewrite classes\" />\r\n    <MESSAGE value=\"Add search\" />\r\n    <MESSAGE value=\"Add status\" />\r\n    <MESSAGE value=\"Update to basic builder\" />\r\n    <MESSAGE value=\"Update README.md\" />\r\n    <MESSAGE value=\"create log list\" />\r\n    <MESSAGE value=\"Fix bug with javafx\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Fix bug with javafx\" />\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/.idea/workspace.xml	(date 1695697464904)
+@@ -5,15 +5,19 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="JavaFx migration">
+-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/resourceBundles.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/Main.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/MainController.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/window/AddJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/window/AddJob.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -45,6 +49,7 @@
+       <list>
+         <option value="FxmlFile" />
+         <option value="Class" />
++        <option value="Interface" />
+       </list>
+     </option>
+   </component>
+@@ -64,34 +69,36 @@
+   <component name="ProjectViewState">
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+-    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;liberica-17&quot;,
+-    &quot;last_opened_file_path&quot;: &quot;C:/Users/terra/IdeaProjects/JobSaver/src/main/resources&quot;,
+-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+-    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
+-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+-    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
+-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "RunOnceActivity.OpenProjectViewOnStart": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
++    "WebServerToolWindowFactoryState": "false",
++    "deletionFromPopupRequiresConfirmation": "false",
++    "extract.method.default.visibility": "private",
++    "git-widget-placeholder": "main",
++    "ignore.virus.scanning.warn.message": "true",
++    "jdk.selected.JAVA_MODULE": "liberica-17",
++    "last_opened_file_path": "C:/Users/terra/IdeaProjects/untitled",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)",
++    "nodejs_package_manager_path": "npm",
++    "project.structure.last.edited": "Artifacts",
++    "project.structure.proportion": "0.15429688",
++    "project.structure.side.proportion": "0.0",
++    "settings.build.tools.auto.reload": "SELECTIVE",
++    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
++    "vue.rearranger.settings.migration": "true"
+   },
+-  &quot;keyToStringList&quot;: {
+-    &quot;DatabaseDriversLRU&quot;: [
+-      &quot;sqlite&quot;
++  "keyToStringList": {
++    "DatabaseDriversLRU": [
++      "sqlite"
+     ]
+   }
+-}</component>
++}]]></component>
+   <component name="RecentsManager">
+     <key name="CreateClassDialog.RecentsKey">
+       <recent name="com.fo4ik.fragments" />
+@@ -104,6 +111,9 @@
+       <recent name="C:\Users\terra\IdeaProjects\test\JobSaver\src\main\java\com\fo4ik\config" />
+     </key>
+     <key name="MoveFile.RECENT_KEYS">
++      <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\java" />
++      <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\resources" />
++      <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\java\com\fo4ik\jobsaver" />
+       <recent name="C:\Users\terra\IdeaProjects\LinkedInJobSaver\src\tmp" />
+     </key>
+     <key name="CopyClassDialog.RECENTS_KEY">
+@@ -115,9 +125,17 @@
+   <component name="RunAnythingCache">
+     <option name="myCommands">
+       <command value="gradle run" />
++      <command value="gradle jlinkZip" />
++      <command value="gradle jpackageCreateInstaller" />
++      <command value="gradle shadowJar" />
++      <command value="gradle version" />
++      <command value="gradle --version" />
++      <command value="gradle selfContainedJar" />
++      <command value="gradle dist" />
++      <command value="gradle createJar" />
+     </option>
+   </component>
+-  <component name="RunManager" selected="Application.Main">
++  <component name="RunManager" selected="Gradle.JobSaver [jpackage]">
+     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+       <option name="MAIN_CLASS_NAME" value="com.fo4ik.jobsaver.Main" />
+       <module name="LinkedInJobSaver.main" />
+@@ -153,7 +171,7 @@
+       <RunAsTest>false</RunAsTest>
+       <method v="2" />
+     </configuration>
+-    <configuration name="JobSaver [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
++    <configuration name="JobSaver [createJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+       <ExternalSystemSettings>
+         <option name="executionName" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+@@ -164,7 +182,7 @@
+         </option>
+         <option name="taskNames">
+           <list>
+-            <option value="run" />
++            <option value="createJar" />
+           </list>
+         </option>
+         <option name="vmOptions" />
+@@ -175,7 +193,7 @@
+       <RunAsTest>false</RunAsTest>
+       <method v="2" />
+     </configuration>
+-    <configuration name="LinkedInJobSaver [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
++    <configuration name="JobSaver [jlink]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+       <ExternalSystemSettings>
+         <option name="executionName" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+@@ -186,7 +204,7 @@
+         </option>
+         <option name="taskNames">
+           <list>
+-            <option value="buildDependents" />
++            <option value="jlink" />
+           </list>
+         </option>
+         <option name="vmOptions" />
+@@ -197,7 +215,7 @@
+       <RunAsTest>false</RunAsTest>
+       <method v="2" />
+     </configuration>
+-    <configuration name="LinkedInJobSaver [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
++    <configuration name="JobSaver [jpackage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+       <ExternalSystemSettings>
+         <option name="executionName" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+@@ -208,7 +226,7 @@
+         </option>
+         <option name="taskNames">
+           <list>
+-            <option value="build" />
++            <option value="jpackage" />
+           </list>
+         </option>
+         <option name="vmOptions" />
+@@ -221,11 +239,11 @@
+     </configuration>
+     <recent_temporary>
+       <list>
++        <item itemvalue="Gradle.JobSaver [jpackage]" />
+         <item itemvalue="Application.Main" />
+-        <item itemvalue="Gradle.JobSaver [run]" />
++        <item itemvalue="Gradle.JobSaver [createJar]" />
++        <item itemvalue="Gradle.JobSaver [jlink]" />
+         <item itemvalue="Gradle.JobSaver [clean]" />
+-        <item itemvalue="Gradle.LinkedInJobSaver [build]" />
+-        <item itemvalue="Gradle.LinkedInJobSaver [buildDependents]" />
+       </list>
+     </recent_temporary>
+   </component>
+@@ -247,6 +265,7 @@
+       <workItem from="1695159602767" duration="14343000" />
+       <workItem from="1695427144125" duration="279000" />
+       <workItem from="1695427488552" duration="8290000" />
++      <workItem from="1695666706896" duration="23526000" />
+     </task>
+     <task id="LOCAL-00001" summary="update basic files">
+       <created>1694730612902</created>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"FrameworkDetectionExcludesConfiguration\">\r\n    <file type=\"web\" url=\"file://$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" default=\"true\" project-jdk-name=\"17\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/.idea/misc.xml	(date 1695686475440)
+@@ -6,4 +6,7 @@
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />
+   </component>
++  <component name="ProjectType">
++    <option name="id" value="jpab" />
++  </component>
+ </project>
+\ No newline at end of file
+Index: src/main/java/module-info.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>module com.fo4ik.jobsaver {\r\n    requires javafx.controls;\r\n    requires javafx.fxml;\r\n\r\n    requires org.controlsfx.controls;\r\n    requires org.jsoup;\r\n    requires java.sql;\r\n    requires javafx.web;\r\n\r\n    opens com.fo4ik.jobsaver to javafx.fxml;\r\n    exports com.fo4ik.jobsaver;\r\n    exports com.fo4ik.jobsaver.controllers;\r\n    opens com.fo4ik.jobsaver.controllers to javafx.fxml;\r\n    exports com.fo4ik.jobsaver.window;\r\n    opens com.fo4ik.jobsaver.window to javafx.fxml;\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/module-info.java b/src/main/java/module-info.java
+--- a/src/main/java/module-info.java	(revision 7d180dd330c3d65b73f7e1076ff46f05bef6f187)
++++ b/src/main/java/module-info.java	(date 1695683739537)
+@@ -1,16 +1,21 @@
+ module com.fo4ik.jobsaver {
+     requires javafx.controls;
+     requires javafx.fxml;
++    requires javafx.web;
++    requires javafx.graphics;
++    requires javafx.base;
++    requires javafx.media;
+ 
+-    requires org.controlsfx.controls;
+     requires org.jsoup;
++    requires org.xerial.sqlitejdbc;
+     requires java.sql;
+-    requires javafx.web;
+ 
+-    opens com.fo4ik.jobsaver to javafx.fxml;
++
+     exports com.fo4ik.jobsaver;
+     exports com.fo4ik.jobsaver.controllers;
++    exports com.fo4ik.jobsaver.window;
++
++    opens com.fo4ik.jobsaver to javafx.fxml;
+     opens com.fo4ik.jobsaver.controllers to javafx.fxml;
+-    exports com.fo4ik.jobsaver.window;
+     opens com.fo4ik.jobsaver.window to javafx.fxml;
+ }
+\ No newline at end of file

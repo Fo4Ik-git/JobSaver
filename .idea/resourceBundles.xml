@@ -4,7 +4,6 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/language.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/language_pl.properties" />
     <file url="file://$PROJECT_DIR$/src/main/resources/language_ru.properties" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/language_ua.properties" />
     <custom-resource-bundle>
       <file value="file://$PROJECT_DIR$/src/main/resources/language.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/language_pl.properties" />

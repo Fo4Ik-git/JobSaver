@@ -1,0 +1,341 @@
+Index: src/main/java/com/fo4ik/panel/settings/SettingsPanel.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/panel/settings/SettingsPanel.java b/src/main/java/com/fo4ik/panel/settings/SettingsPanel.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/panel/settings/SettingsPanel.java	
++++ /dev/null	
+@@ -1,122 +0,0 @@
+-package com.fo4ik.panel.settings;
+-
+-import com.fo4ik.Main;
+-import com.fo4ik.config.Config;
+-import com.fo4ik.engine.rounded.RoundedPanel;
+-
+-import javax.swing.*;
+-import javax.swing.border.EmptyBorder;
+-import java.awt.*;
+-import java.awt.event.MouseAdapter;
+-import java.awt.event.MouseEvent;
+-import java.util.ResourceBundle;
+-
+-public class SettingsPanel extends Main {
+-
+-    protected JPanel settingsPanel;
+-    protected int width, height;
+-
+-    public void getSettings() {
+-
+-        width = (int) (frame.getWidth() * 0.5);
+-        height = (int) (frame.getHeight() * 0.6);
+-
+-        settingsPanel = new RoundedPanel(20, true);
+-        settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
+-
+-        settingsPanel.setPreferredSize(new Dimension(width, height));
+-        settingsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+-
+-        JScrollPane scrollPane = new JScrollPane(settingsPanel);
+-        scrollPane.setOpaque(false);
+-        scrollPane.setBorder(null);
+-        scrollPane.getViewport().setOpaque(false);
+-        scrollPane.setViewportView(settingsPanel);
+-
+-        settingsPanel.add(getAccount());
+-        settingsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+-        settingsPanel.add(getGeneral());
+-        settingsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+-        settingsPanel.add(getLanguage());
+-
+-        JPanel centerPanel = new JPanel(new GridBagLayout());
+-        centerPanel.setOpaque(false);
+-
+-        int settingPanelX = (frame.getWidth() - width) / 2;
+-        int settingPanelY = (frame.getHeight() - height) / 2;
+-        centerPanel.setBounds(settingPanelX, settingPanelY, width, height);
+-
+-        centerPanel.add(scrollPane);
+-
+-        frame.getContentPane().add(centerPanel);
+-        frame.getContentPane().setComponentZOrder(centerPanel, 0);
+-        frame.getContentPane().revalidate();
+-        frame.getContentPane().repaint();
+-    }
+-
+-    private JPanel getAccount() {
+-        JPanel accountPanel = new RoundedPanel(new BorderLayout(),15);
+-        accountPanel.setBackground(Color.red);
+-
+-        JLabel accountLabel = new JLabel("Account");
+-        accountLabel.setForeground(Color.white);
+-        accountLabel.setFont(new Font("Arial", Font.BOLD, 20));
+-
+-        JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+-        labelPanel.setOpaque(false);
+-        labelPanel.add(accountLabel);
+-
+-        accountPanel.add(labelPanel );
+-
+-        accountPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+-        /*accountPanel.addMouseListener(new MouseAdapter() {
+-            @Override
+-            public void mouseClicked(MouseEvent e) {
+-                AccountPanel accountPanel = new AccountPanel();
+-                accountPanel.getAccount();
+-
+-                //Messag
+-            }
+-        });*/
+-
+-
+-        return accountPanel;
+-    }
+-
+-    private JPanel getGeneral() {
+-        JPanel generalPanel = new RoundedPanel(new BorderLayout(),15);
+-        generalPanel.setBackground(Color.yellow);
+-
+-        JLabel generalLabel = new JLabel("General");
+-        generalLabel.setForeground(Color.white);
+-        generalLabel.setFont(new Font("Arial", Font.BOLD, 20));
+-        generalPanel.add(generalLabel);
+-
+-        return generalPanel;
+-    }
+-
+-    private JPanel getLanguage() {
+-        JPanel languagePanel = new RoundedPanel(new BorderLayout(),15);
+-        languagePanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+-
+-        ResourceBundle resourceBundle = Config.RESOURCE_BUNDLE;
+-        JLabel languageLabel = new JLabel(resourceBundle.getString("settings.languageText"));
+-        languageLabel.setForeground(Color.black);
+-        languageLabel.setFont(new Font("Arial", Font.BOLD, 20));
+-
+-        JLabel userLanguageLabel = new JLabel(resourceBundle.getString("settings.languageDisplay"));
+-        userLanguageLabel.setForeground(Color.black);
+-
+-        languagePanel.add(languageLabel, BorderLayout.WEST);
+-        languagePanel.add(userLanguageLabel, BorderLayout.EAST);
+-
+-        languagePanel.addMouseListener(new MouseAdapter() {
+-            @Override
+-            public void mouseClicked(MouseEvent e) {
+-                LanguagePanel languagePanel = new LanguagePanel();
+-                languagePanel.getLanguage();
+-            }
+-        });
+-        return languagePanel;
+-    }
+-}
+Index: src/main/java/com/fo4ik/engine/rounded/RoundedPanel.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/engine/rounded/RoundedPanel.java b/src/main/java/com/fo4ik/engine/rounded/RoundedPanel.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/engine/rounded/RoundedPanel.java	
++++ /dev/null	
+@@ -1,56 +0,0 @@
+-package com.fo4ik.engine.rounded;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-import java.awt.geom.RoundRectangle2D;
+-
+-public class RoundedPanel extends JPanel {
+-
+-    private int cornerRadius;
+-    private boolean isBorderPainted = false;
+-
+-    public RoundedPanel(LayoutManager layout, int cornerRadius) {
+-        super(layout);
+-        this.cornerRadius = cornerRadius;
+-        setOpaque(false);
+-    }
+-
+-    public RoundedPanel(int cornerRadius) {
+-        super();
+-        this.cornerRadius = cornerRadius;
+-        setOpaque(false);
+-    }
+-
+-    public RoundedPanel(LayoutManager layout, int cornerRadius, boolean isBorderPainted) {
+-        super(layout);
+-        this.cornerRadius = cornerRadius;
+-        this.isBorderPainted = isBorderPainted;
+-        setOpaque(false);
+-    }
+-
+-    public RoundedPanel(int cornerRadius, boolean isBorderPainted) {
+-        this.cornerRadius = cornerRadius;
+-        this.isBorderPainted = isBorderPainted;
+-        setOpaque(false);
+-    }
+-
+-    @Override
+-    protected void paintComponent(Graphics g) {
+-        super.paintComponent(g);
+-        Dimension arcs = new Dimension(cornerRadius, cornerRadius);
+-        int width = getWidth();
+-        int height = getHeight();
+-        Graphics2D graphics = (Graphics2D) g;
+-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+-
+-        graphics.setClip(0, 0, width, height);
+-        graphics.setColor(getBackground());
+-        graphics.fillRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height);
+-        graphics.setColor(getForeground());
+-//
+-        if(isBorderPainted) {
+-            graphics.drawRoundRect(0, 0, width - 1, height - 1, arcs.width, arcs.height);
+-        }
+-    }
+-
+-}
+Index: src/main/java/com/fo4ik/engine/render/JobListCellRenderer.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/engine/render/JobListCellRenderer.java b/src/main/java/com/fo4ik/engine/render/JobListCellRenderer.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/engine/render/JobListCellRenderer.java	
++++ /dev/null	
+@@ -1,61 +0,0 @@
+-package com.fo4ik.engine.render;
+-
+-import com.fo4ik.engine.rounded.RoundedPanel;
+-import com.fo4ik.entity.Job;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-import java.text.SimpleDateFormat;
+-
+-public class JobListCellRenderer extends DefaultListCellRenderer {
+-    private final JLabel jobTitleAndCompanyLabel = new JLabel();
+-    private final JLabel addDateLabel = new JLabel();
+-
+-    public JobListCellRenderer() {
+-        setLayout(new BorderLayout(10, 10));
+-        add(jobTitleAndCompanyLabel, BorderLayout.WEST);
+-        add(addDateLabel, BorderLayout.EAST);
+-        setPreferredSize(new Dimension(getPreferredSize().width, 50));
+-    }
+-
+-    @Override
+-    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+-        if (!(value instanceof Job)) {
+-            return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+-        }
+-
+-        Job job = (Job) value;
+-        JPanel panel = new RoundedPanel(new BorderLayout(10, 10), 10, true);
+-        panel.setPreferredSize(new Dimension(panel.getPreferredSize().width, 50));
+-
+-        String jobTitleAndCompanyText = job.getJobTitle() + " | " + job.getJobCompany();
+-        jobTitleAndCompanyLabel.setText(jobTitleAndCompanyText);
+-
+-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+-        String addDateText = "Add Date: " + dateFormat.format(job.getAddDate());
+-        addDateLabel.setText(addDateText);
+-
+-        panel.add(jobTitleAndCompanyLabel, BorderLayout.WEST);
+-        panel.add(addDateLabel, BorderLayout.EAST);
+-
+-        setBackgroundForElements(panel, job);
+-
+-        if (isSelected) {
+-            panel.setForeground(list.getSelectionForeground());
+-            panel.setBackground(list.getSelectionBackground());
+-        }
+-        return panel;
+-    }
+-
+-    private void setBackgroundForElements(JPanel panel, Job job) {
+-        switch (job.getStatus()) {
+-            case 0 -> panel.setBackground(Color.decode("#00FF00"));
+-            case 1 -> panel.setBackground(Color.decode("#7C7CF9"));
+-            case 2 -> panel.setBackground(Color.decode("#FFA500"));
+-            case 3 -> panel.setBackground(Color.decode("#C102C1"));
+-            case 4 -> panel.setBackground(Color.decode("#009E00"));
+-            case 5 -> panel.setBackground(Color.decode("#FF0000"));
+-            default -> panel.setBackground(Color.WHITE); // ?? ?????????
+-        }
+-    }
+-}
+\ No newline at end of file
+Index: src/main/java/com/fo4ik/panel/settings/LanguagePanel.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/panel/settings/LanguagePanel.java b/src/main/java/com/fo4ik/panel/settings/LanguagePanel.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/panel/settings/LanguagePanel.java	
++++ /dev/null	
+@@ -1,48 +0,0 @@
+-package com.fo4ik.panel.settings;
+-
+-import com.fo4ik.config.Config;
+-import com.fo4ik.engine.render.LanguageListCellRenderer;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-import java.util.ResourceBundle;
+-
+-public class LanguagePanel extends SettingsPanel {
+-
+-    public void getLanguage() {
+-        ResourceBundle resourceBundle = Config.getResourceBundle();
+-        JPanel languagePanel = new JPanel(new BorderLayout());
+-//Top panel
+-        JPanel topPanel = new JPanel(new BorderLayout());
+-        JLabel languageLabel = new JLabel(resourceBundle.getString("settings.chooseLanguage"));
+-        JTextField languageField = new JTextField(10);
+-        topPanel.add(languageLabel, BorderLayout.WEST);
+-        topPanel.add(languageField, BorderLayout.CENTER);
+-        languagePanel.add(topPanel, BorderLayout.NORTH);
+-
+-        //Center panel
+-        DefaultListModel<String> languageListModel = new DefaultListModel<>();
+-        for (String languageName : Config.SUPPORTED_LANGUAGES_MAP.values()) {
+-            languageListModel.addElement(languageName);
+-        }
+-        JList<String> languageList = new JList<>(languageListModel);
+-        languageList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+-        languageList.setCellRenderer(new LanguageListCellRenderer());
+-        JScrollPane scrollPane = new JScrollPane(languageList);
+-        languagePanel.add(scrollPane, BorderLayout.CENTER);
+-
+-        //Bottom panel
+-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+-        JButton returnButton = new JButton(resourceBundle.getString("button.back"));
+-        JButton applyButton = new JButton(resourceBundle.getString("button.apply"));
+-        bottomPanel.add(returnButton);
+-        bottomPanel.add(applyButton);
+-        languagePanel.add(bottomPanel, BorderLayout.SOUTH);
+-
+-        frame.getContentPane().removeAll();
+-        frame.getContentPane().add(languagePanel);
+-        frame.getContentPane().repaint();
+-        frame.getContentPane().revalidate();
+-    }
+-
+-}
+Index: src/main/java/com/fo4ik/engine/render/LanguageListCellRenderer.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/engine/render/LanguageListCellRenderer.java b/src/main/java/com/fo4ik/engine/render/LanguageListCellRenderer.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/engine/render/LanguageListCellRenderer.java	
++++ /dev/null	
+@@ -1,18 +0,0 @@
+-package com.fo4ik.engine.render;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-
+-public class LanguageListCellRenderer extends DefaultListCellRenderer {
+-    @Override
+-    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+-        Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+-        if (renderer instanceof JLabel) {
+-            JLabel label = (JLabel) renderer;
+-            label.setFont(new Font("Arial", Font.PLAIN, 16));
+-            label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+-        }
+-        return renderer;
+-    }
+-
+-}

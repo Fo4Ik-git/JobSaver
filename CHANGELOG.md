@@ -1,5 +1,9 @@
 # Change History (Changelog)
 
+## Version 2.0.0
+## Added
+* Transfer to [JavaFx](https://openjfx.io/) for the graphical interface.
+* Added support multilanguage interface
 
 ## Version 1.0.1 
 

@@ -1,0 +1,910 @@
+Index: src/main/java/com/fo4ik/engine/HtmlParser.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/engine/HtmlParser.java b/src/main/java/com/fo4ik/engine/HtmlParser.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/engine/HtmlParser.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,63 +0,0 @@
+-package com.fo4ik.engine;
+-
+-import org.jsoup.Jsoup;
+-import org.jsoup.nodes.Document;
+-import org.jsoup.nodes.Element;
+-import org.jsoup.select.Elements;
+-
+-import java.util.List;
+-public class HtmlParser {
+-
+-    private static Document document;
+-
+-    private static void getDocument(String url) {
+-        try {
+-            document = Jsoup.connect(url).get();
+-        } catch (Exception e) {
+-            e.printStackTrace();
+-        }
+-    }
+-
+-    public static String getJobTitle(String url) {
+-        getDocument(url);
+-        Elements jobTitle = document.select(".top-card-layout__title");
+-        return jobTitle.text();
+-    }
+-
+-    public static String getJobCompany(String url) {
+-        getDocument(url);
+-        Elements jobCompany = document.select(".topcard__org-name-link");
+-        return jobCompany.text();
+-    }
+-
+-    public static String getHtml(String url) {
+-        try {
+-            getDocument(url);
+-            Elements headerElements = document.select("header");
+-            Elements navElements = document.select("nav.nav[aria-label=Primary]");
+-            Elements sectionElementsRight = document.select("section.right-rail");
+-            Elements sectionElementsJob = document.select("section.similar-jobs");
+-            Elements sectionJobAlert = document.select("section.job-alert-redirect-section");
+-            Elements similarPeople = document.select(".face-pile.flex");
+-            Elements globalAlerts = document.select("#artdeco-global-alerts-cls-offset");
+-            Elements elementsToRemove = document.select(".top-card-layout__cta-container");
+-
+-            List<Elements> elementsList = List.of(headerElements, navElements, sectionElementsRight, sectionElementsJob, sectionJobAlert, similarPeople, globalAlerts, elementsToRemove);
+-
+-            deleteElements(elementsList);
+-
+-            return document.html();
+-        } catch (Exception e) {
+-            e.printStackTrace();
+-        }
+-        return null;
+-    }
+-
+-    private static void deleteElements(List<Elements> elements) {
+-        for (Elements element : elements) {
+-            for (Element el : element) {
+-                el.remove();
+-            }
+-        }
+-    }
+-}
+Index: src/main/resources/language.properties
+===================================================================
+diff --git a/src/main/resources/language.properties b/src/main/resources/language.properties
+deleted file mode 100644
+--- a/src/main/resources/language.properties	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,8 +0,0 @@
+-menuItemButtonSettings = Settings
+-menuButtonFile = File
+-JobStatus.New = New
+-JobStatus.Viewed = Viewed
+-JobStatus.Applied = Applied
+-JobStatus.Interview = Interview
+-JobStatus.Offer = Offer
+-JobStatus.Rejected = Rejected
+\ No newline at end of file
+Index: src/main/java/com/fo4ik/panel/MenuPanel.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/panel/MenuPanel.java b/src/main/java/com/fo4ik/panel/MenuPanel.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/panel/MenuPanel.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,23 +0,0 @@
+-package com.fo4ik.panel;
+-
+-import com.fo4ik.Main;
+-import com.fo4ik.actionListner.CustomActionListener;
+-
+-import javax.swing.*;
+-
+-public class MenuPanel extends Main {
+-
+-    public void getMenu() {
+-        JMenuBar menuBar = new JMenuBar();
+-        JMenu menu = new JMenu("Menu");
+-        menuBar.add(menu);
+-
+-        JMenuItem settings = new JMenuItem("Settings");
+-        settings.setActionCommand("Settings");
+-        settings.addActionListener(new CustomActionListener());
+-        menu.add(settings);
+-
+-        frame.setJMenuBar(menuBar);
+-    }
+-
+-}
+Index: src/main/java/com/fo4ik/config/ColorsConfig.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/config/ColorsConfig.java b/src/main/java/com/fo4ik/config/ColorsConfig.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/config/ColorsConfig.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,7 +0,0 @@
+-package com.fo4ik.config;
+-
+-import java.awt.*;
+-
+-public class ColorsConfig {
+-    public static final Color BACKGROUND_LIGHT = Color.white;
+-}
+Index: src/main/java/com/fo4ik/entity/Job.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/entity/Job.java b/src/main/java/com/fo4ik/entity/Job.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/entity/Job.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,75 +0,0 @@
+-package com.fo4ik.entity;
+-
+-import java.util.Date;
+-
+-public class Job {
+-    private int id;
+-    private String JobTitle, JobCompany, html;
+-    private int status;
+-    private Date addDate;
+-
+-
+-    public Job(int id, String jobTitle, String jobCompany, String html, Date addDate, int status) {
+-        this.id = id;
+-        this.JobTitle = jobTitle;
+-        this.JobCompany = jobCompany;
+-        this.html = html;
+-        this.addDate = addDate;
+-        this.status = status;
+-    }
+-
+-    public Job(String jobTitle, String jobCompany, String html, Date addDate, int status) {
+-        JobTitle = jobTitle;
+-        JobCompany = jobCompany;
+-        this.html = html;
+-        this.addDate = addDate;
+-        this.status = status;
+-    }
+-
+-    public Job() {
+-    }
+-
+-    public int getId() {
+-        return id;
+-    }
+-
+-    public String getJobTitle() {
+-        return JobTitle;
+-    }
+-
+-    public void setJobTitle(String jobTitle) {
+-        JobTitle = jobTitle;
+-    }
+-
+-    public String getJobCompany() {
+-        return JobCompany;
+-    }
+-
+-    public void setJobCompany(String jobCompany) {
+-        JobCompany = jobCompany;
+-    }
+-
+-    public String getHtml() {
+-        return html;
+-    }
+-
+-    public void setHtml(String html) {
+-        this.html = html;
+-    }
+-
+-    public Date getAddDate() {
+-        return addDate;
+-    }
+-
+-    public void setAddDate(Date addDate) {
+-        this.addDate = addDate;
+-    }
+-
+-    public int getStatus() {
+-        return status;
+-    }
+-
+-    public void setStatus(int status) {
+-        this.status = status;
+-    }
+-}
+Index: src/main/java/com/fo4ik/panel/ListPanel.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/panel/ListPanel.java b/src/main/java/com/fo4ik/panel/ListPanel.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/panel/ListPanel.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,65 +0,0 @@
+-package com.fo4ik.panel;
+-
+-import com.fo4ik.Main;
+-import com.fo4ik.actionListner.CustomActionListener;
+-import com.fo4ik.config.ColorsConfig;
+-import com.fo4ik.engine.JobListCellRenderer;
+-import com.fo4ik.entity.Job;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-import java.util.List;
+-
+-public class ListPanel extends Main {
+-
+-    private final DefaultListModel<Job> listModel;
+-    private final List<Job> jobs;
+-
+-
+-    public ListPanel() {
+-        dbHelper.connect();
+-        this.listModel = new DefaultListModel<>();
+-        this.jobs = dbHelper.getAllJobs();
+-        dbHelper.close();
+-    }
+-
+-    public ListPanel(List<Job> jobs) {
+-        this.listModel = new DefaultListModel<>();
+-        this.jobs = jobs;
+-    }
+-
+-    public void getListPanel() {
+-        listModel.addAll(jobs);
+-
+-        JPanel panel = new JPanel(new BorderLayout());
+-        panel.setBackground(ColorsConfig.BACKGROUND_LIGHT);
+-        panel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 5));
+-
+-        JButton addJobButton = new JButton("Add job");
+-        addJobButton.setActionCommand("Add job");
+-        addJobButton.addActionListener(new CustomActionListener());
+-        panel.add(addJobButton, BorderLayout.NORTH);
+-
+-        JList<Job> list = new JList<>(listModel);
+-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+-        list.setCellRenderer(new JobListCellRenderer());
+-
+-        JScrollPane scrollPane = new JScrollPane(list);
+-        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+-        scrollPane.setBackground(ColorsConfig.BACKGROUND_LIGHT);
+-        panel.add(scrollPane, BorderLayout.CENTER);
+-
+-        list.addListSelectionListener(e -> {
+-            if (!e.getValueIsAdjusting()) {
+-                Job selectedJob = list.getSelectedValue();
+-
+-                if (selectedJob != null) {
+-                    WebPanel webPanel = new WebPanel();
+-                    webPanel.getWebPanel(selectedJob);
+-                }
+-            }
+-        });
+-
+-        frame.getContentPane().add(panel);
+-    }
+-}
+Index: src/main/java/com/fo4ik/database/DBHelper.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/database/DBHelper.java b/src/main/java/com/fo4ik/database/DBHelper.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/database/DBHelper.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,139 +0,0 @@
+-package com.fo4ik.database;
+-
+-import com.fo4ik.config.Config;
+-import com.fo4ik.entity.Job;
+-
+-import java.sql.*;
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-public class DBHelper {
+-
+-    private Connection connection;
+-
+-    public void connect() {
+-        try {
+-            connection = DriverManager.getConnection("jdbc:sqlite:" + Config.APP_DATABASE_NAME);
+-        } catch (SQLException e) {
+-            System.out.println("Error: " + e.getMessage());
+-        }
+-    }
+-
+-    public void createTable() {
+-        String createTableSQL = "CREATE TABLE IF NOT EXISTS jobs (" +
+-                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+-                "jobTitle TEXT," +
+-                "jobCompany TEXT," +
+-                "html TEXT," +
+-                "addDate DATE," +
+-                "status INT" +
+-                ")";
+-        try (Statement statement = connection.createStatement()) {
+-            statement.execute(createTableSQL);
+-        } catch (SQLException e) {
+-            System.out.println("Error: " + e.getMessage());
+-        }
+-    }
+-
+-    public void addJob(Job job) {
+-        String insertSQL = "INSERT INTO jobs (jobTitle, jobCompany, html, addDate, status) VALUES (?, ?, ?, ?, ?)";
+-
+-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+-            gerPreparedStatment(job, preparedStatement);
+-            preparedStatement.executeUpdate();
+-        } catch (SQLException e) {
+-            System.out.println("Error adding job to the database: " + e.getMessage());
+-        }
+-    }
+-
+-    public void updateJob(Job job) {
+-        String updateSQL = "UPDATE jobs SET jobTitle = ?, jobCompany = ?, html = ?, addDate = ? , status = ? WHERE id = ?";
+-
+-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+-            gerPreparedStatment(job, preparedStatement);
+-            preparedStatement.setInt(6, job.getId());
+-            preparedStatement.executeUpdate();
+-        } catch (SQLException e) {
+-            System.out.println("Error updating job in the database: " + e.getMessage());
+-        }
+-    }
+-
+-    private void gerPreparedStatment(Job job, PreparedStatement preparedStatement) throws SQLException {
+-        preparedStatement.setString(1, job.getJobTitle());
+-        preparedStatement.setString(2, job.getJobCompany());
+-        preparedStatement.setString(3, job.getHtml());
+-        preparedStatement.setDate(4, new Date(job.getAddDate().getTime()));
+-        preparedStatement.setInt(5, job.getStatus());
+-    }
+-
+-    //Create a method to delete a job from the database
+-    public void deleteJob(Job job) {
+-        String deleteSQL = "DELETE FROM jobs WHERE id = ?";
+-
+-        try (PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+-            preparedStatement.setInt(1, job.getId());
+-            preparedStatement.executeUpdate();
+-        } catch (SQLException e) {
+-            System.out.println("Error deleting job from the database: " + e.getMessage());
+-        }
+-    }
+-
+-
+-    public List<Job> getAllJobs() {
+-        List<Job> jobs = new ArrayList<>();
+-
+-        String selectSQL = "SELECT * FROM jobs";
+-
+-        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
+-            getJobResult(jobs, preparedStatement);
+-        } catch (SQLException e) {
+-            System.out.println("Error fetching jobs from the database: " + e.getMessage());
+-        }
+-
+-        return jobs;
+-    }
+-
+-    public List<Job> searchJobsByTitleOrCompany(String keyword) {
+-        List<Job> matchingJobs = new ArrayList<>();
+-
+-        String searchSQL = "SELECT * FROM jobs WHERE jobTitle LIKE ? OR jobCompany LIKE ?";
+-
+-        try (PreparedStatement preparedStatement = connection.prepareStatement(searchSQL)) {
+-            String searchKeyword = "%" + keyword + "%"; // Add wildcard % for partial matching
+-            preparedStatement.setString(1, searchKeyword);
+-            preparedStatement.setString(2, searchKeyword);
+-
+-            getJobResult(matchingJobs, preparedStatement);
+-        } catch (SQLException e) {
+-            System.out.println("Error searching jobs in the database: " + e.getMessage());
+-        }
+-
+-        return matchingJobs;
+-    }
+-
+-    private void getJobResult(List<Job> jobs, PreparedStatement preparedStatement) throws SQLException {
+-        ResultSet resultSet = preparedStatement.executeQuery();
+-
+-        while (resultSet.next()) {
+-            int id = resultSet.getInt("id");
+-            String jobTitle = resultSet.getString("jobTitle");
+-            String jobCompany = resultSet.getString("jobCompany");
+-            String html = resultSet.getString("html");
+-            Date addDate = resultSet.getDate("addDate");
+-            int status = resultSet.getInt("status");
+-
+-            Job job = new Job(id, jobTitle, jobCompany, html, addDate, status);
+-            jobs.add(job);
+-        }
+-    }
+-
+-    public void close() {
+-        try {
+-            if (connection != null) {
+-                connection.close();
+-            }
+-        } catch (SQLException e) {
+-            System.out.println("Error: " + e.getMessage());
+-        }
+-    }
+-}
+Index: .idea/resourceBundles.xml
+===================================================================
+diff --git a/.idea/resourceBundles.xml b/.idea/resourceBundles.xml
+deleted file mode 100644
+--- a/.idea/resourceBundles.xml	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,16 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="ResourceBundleManager">
+-    <file url="file://$PROJECT_DIR$/src/main/resources/language.properties" />
+-    <file url="file://$PROJECT_DIR$/src/main/resources/language_pl.properties" />
+-    <file url="file://$PROJECT_DIR$/src/main/resources/language_ru.properties" />
+-    <file url="file://$PROJECT_DIR$/src/main/resources/language_ua.properties" />
+-    <custom-resource-bundle>
+-      <file value="file://$PROJECT_DIR$/src/main/resources/language.properties" />
+-      <file value="file://$PROJECT_DIR$/src/main/resources/language_pl.properties" />
+-      <file value="file://$PROJECT_DIR$/src/main/resources/language_ru.properties" />
+-      <file value="file://$PROJECT_DIR$/src/main/resources/language_ua.properties" />
+-      <base-name>language</base-name>
+-    </custom-resource-bundle>
+-  </component>
+-</project>
+\ No newline at end of file
+Index: src/main/java/com/fo4ik/window/AddJobWindow.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/window/AddJobWindow.java b/src/main/java/com/fo4ik/window/AddJobWindow.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/window/AddJobWindow.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,74 +0,0 @@
+-package com.fo4ik.window;
+-
+-import com.fo4ik.database.DBHelper;
+-import com.fo4ik.engine.HtmlParser;
+-import com.fo4ik.entity.Job;
+-import com.fo4ik.panel.ListPanel;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-import java.util.Date;
+-
+-public class AddJobWindow extends JFrame {
+-
+-    private static DBHelper dbHelper;
+-
+-    public AddJobWindow() {
+-        setTitle("Add Job");
+-
+-        dbHelper = new DBHelper();
+-
+-        setSize(800, 400);
+-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+-        JPanel panel = createPanel();
+-        add(panel);
+-        setLocationRelativeTo(null);
+-        setVisible(true);
+-    }
+-
+-    private JPanel createPanel() {
+-        JPanel panel = new JPanel();
+-        panel.setLayout(new GridLayout(4, 2, 10, 10));
+-
+-        JLabel linkLabel = new JLabel("Link:");
+-        JTextField linkField = new JTextField(20);
+-
+-        JLabel hintLabel = new JLabel();
+-        hintLabel.setBackground(Color.darkGray);
+-        hintLabel.setFont(new Font("Serif", Font.BOLD, 20));
+-        hintLabel.setForeground(Color.red);
+-
+-        panel.add(linkLabel);
+-        panel.add(linkField);
+-
+-        panel.add(hintLabel);
+-
+-        JButton addButton = new JButton("Add Job");
+-        addButton.addActionListener(e -> {
+-
+-            if (linkField.getText().isEmpty()) {
+-                hintLabel.setText("Please fill all fields");
+-                return;
+-            } else {
+-
+-                Job job = new Job(HtmlParser.getJobTitle(linkField.getText()), HtmlParser.getJobCompany(linkField.getText()), HtmlParser.getHtml(linkField.getText()), new Date(), 0);
+-                dbHelper.connect();
+-                dbHelper.addJob(job);
+-
+-                ListPanel listPanelClass = new ListPanel();
+-                listPanelClass.update();
+-
+-                dbHelper.close();
+-            }
+-
+-            this.dispose();
+-        });
+-
+-        panel.add(addButton);
+-
+-        panel.setBackground(Color.gray);
+-
+-        panel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+-        return panel;
+-    }
+-}
+Index: src/main/java/com/fo4ik/Main.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/Main.java b/src/main/java/com/fo4ik/Main.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/Main.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,84 +0,0 @@
+-package com.fo4ik;
+-
+-import com.fo4ik.config.Config;
+-import com.fo4ik.database.DBHelper;
+-import com.fo4ik.entity.Job;
+-import com.fo4ik.panel.ListPanel;
+-import com.fo4ik.panel.MenuPanel;
+-import com.fo4ik.panel.TopPanel;
+-import com.formdev.flatlaf.FlatLightLaf;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-import java.nio.file.Files;
+-import java.nio.file.Path;
+-import java.util.List;
+-
+-public class Main extends JFrame {
+-
+-    public static JFrame frame;
+-    protected static DBHelper dbHelper = new DBHelper();
+-
+-    public void initComponents() throws Exception {
+-        FlatLightLaf.setup();
+-
+-        Path database = Path.of(Config.APP_DATABASE_NAME);
+-        if (!Files.exists(database)) {
+-            Files.createFile(database);
+-        }
+-
+-        dbHelper.connect();
+-        dbHelper.createTable();
+-
+-        frame = new JFrame(Config.APP_NAME);
+-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+-        frame.setMinimumSize(new Dimension(800, 600));
+-
+-        ImageIcon icon = new ImageIcon("src/main/resources/img/icon.png");
+-        frame.setIconImage(icon.getImage());
+-
+-        update();
+-
+-        dbHelper.close();
+-        frame.setVisible(true);
+-    }
+-
+-    public void update(){
+-        frame.getContentPane().removeAll();
+-
+-        MenuPanel menuPanelClass = new MenuPanel();
+-        menuPanelClass.getMenu();
+-
+-        TopPanel topPanelClass = new TopPanel();
+-        topPanelClass.getTopPanel();
+-
+-        ListPanel listPanelClass = new ListPanel();
+-        listPanelClass.getListPanel();
+-        frame.getContentPane().repaint();
+-        frame.getContentPane().revalidate();
+-    }
+-
+-    public void update(List<Job> jobs){
+-        frame.getContentPane().removeAll();
+-        MenuPanel menuPanelClass = new MenuPanel();
+-        menuPanelClass.getMenu();
+-
+-        TopPanel topPanelClass = new TopPanel();
+-        topPanelClass.getTopPanel();
+-
+-        ListPanel listPanelClass = new ListPanel(jobs);
+-        listPanelClass.getListPanel();
+-        frame.getContentPane().repaint();
+-        frame.getContentPane().revalidate();
+-    }
+-
+-    public static void main(String[] args) {
+-        SwingUtilities.invokeLater(() -> {
+-            try {
+-                new Main().initComponents();
+-            } catch (Exception e) {
+-                e.printStackTrace();
+-            }
+-        });
+-    }
+-}
+Index: src/main/java/com/fo4ik/panel/WebPanel.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/panel/WebPanel.java b/src/main/java/com/fo4ik/panel/WebPanel.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/panel/WebPanel.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,140 +0,0 @@
+-package com.fo4ik.panel;
+-
+-import com.fo4ik.Main;
+-import com.fo4ik.config.Config;
+-import com.fo4ik.entity.Job;
+-import javafx.application.Platform;
+-import javafx.embed.swing.JFXPanel;
+-import javafx.scene.Scene;
+-import javafx.scene.layout.StackPane;
+-import javafx.scene.web.WebEngine;
+-import javafx.scene.web.WebView;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-
+-public class WebPanel extends Main {
+-
+-    private static JFXPanel jfxPanel;
+-
+-    private static JTextField jobTitleField;
+-    private static JTextField jobCompanyField;
+-
+-    public void getWebPanel(Job job){
+-        JPanel panel = new JPanel();
+-        JPanel webPanel = getWebFrame(job);
+-        JPanel editPanel = getEditPanel(job);
+-
+-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, editPanel, webPanel);
+-
+-        panel.setLayout(new BorderLayout());
+-        panel.add(splitPane, BorderLayout.CENTER);
+-
+-        frame.getContentPane().removeAll();
+-        frame.getContentPane().add(panel);
+-        frame.getContentPane().repaint();
+-        frame.getContentPane().revalidate();
+-
+-    }
+-
+-    private JPanel getEditPanel(Job job) {
+-        JPanel editPanel = new JPanel();
+-        editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
+-        editPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+-
+-        jobTitleField = new JTextField(job.getJobTitle());
+-        jobCompanyField = new JTextField(job.getJobCompany());
+-        JComboBox<String> statusComboBox = new JComboBox<>(Config.STATUS_OPTIONS);
+-        statusComboBox.setSelectedIndex(job.getStatus());
+-
+-        Dimension maxFieldSize = new Dimension(Integer.MAX_VALUE, 50);
+-        jobTitleField.setMaximumSize(maxFieldSize);
+-        jobCompanyField.setMaximumSize(maxFieldSize);
+-        statusComboBox.setMaximumSize(maxFieldSize);
+-
+-        JButton backButton = new JButton("Back");
+-        backButton.addActionListener(e -> {
+-            dbHelper.connect();
+-            update();
+-
+-            dbHelper.close();
+-        });
+-
+-        JButton saveButton = new JButton("Save");
+-        saveButton.setBackground(Color.green);
+-
+-        saveButton.addActionListener(e -> {
+-            if (jobTitleField.getText().isEmpty() || jobCompanyField.getText().isEmpty()) {
+-                JOptionPane.showMessageDialog(null, "Please fill all fields");
+-                return;
+-            }
+-            job.setJobTitle(jobTitleField.getText());
+-            job.setJobCompany(jobCompanyField.getText());
+-            job.setStatus(statusComboBox.getSelectedIndex());
+-
+-            dbHelper.connect();
+-            dbHelper.updateJob(job);
+-            dbHelper.close();
+-        });
+-
+-        JButton deleteButton = new JButton("Delete");
+-        deleteButton.setBackground(Color.red);
+-        deleteButton.addActionListener(e -> {
+-            dbHelper.connect();
+-            dbHelper.deleteJob(job);
+-
+-            frame.getContentPane().removeAll();
+-
+-            ListPanel listPanelClass = new ListPanel();
+-            listPanelClass.getListPanel();
+-
+-            frame.getContentPane().repaint();
+-            frame.getContentPane().revalidate();
+-
+-            dbHelper.close();
+-        });
+-
+-        JPanel buttonPanel = new JPanel();
+-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+-        buttonPanel.add(backButton);
+-        buttonPanel.add(Box.createVerticalStrut(10));
+-        buttonPanel.add(saveButton);
+-        buttonPanel.add(Box.createVerticalStrut(10));
+-        buttonPanel.add(deleteButton);
+-
+-
+-        editPanel.add(new JLabel("Job Title:"));
+-        editPanel.add(jobTitleField);
+-        editPanel.add(new JLabel("Job Company:"));
+-        editPanel.add(jobCompanyField);
+-        editPanel.add(new JLabel("Status:"));
+-        editPanel.add(statusComboBox);
+-        editPanel.add(Box.createVerticalStrut(10));
+-        editPanel.add(buttonPanel);
+-
+-        return editPanel;
+-    }
+-
+-    private JPanel getWebFrame(Job job) {
+-        JPanel webPanel = new JPanel();
+-        jfxPanel = new JFXPanel();
+-        webPanel.setLayout(new BorderLayout());
+-        webPanel.add(jfxPanel, BorderLayout.CENTER);
+-
+-        Platform.setImplicitExit(false);
+-        Platform.runLater(() -> {
+-            WebView webView = new WebView();
+-            WebEngine webEngine = webView.getEngine();
+-
+-            // Html file to string
+-            webEngine.loadContent(job.getHtml());
+-
+-            StackPane stackPane = new StackPane();
+-            stackPane.getChildren().add(webView);
+-            Scene scene = new Scene(stackPane);
+-            jfxPanel.setScene(scene);
+-        });
+-
+-        return webPanel;
+-    }
+-}
+Index: src/main/java/com/fo4ik/actionListner/CustomActionListener.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/actionListner/CustomActionListener.java b/src/main/java/com/fo4ik/actionListner/CustomActionListener.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/actionListner/CustomActionListener.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,18 +0,0 @@
+-package com.fo4ik.actionListner;
+-
+-import com.fo4ik.Main;
+-import com.fo4ik.window.AddJobWindow;
+-
+-import java.awt.event.ActionEvent;
+-import java.awt.event.ActionListener;
+-
+-public class CustomActionListener extends Main implements ActionListener {
+-    @Override
+-    public void actionPerformed(ActionEvent e) {
+-        switch (e.getActionCommand()) {
+-            case "Add job":
+-                AddJobWindow addJobWindow = new AddJobWindow();
+-                break;
+-        }
+-    }
+-}
+Index: src/main/java/com/fo4ik/panel/TopPanel.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/panel/TopPanel.java b/src/main/java/com/fo4ik/panel/TopPanel.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/panel/TopPanel.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,61 +0,0 @@
+-package com.fo4ik.panel;
+-
+-import com.fo4ik.Main;
+-import com.fo4ik.entity.Job;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-import java.util.List;
+-
+-public class TopPanel extends Main {
+-
+-    public void getTopPanel() {
+-        JPanel topPanel = new JPanel(new BorderLayout());
+-        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+-
+-        JTextField searchField = new JTextField();
+-        searchField.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+-
+-        JPanel buttonsPanel = new JPanel(new GridLayout(1, 2));
+-        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+-
+-        JButton clearButton = new JButton("Clear");
+-
+-        JButton searchButton = new JButton("Search");
+-        searchButton.setActionCommand("Search");
+-        searchButton.addActionListener(e -> {
+-            String searchQuery = searchField.getText();
+-            search(searchQuery);
+-        });
+-        searchField.addActionListener(e -> {
+-            String searchQuery = searchField.getText();
+-            search(searchQuery);
+-        });
+-
+-
+-        clearButton.addActionListener(e -> update());
+-
+-
+-        buttonsPanel.add(searchButton);
+-        buttonsPanel.add(clearButton);
+-
+-        topPanel.add(searchField, BorderLayout.CENTER);
+-        topPanel.add(buttonsPanel, BorderLayout.EAST);
+-
+-        frame.getContentPane().add(topPanel, BorderLayout.NORTH);
+-    }
+-
+-    private void search(String searchQuery) {
+-        if (!searchQuery.isEmpty()) {
+-            dbHelper.connect();
+-            List<Job> jobs = dbHelper.searchJobsByTitleOrCompany(searchQuery);
+-            if (jobs.isEmpty()) {
+-                update();
+-            } else {
+-                update(jobs);
+-            }
+-            dbHelper.close();
+-        }
+-    }
+-
+-}
+Index: src/main/java/com/fo4ik/config/Config.java
+===================================================================
+diff --git a/src/main/java/com/fo4ik/config/Config.java b/src/main/java/com/fo4ik/config/Config.java
+deleted file mode 100644
+--- a/src/main/java/com/fo4ik/config/Config.java	(revision 66ed866dc5e319e900e81205ee3308037071358e)
++++ /dev/null	(revision 66ed866dc5e319e900e81205ee3308037071358e)
+@@ -1,31 +0,0 @@
+-package com.fo4ik.config;
+-
+-import java.util.Locale;
+-import java.util.ResourceBundle;
+-
+-public class Config {
+-
+-    public static final String APP_NAME = "Job saver";
+-    public static final String APP_VERSION = "0.0.1";
+-    public static final String APP_AUTHOR = "Fo4Ik";
+-    public static final String APP_DATABASE_NAME = "database.db";
+-
+-//    public static final String APP_ICON = "src/main/resources/icon.png";
+-
+-    public static ResourceBundle resourceBundle = ResourceBundle.getBundle("language", Locale.getDefault());
+-
+-    public static final String[] STATUS_OPTIONS = {
+-            resourceBundle.getString("JobStatus.New"),
+-            resourceBundle.getString("JobStatus.Viewed"),
+-            resourceBundle.getString("JobStatus.Applied"),
+-            resourceBundle.getString("JobStatus.Interview"),
+-            resourceBundle.getString("JobStatus.Offer"),
+-            resourceBundle.getString("JobStatus.Rejected")};
+-    public static ResourceBundle getResourceBundle() {
+-        return resourceBundle;
+-    }
+-
+-    public static void setResourceBundle(String language) {
+-        resourceBundle = ResourceBundle.getBundle("language", new Locale(language));
+-    }
+-}
+diff --git a/src/main/resources/language_ru.properties b/src/main/resources/language_ru.properties
+deleted file mode 100644
+diff --git a/src/main/resources/language_ua.properties b/src/main/resources/language_ua.properties
+deleted file mode 100644
+diff --git a/src/main/resources/language_pl.properties b/src/main/resources/language_pl.properties
+deleted file mode 100644

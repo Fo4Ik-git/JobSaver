@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+
+<HBox fx:id="jobBox" styleClass="job-cell" stylesheets="@../../../../css/jobCell.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fo4ik.jobsaver.controllers.JobCellController">
+    <HBox alignment="CENTER_LEFT" styleClass="job-header" >
+        <Label fx:id="titleLabel" text="" HBox.hgrow="ALWAYS" />
+    </HBox>
+    <Region HBox.hgrow="ALWAYS" />
+    <Label fx:id="dateLabel" styleClass="job-date" />
+</HBox>
