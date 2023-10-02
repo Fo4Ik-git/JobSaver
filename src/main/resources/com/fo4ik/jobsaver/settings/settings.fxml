@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane fx:id="mainPanel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fo4ik.jobsaver.controllers.settings.SettingsController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="settings-panel" stylesheets="@../../../../css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane fx:id="top" prefHeight="150.0" prefWidth="200.0" styleClass="user-settings" />
+            <AnchorPane prefHeight="150.0" prefWidth="200.0" styleClass="general-settings" />
+            <AnchorPane prefHeight="105.0" prefWidth="200.0" styleClass="language-settings" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

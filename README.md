@@ -1,7 +1,8 @@
 # JobSaver
 
 [![Download Latest](https://img.shields.io/github/v/release/Fo4Ik-git/JobSaver?label=Download%20Latest&logo=download)](https://github.com/Fo4Ik-git/JobSaver/releases/latest)
-[![License](https://img.shields.io/github/license/Fo4Ik-git/JobSaver)](LICENSE)
+[![License: License](https://img.shields.io/badge/License-JobSaver-brightgreen?label=License)](LICENSE)
+
 
 **JobSaver** is an app that helps you keep track of your job applications. You can add jobs that you are interested in,
 check their responsibilities, and update their status. JobSaver also lets you see the progress of your applications in a
@@ -14,7 +15,19 @@ dashboard. With JobSaver, you can easily manage your job search and never miss a
 
 ## Getting Started
 
-To build and run the project, you can use the provided `build.gradle` file. Follow these steps:
+#### To run the project in an IDE, follow these steps:
+
+1. Clone the repository to your local machine.
+
+   ```bash
+   git clone https://github.com/Fo4Ik-git/JobSaver.git
+   ```
+
+2. Open the project in your IDE of choice.
+3. Run the `Main` class.
+
+
+#### To build and run the project, you can use the provided `build.gradle` file. Follow these steps:
 
 1. Clone the repository to your local machine.
 

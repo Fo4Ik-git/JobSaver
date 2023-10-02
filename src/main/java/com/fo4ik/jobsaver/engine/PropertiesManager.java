@@ -1,20 +1,26 @@
 package com.fo4ik.jobsaver.engine;
 
+import com.fo4ik.jobsaver.config.Config;
+
 import java.io.*;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
 public class PropertiesManager {
 
-    public static Map<Object, Object> getProperties() {
+    public static Map<Object, Object> getProperties(String name) {
         Map<Object, Object> resultProperties = new HashMap();
 
-        try (InputStream input = new FileInputStream("Job saver.properties")) {
+        try (InputStream input = new FileInputStream(name)) {
             Properties properties = new Properties();
             properties.load(input);
-            resultProperties.put("Language", properties.getProperty("Language"));
-            resultProperties.put("Current version", properties.getProperty("Current version"));
+            //load all from properties file to map
+
+            for(String key : properties.stringPropertyNames()) {
+                resultProperties.put(key, properties.getProperty(key));
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -23,28 +29,25 @@ public class PropertiesManager {
         return resultProperties;
     }
 
-    public static void createProperties() {
-        File configFile = new File("Job saver.properties");
+    public static void createProperties(String name) {
+        File configFile = new File(name);
         if (!configFile.exists()) {
-            try (OutputStream output = new FileOutputStream("Job saver.properties")) {
+            try (OutputStream output = new FileOutputStream(name)) {
                 Properties properties = new Properties();
-                properties.setProperty("Language", "en");
-                properties.setProperty("Current version", "2.0.0");
                 properties.store(output, "Created properties file");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
 
-    public static void editProperties(String key, String value) {
-        try(InputStream input = new FileInputStream("Job saver.properties")) {
+    public static void editProperties(String name, String key, String value) {
+        try (InputStream input = new FileInputStream(name)) {
             Properties properties = new Properties();
             properties.load(input);
             properties.setProperty(key, value);
 
-            OutputStream output = new FileOutputStream("Job saver.properties");
+            OutputStream output = new FileOutputStream(name);
 
             properties.store(output, "Updated Properties: " + key + "=" + value);
         } catch (Exception e) {

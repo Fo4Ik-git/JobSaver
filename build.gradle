@@ -3,25 +3,20 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.1.0'
     id 'org.javamodularity.moduleplugin' version '1.8.12'
-    id 'org.beryx.jlink' version '2.25.0'
+    id 'org.beryx.jlink' version '2.26.0'
 }
 
 project.ext {
     mainClass = 'com.fo4ik.jobsaver.Main'
     applicationName = 'Job Saver'
-    applicationVersion = '2.0.0'
+    applicationVersion = '2.1.0'
 }
 
 application {
     mainModule = 'com.fo4ik.jobsaver'
     mainClass = "${project.mainClass}"
-    mainClassName = "${project.mainClass}"
     applicationName = "${project.applicationName}"
-    applicationVersion = "${project.applicationVersion}"
-}
-
-java {
-    modularity.inferModulePath = true
+    version = "${project.applicationVersion}"
 }
 
 group 'com.fo4ik'
@@ -34,12 +29,14 @@ repositories {
 dependencies {
     implementation 'org.jsoup:jsoup:1.16.1'
     implementation 'org.xerial:sqlite-jdbc:3.42.0.0'
+    implementation 'commons-io:commons-io:2.13.0'
 }
 
 javafx {
-    version = "19"
+    version = "20"
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.media', 'javafx.graphics']
 }
+
 
 jlink {
     imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
@@ -50,24 +47,26 @@ jlink {
     }
 
 
-
     jpackage {
+        imageOptions += ['--icon', 'src/main/resources/img/icon.ico']
+        imageOptions += ['--vendor', 'Fo4Ik']
+
         if (org.gradle.internal.os.OperatingSystem.current().windows) {
-            javaHome = System.getenv("JAVA_HOME")
             installerOptions += ['--win-per-user-install', '--win-dir-chooser', '--win-menu', '--win-shortcut']
             installerOptions += ['--win-menu-group', "${project.applicationName}"]
             installerOptions += ['--win-upgrade-uuid', generateUUID()]
             installerOptions += ['--license-file', 'LICENSE']
-
             //Optional
-            imageOptions += ['--win-console']
+//            imageOptions += ['--win-console']
         }
-        imageOptions += ['--icon', 'src/main/resources/img/icon.ico']
     }
+
 }
 
 jlinkZip {
+    //Set the name of the zip file
     group = 'distribution'
+    archivesBaseName = "Job.Saver-windows.zip"
 }
 
 def generateUUID() {
@@ -77,11 +76,8 @@ def generateUUID() {
     return uuid.toString()
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.compilerArgs += ["--module-path", "${sourceSets.main.runtimeClasspath.collect { it.absolutePath }.join(':')}"]
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
