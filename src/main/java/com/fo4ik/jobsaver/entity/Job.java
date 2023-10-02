@@ -6,27 +6,23 @@ public class Job {
     private int id;
     private String JobTitle;
     private String JobCompany;
-    private String html, css, folder;
+    private String html;
     private int status;
     private Date addDate;
 
-    public Job(int id, String jobTitle, String jobCompany, String html, String css, String folder, Date addDate, int status) {
+    public Job(int id, String jobTitle, String jobCompany, String html, Date addDate, int status) {
         this.id = id;
         this.JobTitle = jobTitle;
         this.JobCompany = jobCompany;
         this.html = html;
-        this.css = css;
-        this.folder = folder;
         this.addDate = addDate;
         this.status = status;
     }
 
-    public Job(String jobTitle, String jobCompany, String html, String css, String folder, Date addDate, int status) {
+    public Job(String jobTitle, String jobCompany, String html, Date addDate, int status) {
         this.JobTitle = jobTitle;
         this.JobCompany = jobCompany;
         this.html = html;
-        this.css = css;
-        this.folder = folder;
         this.addDate = addDate;
         this.status = status;
     }
@@ -60,22 +56,6 @@ public class Job {
 
     public void setHtml(String html) {
         this.html = html;
-    }
-
-    public String getCss() {
-        return css;
-    }
-
-    public void setCss(String css) {
-        this.css = css;
-    }
-
-    public String getFolder() {
-        return folder;
-    }
-
-    public void setFolder(String folder) {
-        this.folder = folder;
     }
 
     public Date getAddDate() {
