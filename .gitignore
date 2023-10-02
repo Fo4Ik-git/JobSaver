@@ -42,3 +42,7 @@ bin/
 .DS_Store
 
 database.db
+Job saver.properties
+data
+update.jar
+update.properties

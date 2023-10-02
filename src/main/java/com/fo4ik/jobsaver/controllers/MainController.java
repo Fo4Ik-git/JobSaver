@@ -1,26 +1,33 @@
 package com.fo4ik.jobsaver.controllers;
 
-import com.fo4ik.jobsaver.config.Config;
 import com.fo4ik.jobsaver.database.DBHelper;
+import com.fo4ik.jobsaver.engine.HtmlParser;
 import com.fo4ik.jobsaver.engine.SceneSwitcher;
 import com.fo4ik.jobsaver.entity.Job;
-import com.fo4ik.jobsaver.window.AddJobWindow;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -37,11 +44,16 @@ public class MainController implements Initializable {
     @FXML
     private TextField searchField;
     @FXML
+    private AnchorPane settings;
+    @FXML
+    private VBox mainPanel;
+
+    @FXML
     private HBox searchPanel;
     @FXML
     private Button actionButton;
-    private int width;
-    private int height;
+    private int width, height;
+    private String html;
     private DBHelper dbHelper = DBHelper.getInstance();
     private ObservableList<Job> selectedJobs = FXCollections.observableArrayList();
 
@@ -59,17 +71,27 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    void openAddWindow(ActionEvent event) {
+    void addJob(ActionEvent event) {
         try {
-            new AddJobWindow();
-        } catch (IOException var3) {
-            throw new RuntimeException(var3);
+            if (isUrl(searchField.getText())) {
+                HtmlParser htmlParser = new HtmlParser(searchField.getText());
+                Job job = new Job(htmlParser.getJobTitle(), htmlParser.getJobCompany(),
+                        htmlParser.getUrlToHtml(), htmlParser.getUrlToCss(), htmlParser.getJobFolder(), new Date(), 0);
+                DBHelper dbHelper = DBHelper.getInstance();
+                dbHelper.connect();
+                dbHelper.addJob(job);
+                dbHelper.close();
+                searchField.clear();
+            }
+        } catch (Exception e) {
+            System.out.println("Error while add job: " + e.getMessage());
         }
     }
 
     @FXML
     void openJobView(MouseEvent event) throws IOException {
         Job selectedJob = (Job) jobList.getSelectionModel().getSelectedItem();
+
         if (selectedJob != null && event.getClickCount() == 2) {
             ActionEvent actionEvent = new ActionEvent(event.getTarget(), (EventTarget) null);
             SceneSwitcher sceneSwitcher = new SceneSwitcher("/com/fo4ik/jobsaver/job/jobView.fxml");
@@ -84,19 +106,37 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    void openSettings(ActionEvent event) {
+        try {
+            //load settings.fxml like modal window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/fo4ik/jobsaver/settings/settings.fxml"));
+            Parent settingsContentRoot = loader.load();
+
+            Stage settingsStage = new Stage();
+            settingsStage.initModality(Modality.APPLICATION_MODAL); // Makes it a modal window
+            settingsStage.setTitle("Settings");
+
+            settingsStage.setScene(new Scene(settingsContentRoot));
+            settingsStage.showAndWait();
+        } catch (Exception e) {
+            System.out.println("Error while open settings: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     void search(ActionEvent event) {
-        search(searchField.getText());
+        searchJobs(searchField.getText());
     }
 
     @FXML
     void actionButton(ActionEvent event) {
-        if (searchField.getText().isEmpty()) {
-            search(event);
+        if (!searchField.getText().isEmpty()) {
+            searchJobs(searchField.getText());
         } else {
             searchField.clear();
             loadJobList();
         }
-
     }
 
     @FXML
@@ -111,6 +151,14 @@ public class MainController implements Initializable {
                 }
         }
 
+    }
+
+    @FXML
+    void mainPanelOnMouseClick(MouseEvent event) {
+        if (settings.isVisible()) {
+            settings.setVisible(false);
+            settings.getChildren().clear();
+        }
     }
 
     @FXML
@@ -130,7 +178,22 @@ public class MainController implements Initializable {
         deleteSelectedJob();
     }
 
+    //Add listener to change size of jobList when window size changed
+
+
     public void initialize(URL location, ResourceBundle resources) {
+
+        // Add a listener for changes in width
+        mainPanel.widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            this.width = newWidth.intValue();
+        });
+
+        // Add a listener for changes in height
+        mainPanel.heightProperty().addListener((obs, oldHeight, newHeight) -> {
+            this.height = newHeight.intValue();
+        });
+
+
         jobList.setPrefWidth((double) width);
         scrollPane.widthProperty().addListener((obs, oldWidth, newWidth) -> {
             jobList.setPrefWidth(newWidth.doubleValue());
@@ -146,8 +209,10 @@ public class MainController implements Initializable {
         jobList.setFixedCellSize(50.0);
         jobList.getStyleClass().add("list-cell");
         jobList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        jobList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            selectedJobs.add(newValue);
+        //add to selected jobs all selected items
+        jobList.getSelectionModel().getSelectedItems().addListener((ListChangeListener<Job>) c -> {
+            selectedJobs.clear();
+            selectedJobs.addAll(c.getList());
         });
         scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
@@ -160,17 +225,24 @@ public class MainController implements Initializable {
         dbHelper.close();
     }
 
-    private void search(String searchQuery) {
+    private void searchJobs(String searchQuery) {
         if (!searchQuery.isEmpty()) {
             dbHelper.connect();
             List<Job> jobs = dbHelper.searchJobsByTitleOrCompany(searchQuery);
-            ObservableList<Job> observableJobs = FXCollections.observableArrayList(jobs);
-            jobList.setItems(observableJobs);
+            System.out.println(jobs.size());
             dbHelper.close();
+
+            if (!jobs.isEmpty()) {
+                ObservableList<Job> observableJobs = FXCollections.observableArrayList(jobs);
+                jobList.setItems(observableJobs);
+            } else {
+                jobList.setItems(FXCollections.emptyObservableList());
+                jobList.setPlaceholder(new Label("No results found"));
+            }
+            searchField.clear();
         } else {
             loadJobList();
         }
-
     }
 
     private void deleteSelectedJob() {
@@ -187,6 +259,10 @@ public class MainController implements Initializable {
             selectedJobs.clear();
             loadJobList();
         }
+    }
+
+    private boolean isUrl(String url) {
+        return url.matches("^(http|https)://.*$");
     }
 
     private class JobListCell extends ListCell<Job> {
