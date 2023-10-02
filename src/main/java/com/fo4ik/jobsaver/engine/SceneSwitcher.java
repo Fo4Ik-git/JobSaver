@@ -5,8 +5,6 @@ import com.fo4ik.jobsaver.config.Config;
 import com.fo4ik.jobsaver.controllers.JobViewController;
 import com.fo4ik.jobsaver.entity.Job;
 import java.io.IOException;
-
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

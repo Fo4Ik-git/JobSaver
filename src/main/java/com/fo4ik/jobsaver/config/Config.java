@@ -6,14 +6,11 @@ import java.util.ResourceBundle;
 
 public class Config {
     public static final String APP_NAME = "Job saver";
-    public static final String APP_VERSION = "2.1.0";
+    public static final String APP_VERSION = "2.0.0";
     public static final String APP_AUTHOR = "Fo4Ik";
     public static final String APP_DATABASE_NAME = "database.db";
     public static final String PROPERTIES_FILE_PATH = "Job saver.properties";
-    public static final String URL_TO_RELEASE = "https://github.com/Fo4Ik-git/JobSaver/releases";
-    public static final String URL_TO_LAST_RELEASE = URL_TO_RELEASE + "/latest";
-    public static final String URL_TO_DOWNLOAD_RELEASE = URL_TO_RELEASE + "/download";
-    public static final String WIN_ZIP_NAME = "Job.Saver-windows.zip";
+    public static final String APP_ICON = "/img/icon.png";
     public static Map<String, String> SUPPORTED_LANGUAGES_MAP = Map.of("en", "English", "pl", "Polski", "uk", "Українська", "ru", "Русский");
     private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("language", Locale.getDefault());
     public String[] STATUS_OPTIONS;

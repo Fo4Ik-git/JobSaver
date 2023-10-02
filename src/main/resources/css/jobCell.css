@@ -1,0 +1,12 @@
+.job-cell {
+    -fx-background-radius: 5px;
+    -fx-alignment: CENTER;
+}
+
+.job-header {
+    -fx-padding: 0 0 0 10;
+}
+
+.job-date {
+    -fx-padding: 0 10 0 0;
+}

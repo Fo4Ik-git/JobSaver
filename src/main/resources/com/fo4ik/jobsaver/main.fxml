@@ -45,7 +45,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="mainPanel" onMouseClicked="#mainPanelOnMouseClick" prefHeight="405.0" prefWidth="720.0" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fo4ik.jobsaver.controllers.MainController">
+<VBox prefHeight="405.0" prefWidth="720.0" stylesheets="@../../../css/main.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fo4ik.jobsaver.controllers.MainController">
     <children>
         <MenuBar fx:id="menu" VBox.vgrow="NEVER">
             <menus>
@@ -59,7 +59,7 @@
                         <MenuItem mnemonicParsing="false" text="Save" />
                         <MenuItem mnemonicParsing="false" text="Save As…" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#openSettings" text="Preferences…" />
+                        <MenuItem mnemonicParsing="false" text="Preferences…" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Quit" />
                     </items>
@@ -100,7 +100,7 @@
                                                         <Insets right="5.0" />
                                                     </HBox.margin>
                                                 </Button>
-                                                <Button fx:id="addButton" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" onAction="#addJob" prefHeight="30.0" prefWidth="60.0" text="%button.add">
+                                                <Button fx:id="addButton" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" onAction="#openAddWindow" prefHeight="30.0" prefWidth="60.0" text="%button.add">
                                                     <HBox.margin>
                                                         <Insets left="5.0" />
                                                     </HBox.margin>
@@ -131,7 +131,6 @@
                                         <Insets bottom="5.0" left="5.0" top="5.0" />
                                     </padding>
                                 </ScrollPane>
-                        <AnchorPane fx:id="settings" maxWidth="500.0" minHeight="-Infinity" minWidth="200.0" prefHeight="9.999999999E9" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="260.0" AnchorPane.topAnchor="0.0" />
                             </children>
                         </AnchorPane>
                     </children>

@@ -1,0 +1,20 @@
+.save-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+}
+
+.back-button {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: white;
+}
+
+.delete-button {
+    -fx-background-color: #DA564E;
+    -fx-text-fill: white;
+}
+
+.back-button:hover, .save-button:hover, .delete-button:hover {
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
