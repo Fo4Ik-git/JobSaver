@@ -51,31 +51,22 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="New" />
-                        <MenuItem mnemonicParsing="false" text="Open…" />
-                        <Menu mnemonicParsing="false" text="Open Recent" />
+                        <MenuItem mnemonicParsing="false" onAction="#openSettings" text="%menu.settings" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                        <MenuItem mnemonicParsing="false" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save As…" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#openSettings" text="Preferences…" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Quit" />
+                        <MenuItem mnemonicParsing="false" onAction="#close" text="%menu.quit" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Copy" />
-                        <MenuItem mnemonicParsing="false" onAction="#delete" text="Delete" />
+                        <MenuItem mnemonicParsing="false" onAction="#delete" text="%menu.delete" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#selectAll" text="Select All" />
-                        <MenuItem mnemonicParsing="false" onAction="#unselectAll" text="Unselect All" />
+                        <MenuItem mnemonicParsing="false" onAction="#selectAll" text="%menu.selectAll" />
+                        <MenuItem mnemonicParsing="false" onAction="#unselectAll" text="%menu.unselectAll" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                        <MenuItem mnemonicParsing="false" text="%menu.about" />
                     </items>
                 </Menu>
             </menus>
@@ -88,19 +79,19 @@
                             <children>
                                 <AnchorPane minWidth="510.0" prefHeight="50.0" prefWidth="9.9999999999999E13" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="NEVER">
                                     <children>
-                                        <TextField fx:id="searchField" layoutY="10.0" maxWidth="1.7976931348623157E308" minWidth="500.0" onAction="#search" prefHeight="30.0" prefWidth="9.9999999999999E13" promptText="%textField.hint.searchJob" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                                        <TextField fx:id="searchField" layoutY="10.0" maxWidth="1.7976931348623157E308" minWidth="500.0" onAction="#search" prefHeight="30.0" prefWidth="9.9999999999999E13" promptText="%textField.hint.searchJob" styleClass="search-field" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
                                     </children>
                                 </AnchorPane>
                                 <AnchorPane maxWidth="1.7976931348623157E308" minWidth="200.0" prefHeight="50.0" prefWidth="9.9999999E7">
                                     <children>
                                         <HBox prefHeight="50.0" prefWidth="9.999999999999E12" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <Button fx:id="actionButton" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" onAction="#actionButton" prefHeight="30.0" prefWidth="105.0" text="%button.search-clear">
+                                                <Button fx:id="actionButton" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" onAction="#actionButton" prefHeight="30.0" prefWidth="105.0" styleClass="search-clear-button" text="%button.search-clear">
                                                     <HBox.margin>
                                                         <Insets right="5.0" />
                                                     </HBox.margin>
                                                 </Button>
-                                                <Button fx:id="addButton" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" onAction="#addJob" prefHeight="30.0" prefWidth="60.0" text="%button.add">
+                                                <Button fx:id="addButton" minHeight="30.0" minWidth="60.0" mnemonicParsing="false" onAction="#addJob" prefHeight="30.0" prefWidth="60.0" styleClass="add-button" text="%button.add">
                                                     <HBox.margin>
                                                         <Insets left="5.0" />
                                                     </HBox.margin>
@@ -121,7 +112,10 @@
                                         <!-- Use an HBox to wrap the ListView -->
                                         <HBox>
                                             <children>
-                                                <ListView fx:id="jobList" onKeyPressed="#handleDeleteKey" onMouseClicked="#openJobView" HBox.hgrow="ALWAYS" />
+                                                <ListView fx:id="jobList" onKeyPressed="#handleDeleteKey" onMouseClicked="#openJobView" styleClass="list" stylesheets="@../../../css/style.css" HBox.hgrow="ALWAYS">
+                                       <padding>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </padding></ListView>
                                             </children>
                                         </HBox>
                                     </content>
@@ -131,7 +125,6 @@
                                         <Insets bottom="5.0" left="5.0" top="5.0" />
                                     </padding>
                                 </ScrollPane>
-                        <AnchorPane fx:id="settings" maxWidth="500.0" minHeight="-Infinity" minWidth="200.0" prefHeight="9.999999999E9" style="-fx-background-color: black;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="260.0" AnchorPane.topAnchor="0.0" />
                             </children>
                         </AnchorPane>
                     </children>

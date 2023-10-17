@@ -6,7 +6,11 @@ import java.util.ResourceBundle;
 
 public class Config {
     public static final String APP_NAME = "Job saver";
+<<<<<<< HEAD
     public static final String APP_VERSION = "2.1.0 -b";
+=======
+    public static final String APP_VERSION = "2.1.1";
+>>>>>>> 17ca81c0907d381900a7f9c31858448dd43c6fe6
     public static final String APP_AUTHOR = "Fo4Ik";
     public static final String APP_DATABASE_NAME = "database.db";
     public static final String PROPERTIES_FILE_PATH = "Job saver.properties";

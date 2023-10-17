@@ -1,7 +1,24 @@
 # Change History (Changelog)
 
-## Version 2.1.0 
+## Version 2.1.1
+
 ### Added
+
+* Support for multiple languages in menu
+
+### Edited
+
+* New logo for application
+
+### Fixed
+
+* Fixed css for application
+* Delete unused menu items
+
+## Version 2.1.0 (2023-10-02)
+
+### Added
+
 * Support to new language
     + Ukrainian
     + Polish
@@ -9,21 +26,24 @@
 * Add update for application
 
 ### Edited
+
 * Delete Add window, now add job in main window
 * Changed logic of save Jop in database (now it's save in folders)
 
-
 ### Fixed
+
 * Fixed bug in view job window now vacancy description is displayed correctly
 
 ## Version 2.0.0 (2023-09-26)
+
 ## Added
+
 * Transfer to [JavaFx](https://openjfx.io/) for the graphical interface.
-* Added support multilanguage interface
+* Added support multilingual interface
     + English
     + Russian
 
-## Version 1.0.1 
+## Version 1.0.1
 
 ### Fixed
 

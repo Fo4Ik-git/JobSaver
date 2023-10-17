@@ -14,7 +14,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="720.0" stylesheets="@../../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fo4ik.jobsaver.controllers.JobViewController">
    <children>
-      <SplitPane dividerPositions="0.3245125348189415" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.3384401114206128" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minWidth="-Infinity">
                <children>
@@ -26,7 +26,7 @@
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin></Label>
-                              <TextField fx:id="jobTitle" minWidth="-Infinity">
+                              <TextField fx:id="jobTitle" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin></TextField>
@@ -44,7 +44,7 @@
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin></Label>
-                              <TextField fx:id="jobCompany" minWidth="-Infinity">
+                              <TextField fx:id="jobCompany" minWidth="-Infinity" HBox.hgrow="SOMETIMES">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin></TextField>
@@ -62,7 +62,7 @@
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin></Label>
-                              <ChoiceBox fx:id="jobStatusChoice" minWidth="-Infinity">
+                              <ChoiceBox fx:id="jobStatusChoice" minWidth="-Infinity" HBox.hgrow="ALWAYS">
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin></ChoiceBox>
@@ -77,7 +77,7 @@
                         <AnchorPane />
                         <HBox>
                            <children>
-                              <Button fx:id="backButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToMain" text="%button.back">
+                              <Button fx:id="backButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#switchToMain" styleClass="back-button" text="%button.back">
                                  <HBox.margin>
                                     <Insets left="10.0" right="5.0" />
                                  </HBox.margin></Button>
