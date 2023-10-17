@@ -9,7 +9,7 @@ plugins {
 project.ext {
     mainClass = 'com.fo4ik.jobsaver.Main'
     applicationName = 'Job Saver'
-    applicationVersion = '2.1.0'
+    applicationVersion = '2.1.1'
 }
 
 application {
@@ -72,6 +72,7 @@ jlinkZip {
 def generateUUID() {
     def inputString = "${project.applicationName}-${project.applicationVersion}"
     def uuid = UUID.nameUUIDFromBytes(inputString.getBytes())
+    //print it
     println "Generated UUID: ${uuid}"
     return uuid.toString()
 }

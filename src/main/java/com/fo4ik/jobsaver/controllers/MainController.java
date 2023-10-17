@@ -75,8 +75,7 @@ public class MainController implements Initializable {
         try {
             if (isUrl(searchField.getText())) {
                 HtmlParser htmlParser = new HtmlParser(searchField.getText());
-                Job job = new Job(htmlParser.getJobTitle(), htmlParser.getJobCompany(),
-                        htmlParser.getUrlToHtml(), htmlParser.getUrlToCss(), htmlParser.getJobFolder(), new Date(), 0);
+                Job job = new Job(htmlParser.getJobTitle(), htmlParser.getJobCompany(), htmlParser.getUrlToHtml(), htmlParser.getUrlToCss(), htmlParser.getJobFolder(), new Date(), 0);
                 DBHelper dbHelper = DBHelper.getInstance();
                 dbHelper.connect();
                 dbHelper.addJob(job);
@@ -178,8 +177,10 @@ public class MainController implements Initializable {
         deleteSelectedJob();
     }
 
-    //Add listener to change size of jobList when window size changed
-
+    @FXML
+    void close(ActionEvent event) {
+        System.exit(0);
+    }
 
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -193,30 +194,32 @@ public class MainController implements Initializable {
             this.height = newHeight.intValue();
         });
 
-
-        jobList.setPrefWidth((double) width);
+        //set size of jobList
+        jobList.setPrefWidth((double) width - 10);
         scrollPane.widthProperty().addListener((obs, oldWidth, newWidth) -> {
-            jobList.setPrefWidth(newWidth.doubleValue());
+            jobList.setPrefWidth(newWidth.doubleValue() - 10);
         });
         scrollPane.heightProperty().addListener((obs, oldHeight, newHeight) -> {
-            jobList.setPrefHeight(newHeight.doubleValue());
+            jobList.setPrefHeight(newHeight.doubleValue() - 10);
         });
+
+        //set settings to jobList
         jobList.setCellFactory(new Callback<ListView<Job>, ListCell<Job>>() {
             public ListCell<Job> call(ListView<Job> param) {
                 return new JobListCell();
             }
         });
         jobList.setFixedCellSize(50.0);
-        jobList.getStyleClass().add("list-cell");
         jobList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         //add to selected jobs all selected items
         jobList.getSelectionModel().getSelectedItems().addListener((ListChangeListener<Job>) c -> {
             selectedJobs.clear();
             selectedJobs.addAll(c.getList());
         });
+
+
         scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
         scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-        scrollPane.setStyle("-fx-background-color: transparent;");
         dbHelper.registerDatabaseChangeListener(this::loadJobList);
 
 
@@ -279,6 +282,11 @@ public class MainController implements Initializable {
                     content = loader.load();
                     JobCellController controller = loader.getController();
                     controller.setJob(item);
+
+                    if (isSelected()) {
+                        content.getStyleClass().add("selected-item");
+                    }
+
                     setGraphic(content);
                 } catch (IOException e) {
                     e.printStackTrace();

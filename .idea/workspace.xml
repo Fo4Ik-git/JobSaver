@@ -9,45 +9,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="Fix files">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="Version 2.1.0">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d256abd1-f566-4a41-8c7c-6d1d66ea9f9e.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d256abd1-f566-4a41-8c7c-6d1d66ea9f9e/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d5ea6ea2-4c53-4011-89a2-ee179a66de45.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d5ea6ea2-4c53-4011-89a2-ee179a66de45.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26-Sep-23_07_12_[Changes]1/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26-Sep-23_07_12__Changes_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26-Sep-23_14_53_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_26-Sep-23_14_53__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/config/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/HtmlParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/HtmlParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/PropertiesManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/PropertiesManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/SceneSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/SceneSwitcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/entity/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/entity/Job.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/window/AddJob.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/window/AddJobWindow.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/job/jobCell.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/job/jobCell.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/job/jobView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/job/jobView.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/window/addJob.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/jobCell.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/jobView.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/icon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/img/icon.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/language.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/language.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/language_pl.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/language_pl.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/language_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/language_ru.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/language_ua.properties" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +94,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -130,7 +117,7 @@
     "git-widget-placeholder": "dev",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "liberica-17",
-    "last_opened_file_path": "C:/Users/terra/IdeaProjects/JobSaver/src/main/resources/updater",
+    "last_opened_file_path": "C:/Users/terra/IdeaProjects/JobSaver/src/main/resources/img",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -155,13 +142,14 @@
       <recent name="com.fo4ik.fragments" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\resources\img" />
       <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\resources\updater" />
       <recent name="C:\Users\terra\IdeaProjects\JobSaver\build\libs" />
       <recent name="C:\Users\terra\IdeaProjects\JobSaver" />
       <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\resources" />
-      <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\resources\img" />
       <recent name="C:\Users\terra\IdeaProjects\JobSaver" />
       <recent name="C:\Users\terra\IdeaProjects\JobSaver\src\main\java" />
       <recent name="C:\Users\terra\IdeaProjects\LinkedInJobSaver\src\tmp" />
@@ -179,7 +167,7 @@
       <command value="gradle jlinkZip" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.JobSaver [jlinkZip]">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.fo4ik.jobsaver.Main" />
       <module name="JobSaver.main" />
@@ -323,6 +311,7 @@
       <workItem from="1696025117373" duration="29000" />
       <workItem from="1696069874356" duration="9987000" />
       <workItem from="1696120501333" duration="20037000" />
+      <workItem from="1696372345892" duration="9376000" />
     </task>
     <task id="LOCAL-00001" summary="update basic files">
       <created>1694730612902</created>

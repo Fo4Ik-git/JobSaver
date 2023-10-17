@@ -1,6 +1,7 @@
 # JobSaver
 
-[![Download Latest](https://img.shields.io/github/v/release/Fo4Ik-git/JobSaver?label=Download%20Latest&logo=download)](https://github.com/Fo4Ik-git/JobSaver/releases/latest)
+[![Download Latest](https://img.shields.io/github/v/release/Fo4Ik-git/JobSaver?label=Download%20Latest)](https://github.com/Fo4Ik-git/JobSaver/releases/latest)
+
 [![License: License](https://img.shields.io/badge/License-JobSaver-brightgreen?label=License)](LICENSE)
 
 
