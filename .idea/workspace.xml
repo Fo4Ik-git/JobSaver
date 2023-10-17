@@ -10,44 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b5ed237-faf5-4834-ab57-034d100ff8e8" name="Changes" comment="Fix files">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/config/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/config/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/JobViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/controllers/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/database/DBHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/HtmlParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/HtmlParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/PropertiesManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/PropertiesManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/SceneSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/engine/SceneSwitcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/entity/Job.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/entity/Job.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/window/AddJob.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/fo4ik/jobsaver/window/AddJobWindow.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/job/jobCell.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/job/jobCell.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/job/jobView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/job/jobView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/fo4ik/jobsaver/window/addJob.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/jobCell.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/jobView.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/css/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/language.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/language.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/language_pl.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/language_pl.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/language_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/language_ru.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/language_ua.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/973af315-1249-4991-b7c3-195dc6161757.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d5ea6ea2-4c53-4011-89a2-ee179a66de45.xml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,36 +84,36 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "extract.method.default.visibility": "private",
-    "git-widget-placeholder": "dev",
-    "ignore.virus.scanning.warn.message": "true",
-    "jdk.selected.JAVA_MODULE": "liberica-17",
-    "last_opened_file_path": "C:/Users/terra/IdeaProjects/JobSaver/src/main/resources/updater",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15429688",
-    "project.structure.side.proportion": "0.3427705",
-    "settings.build.tools.auto.reload": "SELECTIVE",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;liberica-17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/terra/IdeaProjects/JobSaver/src/main/resources/updater&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15429688&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3427705&quot;,
+    &quot;settings.build.tools.auto.reload&quot;: &quot;SELECTIVE&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.fo4ik.fragments" />
@@ -212,7 +176,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="JobSaver [createUpdateJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -234,7 +197,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="JobSaver [jlinkZip]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -256,7 +218,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="JobSaver [jpackage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -278,7 +239,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <list>
